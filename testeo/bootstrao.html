@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Completa de Bootstrap</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .demo-section {
+            padding: 2rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .component-card {
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    d
+
+    <div class="container mt-4">
+        <!-- Sección de Botones -->
+        <section id="buttons" class="demo-section">
+            <h2 class="mb-4"><i class="bi bi-joystick"></i> Botones</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="component-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Estilos de botones</h5>
+                            <button type="button" class="btn btn-primary me-2 mb-2">Primary</button>
+                            <button type="button" class="btn btn-secondary me-2 mb-2">Secondary</button>
+                            <button type="button" class="btn btn-success me-2 mb-2">Success</button>
+                            <button type="button" class="btn btn-danger me-2 mb-2">Danger</button>
+                            <button type="button" class="btn btn-warning me-2 mb-2">Warning</button>
+                            <button type="button" class="btn btn-info me-2 mb-2">Info</button>
+                            <button type="button" class="btn btn-light me-2 mb-2">Light</button>
+                            <button type="button" class="btn btn-dark me-2 mb-2">Dark</button>
+                            <button type="button" class="btn btn-link me-2 mb-2">Link</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="component-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Botones con iconos</h5>
+                            <button type="button" class="btn btn-outline-primary me-2 mb-2">
+                                <i class="bi bi-heart-fill"></i> Me gusta
+                            </button>
+                            <button type="button" class="btn btn-outline-success me-2 mb-2">
+                                <i class="bi bi-check-circle-fill"></i> Aceptar
+                            </button>
+                            <button type="button" class="btn btn-outline-danger me-2 mb-2">
+                                <i class="bi bi-trash-fill"></i> Eliminar
+                            </button>
+                            <button type="button" class="btn btn-outline-dark me-2 mb-2">
+                                <i class="bi bi-download"></i> Descargar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Tarjetas -->
+        <section id="cards" class="demo-section">
+            <h2 class="mb-4"><i class="bi bi-card-text"></i> Tarjetas</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="component-card card">
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Tarjeta simple</h5>
+                            <p class="card-text">Texto de ejemplo para la tarjeta. Puede contener cualquier contenido.</p>
+                            <a href="#" class="btn btn-primary">Ir a algún lugar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="component-card card text-white bg-dark">
+                        <div class="card-header">
+                            Encabezado
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tarjeta oscura</h5>
+                            <p class="card-text">Con fondo oscuro y texto blanco para mejor contraste.</p>
+                            <a href="#" class="btn btn-light">Botón claro</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="component-card card border-success">
+                        <div class="card-header bg-success text-white">
+                            Estado exitoso
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tarjeta con borde</h5>
+                            <p class="card-text">El borde verde indica una operación exitosa o positiva.</p>
+                            <a href="#" class="btn btn-outline-success">Continuar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Alertas -->
+        <section id="alerts" class="demo-section">
+            <h2 class="mb-4"><i class="bi bi-exclamation-triangle-fill"></i> Alertas</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="component-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Alertas básicas</h5>
+                            <div class="alert alert-primary" role="alert">
+                                Una alerta primary - importante!
+                            </div>
+                            <div class="alert alert-success" role="alert">
+                                Una alerta success - operación exitosa!
+                            </div>
+                            <div class="alert alert-danger" role="alert">
+                                Una alerta danger - algo salió mal!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="component-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Alertas con iconos</h5>
+                            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
+                                <div>Una advertencia con icono integrado.</div>
+                            </div>
+                            <div class="alert alert-info d-flex align-items-center" role="alert">
+                                <i class="bi bi-info-circle-fill flex-shrink-0 me-2"></i>
+                                <div>Una alerta informativa con icono.</div>
+                            </div>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Éxito!</strong> Puedes cerrar esta alerta.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Formularios -->
+        <section id="forms" class="demo-section">
+            <h2 class="mb-4"><i class="bi bi-input-cursor-text"></i> Formularios</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="component-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Formulario básico</h5>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="nombre@ejemplo.com">
+                                    <div class="form-text">Nunca compartiremos tu email.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Recordarme</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="component-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Formulario avanzado</h5>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="firstName" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="Nombre">
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="Apellido">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlSelect1" class="form-label">Ciudad</label>
+                                    <select class="form-select" id="exampleFormControlSelect1">
+                                        <option selected disabled>Selecciona una ciudad</option>
+                                        <option>Madrid</option>
+                                        <option>Barcelona</option>
+                                        <option>Valencia</option>
+                                        <option>Sevilla</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Comentarios</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Método de pago</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+                                        <label class="form-check-label" for="creditCard">
+                                            Tarjeta de crédito
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+                                        <label class="form-check-label" for="paypal">
+                                            PayPal
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Registrarse</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección del Sistema Grid -->
+        <section id="grid" class="demo-section">
+            <h2 class="mb-4"><i class="bi bi-grid-3x3-gap-fill"></i> Sistema Grid</h2>
+            <div class="component-card card">
+                <div class="card-body">
+                    <h5 class="card-title">Ejemplo de Grid Responsivo</h5>
+                    <p class="card-text">Las columnas se ajustan automáticamente al tamaño de pantalla.</p>
+                    
+                    <div class="row text-center mb-3">
+                        <div class="col-sm-12 col-md-6 col-lg-3 p-3 bg-primary text-white">
+                            .col-sm-12 .col-md-6 .col-lg-3
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3 p-3 bg-secondary text-white">
+                            .col-sm-12 .col-md-6 .col-lg-3
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3 p-3 bg-success text-white">
+                            .col-sm-12 .col-md-6 .col-lg-3
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3 p-3 bg-danger text-white">
+                            .col-sm-12 .col-md-6 .col-lg-3
+                        </div>
+                    </div>
+                    
+                    <div class="row text-center">
+                        <div class="col-md-8 p-3 bg-info text-white">
+                            .col-md-8 (principal)
+                        </div>
+                        <div class="col-md-4 p-3 bg-warning text-dark">
+                            .col-md-4 (sidebar)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-4">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 Demo de Bootstrap. Todos los derechos reservados.</p>
+            <div class="mt-2">
+                <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (necesario para algunos componentes) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

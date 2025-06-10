@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador Demo con Temporizador</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #222;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: #00bcd4;
+        }
+
+        /* Contenedor Principal (Flexbox para Panel de Control y Overlay) */
+        #main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        /* Estilos del Panel de Control */
+        #control-panel {
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            width: 45%;
+            min-width: 350px;
+            box-sizing: border-box;
+            border: 1px solid #444;
+        }
+
+        .control-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #444;
+            border-radius: 6px;
+            border: 1px dashed #555;
+        }
+
+        .control-section h2 {
+            margin-top: 0;
+            color: #8bc34a;
+            font-size: 1.3em;
+        }
+
+        .control-section input[type="text"],
+        .control-section input[type="number"],
+        .control-section select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #666;
+            border-radius: 4px;
+            background-color: #555;
+            color: #eee;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .control-section button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-right: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .control-section button:hover {
+            background-color: #0097a7;
+        }
+
+        /* Botones específicos del temporizador */
+        .timer-controls button {
+            background-color: #f44336; /* Rojo */
+            margin-right: 10px;
+        }
+        .timer-controls button:first-child {
+            background-color: #4CAF50; /* Verde */
+        }
+        .timer-controls button:nth-child(2) {
+            background-color: #ff9800; /* Naranja */
+        }
+        .timer-controls button:last-child {
+             background-color: #3f51b5; /* Azul */
+        }
+
+        .timer-controls button:first-child:hover { background-color: #45a049; }
+        .timer-controls button:nth-child(2):hover { background-color: #e68a00; }
+        .timer-controls button:last-child:hover { background-color: #303f9f; }
+        .timer-controls button.red:hover { background-color: #d32f2f; }
+
+
+        /* Estilos del Marcador (Overlay - lo que iría en OBS) */
+        #overlay-container {
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            width: 45%;
+            min-width: 350px;
+            box-sizing: border-box;
+            border: 1px solid #444;
+            text-align: center;
+        }
+
+        #scoreboard-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            padding: 15px 25px;
+            border: 2px solid #555;
+        }
+
+        .team-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .team-name-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fdd835;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .score-display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #ff5722;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+        }
+
+        .middle-info-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+            min-width: 100px;
+        }
+
+        .time-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 5px;
+        }
+
+        .status-display {
+            font-size: 1.2em;
+            color: #9e9e9e;
+            text-transform: uppercase;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #control-panel, #overlay-container {
+                width: 95%;
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Demostración de Marcador con Temporizador (Local)</h1>
+    <p>Controla el marcador y el temporizador. Los cambios se reflejan al instante en la vista previa.</p>
+
+    <div id="main-container">
+        <div id="control-panel">
+            <h2>Panel de Control del Marcador</h2>
+
+            <div class="control-section">
+                <h2>Equipo 1</h2>
+                <input type="text" id="control-team1Name" value="ITALIA">
+                <button onclick="updateScore('control-score1', 1)">+1</button>
+                <button onclick="updateScore('control-score1', -1)">-1</button>
+                <input type="number" id="control-score1" value="26">
+                <button onclick="sendUpdates()">Actualizar Todo</button>
+            </div>
+
+            <div class="control-section">
+                <h2>Equipo 2</h2>
+                <input type="text" id="control-team2Name" value="FRANCIA">
+                <button onclick="updateScore('control-score2', 1)">+1</button>
+                <button onclick="updateScore('control-score2', -1)">-1</button>
+                <input type="number" id="control-score2" value="26">
+                <button onclick="sendUpdates()">Actualizar Todo</button>
+            </div>
+
+            <div class="control-section">
+                <h2>Temporizador y Estado</h2>
+                <input type="number" id="control-initialMinutes" value="40" placeholder="Minutos iniciales">
+                <input type="number" id="control-initialSeconds" value="0" placeholder="Segundos iniciales">
+                <div class="timer-controls">
+                    <button onclick="startTimer()">INICIAR</button>
+                    <button onclick="pauseTimer()">PAUSAR</button>
+                    <button onclick="resetTimer()">REINICIAR</button>
+                </div>
+                <select id="control-gameStatus">
+                    <option value="Playing">JUGANDO</option>
+                    <option value="Obstruction">OBSTRUCCIÓN</option>
+                    <option value="Half Time">MEDIO TIEMPO</option>
+                    <option value="Full Time">FIN DEL JUEGO</option>
+                </select>
+                <button onclick="sendUpdates()">Actualizar Estado Manual</button>
+            </div>
+        </div>
+
+        <div id="overlay-container">
+            <h2>Vista Previa del Marcador (Simula OBS)</h2>
+            <div id="scoreboard-display">
+                <div class="team-display left">
+                    <span id="display-team1Name" class="team-name-display">ITALIA</span>
+                    <span id="display-score1" class="score-display">26</span>
+                </div>
+                <div class="middle-info-display">
+                    <span id="display-gameTime" class="time-display">00:00</span>
+                    <span id="display-gameStatus" class="status-display">JUGANDO</span>
+                </div>
+                <div class="team-display right">
+                    <span id="display-team2Name" class="team-name-display">FRANCIA</span>
+                    <span id="display-score2" class="score-display">26</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Lógica del Panel de Control y Actualización del Marcador (simulada) ---
+
+        let timerInterval;
+        let totalSeconds = 0; // Total de segundos actuales del temporizador
+        let timerRunning = false;
+
+        // Función para formatear segundos a MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+
+        // Función para enviar las actualizaciones al marcador (simulado aquí)
+        function sendUpdates() {
+            const team1Name = document.getElementById('control-team1Name').value;
+            const team2Name = document.getElementById('control-team2Name').value;
+            const score1 = document.getElementById('control-score1').value;
+            const score2 = document.getElementById('control-score2').value;
+            const gameTimeDisplay = formatTime(totalSeconds); // Obtener tiempo del temporizador
+            const gameStatus = document.getElementById('control-gameStatus').value;
+
+            // Actualiza directamente los elementos del "overlay"
+            document.getElementById('display-team1Name').textContent = team1Name.toUpperCase();
+            document.getElementById('display-score1').textContent = score1;
+            document.getElementById('display-team2Name').textContent = team2Name.toUpperCase();
+            document.getElementById('display-score2').textContent = score2;
+            document.getElementById('display-gameTime').textContent = gameTimeDisplay;
+            document.getElementById('display-gameStatus').textContent = gameStatus.toUpperCase();
+
+            console.log("Marcador actualizado:", { team1Name, score1, team2Name, score2, gameTime: gameTimeDisplay, gameStatus });
+        }
+
+        // Funciones de control del temporizador
+        function startTimer() {
+            if (timerRunning) return; // Ya está corriendo
+
+            timerRunning = true;
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                sendUpdates(); // Envía la actualización del tiempo cada segundo
+            }, 1000);
+            console.log("Temporizador iniciado.");
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            console.log("Temporizador pausado.");
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            const initialMinutes = parseInt(document.getElementById('control-initialMinutes').value) || 0;
+            const initialSeconds = parseInt(document.getElementById('control-initialSeconds').value) || 0;
+            totalSeconds = (initialMinutes * 60) + initialSeconds; // Establece el tiempo inicial
+            sendUpdates(); // Actualiza la pantalla con el tiempo de reseteo
+            console.log("Temporizador reiniciado a:", formatTime(totalSeconds));
+        }
+
+        // Función para actualizar puntajes directamente desde los botones +/-
+        function updateScore(scoreId, change) {
+            const scoreInput = document.getElementById(scoreId);
+            let currentScore = parseInt(scoreInput.value);
+            currentScore += change;
+            if (currentScore < 0) currentScore = 0; // Evitar puntajes negativos
+            scoreInput.value = currentScore;
+            sendUpdates(); // Envía la actualización inmediatamente
+        }
+
+        // Inicializar el marcador con los valores por defecto al cargar la página
+        window.onload = () => {
+            // Establecer el tiempo inicial del temporizador al cargar
+            resetTimer(); // Llamar a resetTimer para cargar los valores iniciales de minutos y segundos
+            sendUpdates(); // Asegurarse de que el marcador se renderice correctamente
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,375 @@
+/* --- Estilos para el MODO OBS --- */
+
+/* 1. Fondo de la página transparente (esencial para OBS como overlay) */
+/* Estas reglas solo se aplican cuando el body tiene la clase 'obs-mode' */
+body.obs-mode {
+    background-color: transparent !important; /* ¡Muy importante para OBS! */
+    background-image: none !important;      /* Asegura que no haya imagen de fondo en OBS */
+    margin: 0;
+    overflow: hidden;
+}
+
+/* 2. Oculta el panel de control cuando el body tiene la clase 'obs-mode' */
+body.obs-mode #control-panel { /* Asegúrate que el ID de tu panel de control sea 'control-panel' */
+    display: none !important; /* El !important asegura que estas reglas prevalezcan */
+}
+
+/* 3. Oculta otros elementos que no quieres ver en OBS (ajusta IDs/clases según tu HTML) */
+body.obs-mode #navbar { /* Si tienes un navbar global */
+    display: none !important;
+}
+body.obs-mode h1, /* Si tienes títulos grandes que no son parte del marcador */
+body.obs-mode body > p { /* Si tienes párrafos introductorios */
+    display: none !important;
+}
+
+/* 4. Centra y ajusta el tamaño del contenedor principal del marcador en modo OBS */
+body.obs-mode #main-container { /* Asume que el ID de tu contenedor principal es 'main-container' */
+    display: flex;
+    align-items: center;    /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    height: 100vh;          /* Ocupa el 100% de la altura de la ventana del navegador */
+    width: 100vw;           /* Ocupa el 100% del ancho de la ventana del navegador */
+    margin: 0;
+    padding: 0;
+}
+
+/* 5. Haz transparentes los fondos del contenedor general del marcador si no quieres que tengan fondo extra,
+   pero PERMITE que #scoreboard-display mantenga su color de fondo */
+body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcador */
+    background-color: transparent; /* Fondo transparente */
+    border: none;                  /* Sin borde */
+    box-shadow: none;              /* Sin sombra */
+}
+
+
+/* --- Aquí comienza el resto de tus estilos CSS generales para el marcador y el panel --- */
+
+/* === General Styles === */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-image: url("../Img/fondo.png"); /* Esta es la imagen de fondo para el panel de control */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Esto asegura que el fondo no se mueva con el scroll */
+    color: #e0e0e0; /* Color para el texto general */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* === Navbar === */
+#navbar {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #e0e0e0;
+}
+#navbar h2 {
+    color: #e0e0e0;
+    margin: 0;
+}
+#navbar button {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+#navbar button:hover {
+    background-color: #00e676; /* Accent color on hover */
+    color: #1a1a1a;
+}
+
+
+/* === Headings and Paragraph === */
+h1 {
+    color: #e0e0e0;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+h2 {
+    color: #00bcd4;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+body > p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #bdbdbd;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* === Main Container === */
+#main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+    flex-grow: 1;
+    align-items: flex-start;
+    padding-bottom: 20px;
+}
+
+/* === Overlay Container (Scoreboard) === */
+#overlay-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid #333333;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    width: 75%;
+    min-width: 350px;
+    box-sizing: border-box;
+    text-align: center;
+    order: 1;
+    backdrop-filter: blur(3px);
+}
+
+#scoreboard-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(26, 26, 26, 0.8); /* Este es el fondo que quieres visible */
+    border: 2px solid #555555;
+    border-radius: 12px;
+    padding: 15px 25px;
+    color: #e0e0e0;
+}
+
+.team-name-display {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #e0e0e0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.score-display {
+    font-size: 3em;
+    font-weight: bold;
+    color: #00e676;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    padding: 20px;
+}
+
+.time-display {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #00bcd4;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    margin: 20px;
+}
+
+
+.status-display {
+    font-size: 1.2em;
+    color: #e0e0e0;
+    margin-top: 5px;
+}
+
+
+.team-display.left { order: 2; }
+.middle-info-display { order: 1; }
+.team-display.right { order: 0; }
+
+/* === Control Panel === */
+#control-panel {
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 1px solid #333333;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    width: 75%;
+    box-sizing: border-box;
+    flex-basis: 75%;
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    backdrop-filter: blur(3px);
+}
+
+#control-sections-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* === Individual Control Sections === */
+.control-section,
+.control-section1,
+.control-section2,
+.control-section3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    border: 1px dashed #555555;
+    border-radius: 6px;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: #e0e0e0;
+}
+
+/* Colores específicos para tus secciones */
+.control-section1 { /* Equipo 1 - Rojo */
+    background-color: rgba(229, 57, 53, 0.8);
+    border-color: #e53935;
+}
+.control-section2 { /* Equipo 2 - Azul */
+    background-color: rgba(41, 98, 255, 0.8);
+    border-color: #2962ff;
+}
+.control-section3 { /* Temporizador - Verde */
+    background-color: rgba(67, 160, 71, 0.8);
+    border-color: #43a047;
+}
+
+
+.control-section1 input,
+.control-section2 input,
+.control-section3 input {
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    border-radius: 4px;
+}
+
+.control-section > *,
+.control-section1 > *,
+.control-section2 > *,
+.control-section3 > * {
+    margin: 8px 0;
+    width: 100%;
+}
+
+/* === Inputs and Buttons === */
+.control-section input,
+.control-section select,
+.control-section button,
+.control-section1 input,
+.control-section1 select,
+.control-section1 button,
+.control-section2 input,
+.control-section2 select,
+.control-section2 button,
+.control-section3 input,
+.control-section3 select,
+.control-section3 button {
+    padding: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.control-section button:hover,
+.control-section1 button:hover,
+.control-section2 button:hover,
+.control-section3 button:hover {
+    background-color: #00e676;
+    color: #1a1a1a;
+    border-color: #00e676;
+}
+.control-section select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 30px;
+}
+
+
+/* === Score Controls === */
+.goles {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    width: auto;
+}
+
+.goles button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.goles input {
+    width: 60px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #1a1a1a;
+    color: #00e676;
+    border: 1px solid #00e676;
+    border-radius: 4px;
+}
+
+/* === Timer Controls === */
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+.timer-controls button {
+    flex: 1;
+    min-width: 80px;
+}
+
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    #control-panel,
+    #overlay-container {
+        width: 95%;
+        min-width: unset;
+    }
+
+    #main-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    #control-sections-wrapper {
+        flex-direction: column;
+    }
+
+    .control-section,
+    .control-section1,
+    .control-section2,
+    .control-section3 {
+        width: 100%;
+        max-width: unset;
+    }
+}

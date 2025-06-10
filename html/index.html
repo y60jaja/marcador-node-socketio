@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-box login">
+            <form action="../php/Inicio_sesion.php" method="post">
+                <h1>Inicio Sesión</h1>
+                <p id="mensaje" style="color: green;"></p>
+                <p id="error" style="color: red;"></p>
+                
+                <div class="input-box">
+                    <input type="text" name="username" placeholder="Nombre de usuario" required>
+                    <i class="bx bxs-user"></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <i class="bx bx-show eye-icon"></i>
+                </div>
+                
+                <div class="forgot-link">
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="btn">Iniciar Sesión</button>
+                
+                <p>Inicia Sesión con:</p>
+                
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-google'></i></a>
+                    <a href="#"><i class='bx bxl-microsoft'></i></a>
+                    <!-- <a href="#"><i class="fas fa-football-ball"></i></a>   <!-- Rugby -->
+                    <!-- <a href="#"><i class="fas fa-golf-ball"></i></a>      <!-- Golf -->
+
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <form action="../php/Registro.php" method="post">
+                <h1>Registrarse</h1>
+                
+                <div class="input-box">
+                    <input type="text" name="username" placeholder="Nombre de usuario" required>
+                    <i class="bx bxs-user"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="email"name="email" placeholder="Email" required>
+                    <i class='bx  bxs-envelope'></i> 
+                </div>
+                
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <i class="bx bx-show eye-icon"></i>
+                </div>
+                
+                <button type="submit" class="btn">Registar</button>
+                 
+                <p> Registrarse con: </p>
+                
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-google'></i></a>
+                    <a href="#"><i class='bx bxl-microsoft'></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1> Bienvenido</h1>
+                <p> ¿No tienes una cuenta?</p>
+                <button class="btn register-btn">Registrarse</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1> Inicio sesión</h1>
+                <p> Si tienes una cuenta</p>
+                <button class="btn login-btn">Inicio Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
+
+
+<!--HACER QUE EL INDEX Y EL ENTRADA SE VEAN DESDE EL SERVER PROPIO QUE HICE QUE ANTES DE LLEGAR AL MARCADOR SE INICIE SESION, REGISTRE ELIJA DEPORTE Y UTILIZE EL MARCADOR
+ -->
