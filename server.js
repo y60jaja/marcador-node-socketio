@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000; // Define el puerto, usa 3000 por defecto
 // Sirve los archivos HTML desde la carpeta 'html'
 app.use(express.static(path.join(__dirname, 'html')));
 // Sirve los archivos CSS desde la carpeta 'CSS'
-app.use('/CSS', express.static(path.join(__dirname, 'CSS')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
 // Sirve los archivos JS desde la carpeta 'js'
 app.use('/js', express.static(path.join(__dirname, 'js')));
 // Sirve las imágenes desde la carpeta 'Img'
