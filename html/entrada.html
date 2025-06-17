@@ -48,8 +48,7 @@
                 <div class="info-deporte">
                     <h3>Fútbol / Futsal / Handball</h3>
                 </div>
-                <?php echo "<a href='marcador.html?user=$user' class='boton-ir'>Ir</a>";?>
-                >
+                <a id="redirigir" class='boton-ir'>Ir</a>
             </div>
 
             <!-- Deporte 2 -->
@@ -103,5 +102,17 @@
             </div>
         </div>
     </main>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const user = params.get("user");
+        const boton = document.getElementById("redirigir");
+
+        if (user) {
+        boton.addEventListener("click", () => {
+            // Redirigir con el mismo parámetro
+            window.location.href = `marcador.html?user=${encodeURIComponent(user)}`;
+        });
+        }
+    </script>
 </body>
 </html>
