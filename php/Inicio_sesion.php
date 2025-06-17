@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (password_verify($contrasena, $fila['contrasena'])) {
             // ÉXITO: Redirige a Node.js
-            header("Location: http://localhost:3000/entrada.html?user=$user");
+            header("Location: http://localhost:3000/entrada.html");
             exit();
         } else {
             // ERROR DE CONTRASEÑA: Muestra login y error
