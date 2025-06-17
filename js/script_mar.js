@@ -49,10 +49,10 @@ socket.on('currentScoreboardData', (data) => {
 });
 
 // Cuando el servidor envía una actualización (porque otro cliente cambió algo), actualiza la vista.
-/*socket.on('scoreboardUpdated', (data) => {
+socket.on('scoreboardUpdated', (data) => {
     console.log('Actualización recibida del servidor:', data);
     updateDisplay(data);
-});*/
+});
 
 // --- Funciones para enviar datos al servidor (desde los controles de tu panel) ---
 function sendUpdates() {
