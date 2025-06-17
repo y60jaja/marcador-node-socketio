@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h3>Fútbol / Futsal / Handball</h3>
                 </div>
                 <?php echo "<a href='marcador.html?user=$user' class='boton-ir'>Ir</a>";?>
-                >
             </div>
 
             <!-- Deporte 2 -->
