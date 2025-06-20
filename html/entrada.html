@@ -21,6 +21,10 @@
             <h1>ScoreXtreme</h1>
             <p>⚽️ 🏀 Tu marcador deportivo 🏐 🏈</p>
         </div>
+        <!-- Dentro del navbar -->
+        <div class="user-info">
+          <p id="nombre-usuario">Cargando usuario...</p>
+        </div>
         
         <!-- Botón home a la derecha CON FONDO BLANCO -->
         <div class="home-btn-container">
@@ -103,15 +107,28 @@
         </div>
     </main>
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const user = params.get("user");
-        const boton = document.getElementById("redirigir");
-
-        if (user) {
-        boton.addEventListener("click", () => {
-            // Redirigir con el mismo parámetro
-            window.location.href = `marcador.html?user=${encodeURIComponent(user)}`;
-        });
+          const params = new URLSearchParams(window.location.search);
+          const user = params.get("user");
+        
+          const boton = document.getElementById("redirigir");
+          const saludo = document.getElementById("nombre-usuario");
+        
+          if (user) {
+            // Mostrar el usuario en el header
+            if (saludo) {
+              saludo.textContent = `Bienvenido, ${user}`;
+            }
+        
+            // Activar el botón si existe
+            if (boton) {
+              boton.addEventListener("click", () => {
+                window.location.href = `marcador.html?user=${encodeURIComponent(user)}`;
+              });
+            }
+        } else {
+        if (saludo) {
+            saludo.textContent = "Bienvenido, visitante";
+            }
         }
     </script>
 </body>
