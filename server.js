@@ -94,8 +94,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'marcador.html')); 
 });
 
-// Ruta para la página de selección de deporte
 app.get('/entrada.html', (req, res) => {
+    const user = req.query.user;
+    console.log("Usuario recibido desde PHP:", user);
     res.sendFile(path.join(__dirname, 'html', 'entrada.html'));
 });
 
