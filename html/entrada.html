@@ -54,7 +54,7 @@
                 <div class="info-deporte">
                     <h3>Fútbol / Futsal / Handball</h3>
                 </div>
-                <a id="redirigir" class='boton-ir'>Ir</a>
+                <a href="marcador.html" class="boton-ir">Ir</a>
             </div>
 
             <!-- Deporte 2 -->
@@ -108,29 +108,5 @@
             </div>
         </div>
     </main>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const user = params.get("user");
-        const boton = document.getElementById("redirigir");
-        const saludo = document.getElementById("nombre-usuario");
-        
-        if (user) {
-        // Mostrar el usuario en el header
-            if (saludo) {
-              saludo.textContent = `Bienvenido, ${user}`;
-            }
-        
-            // Activar el botón si existe
-            if (boton) {
-              boton.addEventListener("click", () => {
-                window.location.href = `marcador.html?user=${encodeURIComponent(user)}`;
-              });
-            }
-        } else {
-        if (saludo) {
-            saludo.textContent = "Bienvenido, visitante";
-            }
-        }
-    </script>
 </body>
 </html>
