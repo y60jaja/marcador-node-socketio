@@ -47,7 +47,7 @@ if ($stmt->execute()) {
     // Redirige al usuario a la página del marcador con el ID único
     // Asumiendo que tu entrada.html es ahora el panel de control del marcador
     // **IMPORTANTE**: Ajusta la URL base (http://localhost:3000 o tu dominio de Render/Node.js)
-    header("Location: http://localhost:1000/entrada.html?id=" . $nuevo_marcador_id);
+    header("Location: https://marcador-server.onrender.com//entrada.html?id=" . $nuevo_marcador_id);
     exit();
 } else {
     error_log("Error al ejecutar la inserción del marcador: " . $stmt->error);
