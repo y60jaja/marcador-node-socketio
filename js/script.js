@@ -78,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'registration_failed':
                 showMessage(errorMessageElement, 'Error en el registro. El usuario podría ya existir o hubo un problema.', 'error');
                 break;
+            case 'failed_to_create_scoreboard':
+                showMessage(errorMessageElement, 'Error al crear el marcador. Por favor, inténtalo de nuevo.', 'error');
+                break;
             default:
                 showMessage(errorMessageElement, 'Ha ocurrido un error inesperado.', 'error');
         }
