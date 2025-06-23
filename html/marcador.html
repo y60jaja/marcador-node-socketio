@@ -30,7 +30,7 @@
                 <!-- Equipo 1: Por convención, el equipo "Local" o de la izquierda.
                      Corresponde a control-team1Name y control-score1 -->
                 <div class="team-display left">
-                    <span id="display-team1Name" class="team-name-display">ITALIA</span>
+                    <span id="display-team1Name" class="team-name-display">CHILE</span>
                     <span id="display-score1" class="score-display">0</span>
                 </div>
                 <!-- Información Central: Temporizador y Estado del Juego -->
@@ -41,7 +41,7 @@
                 <!-- Equipo 2: Por convención, el equipo "Visitante" o de la derecha.
                      Corresponde a control-team2Name y control-score2 -->
                 <div class="team-display right">
-                    <span id="display-team2Name" class="team-name-display">FRANCIA</span>
+                    <span id="display-team2Name" class="team-name-display">ARGENTINA</span>
                     <span id="display-score2" class="score-display">0</span>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <input type="text" id="control-team1Name" value="ITALIA">
                     <div class="goles">
                         <button onclick="updateScore('control-score1', 1)">+1</button>
-                        <input type="number" id="control-score1" value="0">
+                        <input type="number" id="control-score2" value="0">
                         <button onclick="updateScore('control-score1', -1)">-1</button>
                     </div>
                     <!-- El botón "Actualizar Todo" se quita porque sendUpdates() ya se llama automáticamente -->
@@ -91,7 +91,7 @@
                     <input type="text" id="control-team2Name" value="FRANCIA">
                     <div class="goles">
                         <button onclick="updateScore('control-score2', 1)">+1</button>
-                        <input type="number" id="control-score2" value="0">
+                        <input type="number" id="control-score1" value="0">
                         <button onclick="updateScore('control-score2', -1)">-1</button>
                     </div>
                     <!-- El botón "Actualizar Todo" se quita -->
