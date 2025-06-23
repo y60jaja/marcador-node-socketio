@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (password_verify($contrasena, $fila['contrasena'])) {
             // ÉXITO: Redirige a Node.js
-            echo "Valor de \$usuario antes de la redirección: " . $usuario;
-            die(); // Esto detendrá la ejecución para que vea el valor en la pantalla
+            /*echo "Valor de \$usuario antes de la redirección: " . $usuario;
+            die(); // Esto detendrá la ejecución para que vea el valor en la pantalla*/
             header("Location: http://localhost:3000/entrada.html?user=" . urlencode($usuario));
             exit;
 
