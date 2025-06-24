@@ -125,8 +125,6 @@ app.get('/rugby.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'rugby.html'));
 });
 
-
-const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
