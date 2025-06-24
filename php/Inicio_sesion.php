@@ -31,33 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $fila = $resultado->fetch_assoc();
 
         if (password_verify($contrasena, $fila['contrasena'])) {
-            $node_api_url = "https://marcador-server.onrender.com/api/create-scoreboard"; 
-            $ch = curl_init($node_api_url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-            // No es necesario enviar body si el endpoint solo crea con valores por defecto
-            $response = curl_exec($ch);
-            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-
-            if ($http_code == 201) {
-                $data = json_decode($response, true);
-                $new_scoreboard_id = $data['id'];
-                // Redirige al frontend de Node.js con el ID del marcador
-                header("Location: https://marcador-server.onrender.com/entrada.html?id=" . $new_scoreboard_id);
-                exit();
-            } else {
-                // Manejar error si no se pudo crear el marcador
-                error_log("Fallo al crear marcador en Node.js API. HTTP Code: " . $http_code . " Response: " . $response);
-                header("Location: ../html/index.html?error=failed_to_create_scoreboard");
-                exit();
-            }
             // ÉXITO: Redirige a Node.js
             /*echo "Valor de \$usuario antes de la redirección: " . $usuario;
-            die(); // Esto detendrá la ejecución para que vea el valor en la pantalla
-            header("Location: https://marcador-server.onrender.com/crear_marcador.php");
-            exit;*/
+            die(); // Esto detendrá la ejecución para que vea el valor en la pantalla*/
+            header("Location: http://localhost:3000/entrada.html?user=" . urlencode($usuario));
+            exit;
 
         } else {
             // ERROR DE CONTRASEÑA: Muestra login y error

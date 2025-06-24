@@ -20,8 +20,6 @@ app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 // Sirve las imágenes desde la carpeta 'Img'
 app.use('/Img', express.static(path.join(__dirname, 'Img')));
-// Sirve los archivos php desde la carpeta 'php'
-app.use('/php', express.static(path.join(__dirname, 'php')));
 
 
 // --- Variables de estado del marcador (para Socket.IO) ---
@@ -128,6 +126,7 @@ app.get('/rugby.html', (req, res) => {
 });
 
 
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

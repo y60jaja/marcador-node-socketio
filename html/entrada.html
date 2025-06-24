@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccionar Deporte</title>
+    <!-- ¡IMPORTANTE! Asegúrate que '/CSS/' tenga la misma capitalización que tu carpeta en GitHub -->
     <link rel="stylesheet" href="../css/style_ent.css">
 </head>
 <body>
+    <!-- NAV-BAR -->
     <nav class="navbar">
+        <!-- Logo a la izquierda -->
         <div class="logo-container">
+            <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
             <img src="/Img/logo.png" alt="Logo" class="logo-img">
             <div class="user-info">
                 <p id="nombre-usuario">Cargando usuario...</p>
@@ -16,13 +20,19 @@
         </div>
         
         
+        <!-- Texto en el centro -->
         <div class="texto-centro">
             <h1>ScoreXtreme</h1>
             <p>⚽️ 🏀 Tu marcador deportivo 🏐 🏈</p>
         </div>
+        <!-- Dentro del navbar -->
+       
+        
+        <!-- Botón home a la derecha CON FONDO BLANCO -->
         <div class="home-btn-container">
             <a href="cflq.cl/benjamin-rojas/Integraticva_web/html/index.html" class="home-btn">
                 <div class="home-btn-background">
+                    <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                     <img src="/Img/home.png" alt="Inicio" class="home-img">
                 </div>
             </a>
@@ -37,84 +47,90 @@
         </div>
     
         <div class="contenedor-deportes">
+            <!-- Deporte 1 -->
             <div class="tarjeta-deporte">
+                <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                 <img src="/Img/football.png" alt="Fútbol" class="icono-deporte">
                 <div class="info-deporte">
                     <h3>Fútbol / Futsal / Handball</h3>
                 </div>
-                <a href="marcador.html" class="boton-ir" data-sport="marcador">Ir</a>
+                <a id="redirigir" class='boton-ir'>Ir</a>
             </div>
 
+            <!-- Deporte 2 -->
             <div class="tarjeta-deporte">
+                <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                 <img src="/Img/basketball.png" alt="Baloncesto" class="icono-deporte">
                 <div class="info-deporte">
                     <h3>Baloncesto</h3>
                 </div>
-                <a href="bskt.html" class="boton-ir" data-sport="bskt">Ir</a>
+                <a href="bskt.html" class="boton-ir">Ir</a>
             </div>
 
+            <!-- Deporte 3 -->
             <div class="tarjeta-deporte">
+                <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                 <img src="/Img/tennis.png" alt="Tenis" class="icono-deporte">
                 <div class="info-deporte">
                     <h3>Tenis / Ping Pong / Padel</h3>
                 </div>
-                <a href="tenis.html" class="boton-ir" data-sport="tenis">Ir</a>
+                <a href="tenis.html" class="boton-ir">Ir</a>
             </div>
 
+            <!-- Deporte 4 -->
             <div class="tarjeta-deporte">
+                <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                 <img src="/Img/volleyball.png" alt="Voleibol" class="icono-deporte">
                 <div class="info-deporte">
                     <h3>Voleibol / Beach Voleibol</h3>
                 </div>
-                <a href="voleibol.html" class="boton-ir" data-sport="voleibol">Ir</a>
+                <a href="voleibol.html" class="boton-ir">Ir</a>
             </div>
 
+            <!-- Deporte 5 -->
             <div class="tarjeta-deporte">
+                <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                 <img src="/Img/puck.png" alt="Béisbol" class="icono-deporte">
                 <div class="info-deporte">
                     <h3>Hockey / Polo</h3>
                 </div>
-                <a href="hockey.html" class="boton-ir" data-sport="hockey">Ir</a>
+                <a href="hockey.html" class="boton-ir">Ir</a>
             </div>
             
+            <!-- Deporte 6 -->
             <div class="tarjeta-deporte">
+                <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
                 <img src="/Img/rugby-ball.png" alt="Rugby" class="icono-deporte">
                 <div class="info-deporte">
                     <h3>Rugby / Futbol Americano</h3>
                 </div>
-                <a href="rugby.html" class="boton-ir" data-sport="rugby">Ir</a>
+                <a href="rugby.html" class="boton-ir">Ir</a>
             </div>
         </div>
     </main>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const scoreboardId = urlParams.get('id'); // Obtiene el ID del marcador
-            const username = urlParams.get('user'); // Obtiene el nombre de usuario (si se sigue pasando)
-
-            // Si hay un ID de marcador, modifica los enlaces
-            if (scoreboardId) {
-                const sportLinks = document.querySelectorAll('.boton-ir');
-                sportLinks.forEach(link => {
-                    const originalHref = link.getAttribute('href');
-                    // Asegúrate de añadir el ID a la URL de cada deporte
-                    link.setAttribute('href', `${originalHref}?id=${scoreboardId}`);
-                });
-            } else {
-                console.warn('No se encontró un ID de marcador en la URL de entrada. Los enlaces de los deportes no incluirán el ID.');
-                // Opcional: Podrías redirigir a la página de login o mostrar un mensaje de error
-                // alert('Error: No se pudo cargar el ID del marcador. Por favor, inicie sesión nuevamente.');
-                // window.location.href = 'index.html'; 
+        const params = new URLSearchParams(window.location.search);
+        const user = params.get("user");
+        const boton = document.getElementById("redirigir");
+        const saludo = document.getElementById("nombre-usuario");
+        
+        if (user) {
+        // Mostrar el usuario en el header
+            if (saludo) {
+              saludo.textContent = `Bienvenido, ${user}`;
             }
-
-            // Si hay un nombre de usuario, muéstralo
-            if (username) {
-                document.getElementById('nombre-usuario').textContent = `Usuario: ${username}`;
-            } else {
-                document.getElementById('nombre-usuario').textContent = `Usuario: Invitado`; // O un mensaje predeterminado
+        
+            // Activar el botón si existe
+            if (boton) {
+              boton.addEventListener("click", () => {
+                window.location.href = `marcador.html?user=${encodeURIComponent(user)}`;
+              });
             }
-        });
+        } else {
+        if (saludo) {
+            saludo.textContent = "Bienvenido, visitante";
+            }
+        }
     </script>
 </body>
 </html>
