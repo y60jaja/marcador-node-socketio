@@ -207,16 +207,14 @@ body {
 }
 /* Estilos para el contenedor del botón de "Cerrar Sesión" */
 .boton-cerrar {
-    /* Por defecto, un div ya ocupa todo el ancho disponible, pero con flexbox se ajusta. */
-    /* Aseguramos que los elementos internos estén alineados si hay más */
     display: flex; 
-    align-items: center; /* Alinea verticalmente el botón dentro del div */
-    margin-right: 15px; /* Ajusta este valor para el espacio deseado entre "Cerrar Sesión" y "Home" */
+    align-items: center;
+    margin-right: 15px;
 }
 
 /* Estilos para el botón de "Cerrar Sesión" en sí */
 .boton-cerrar .btn-cerrar {
-    background-color: #f44336; /* Color rojo para el botón de cerrar sesión */
+    background-color: #f44336; 
     color: white;
     border: none;
     padding: 8px 15px;
@@ -224,23 +222,20 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 16px;
-    white-space: nowrap; /* Evita que el texto del botón se rompa en varias líneas */
+    white-space: nowrap;
 }
 
 .boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f; /* Un rojo más oscuro al pasar el ratón */
+    background-color: #d32f2f; 
 }
 
-/* Es importante revisar las media queries (responsive design) si el espacio 
-   necesita ajustarse para diferentes tamaños de pantalla. 
-   Por ejemplo, podrías añadir esto:
-*/
+
 @media (max-width: 768px) {
     .boton-cerrar {
-        margin-right: 8px; /* Menos espacio en pantallas más pequeñas */
+        margin-right: 8px; 
     }
     .boton-cerrar .btn-cerrar {
-        padding: 6px 12px; /* Reducir el padding para que el botón sea más pequeño */
+        padding: 6px 12px; 
         font-size: 14px;
     }
 }

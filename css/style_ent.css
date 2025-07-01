@@ -152,6 +152,40 @@ body {
         border-radius: 4px;
     }
 }
+/* Estilos para el contenedor del botón de "Cerrar Sesión" */
+.boton-cerrar {
+    display: flex; 
+    align-items: center;
+    margin-right: 15px;
+}
+
+/* Estilos para el botón de "Cerrar Sesión" en sí */
+.boton-cerrar .btn-cerrar {
+    background-color: #f44336; 
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.boton-cerrar .btn-cerrar:hover {
+    background-color: #d32f2f; 
+}
+
+
+@media (max-width: 768px) {
+    .boton-cerrar {
+        margin-right: 8px; 
+    }
+    .boton-cerrar .btn-cerrar {
+        padding: 6px 12px; 
+        font-size: 14px;
+    }
+}
 
 
 /* PALETA DE COLORES */
