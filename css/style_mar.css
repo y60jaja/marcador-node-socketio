@@ -260,7 +260,7 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 h2 {
-    color: #00bcd4;
+    color: #ffffff;
     text-align: center;
     font-weight: bold;
 }
@@ -364,7 +364,7 @@ body > p {
 .time-display {
     font-size: 2.5em;
     font-weight: bold;
-    color: #00bcd4;
+    color: #ffffff;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
     margin: 20px;
 }
@@ -438,8 +438,8 @@ body > p {
     border-color: #2962ff;
 }
 .control-section3 { /* Temporizador - Verde */  
-    background-color: rgba(67, 160, 71, 0.8);
-    border-color: #43a047;
+    background-color: rgba(26, 26, 26, 0.8);
+    border-color: #ffffff;
 }
 
 
