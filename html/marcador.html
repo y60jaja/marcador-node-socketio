@@ -10,11 +10,29 @@
 <body>
 
     <!-- NAV-BAR - Esto se ocultará en modo OBS gracias al CSS y JS -->
-    <div id="navbar">
-        <h2>Panel de Administración de Marcadores</h2>
+    <nav class="navbar">
+        <!-- Logo a la izquierda -->
+        <div class="logo-container">
+            <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
+            <img src="/Img/logo.png" alt="Logo" class="logo-img">
+        </div>
+        
+        <!-- Texto en el centro -->
+        <div class="texto-centro">
+            <h1>ScoreXtreme</h1>
+            <p>⚽️ 🏀 Tu marcador deportivo 🏐 🏈</p>
+        </div>
         <a href="https://cflq.cl/patricio-ramirez/Integrativa/Integrativa_web/html/"><button>Cerrar Sesion</button></a>
-        <a href="entrada.html"><button>Gestión de Deportes</button></a>
-    </div>
+        <!-- Botón home a la derecha CON FONDO BLANCO -->
+        <div class="home-btn-container">
+            <a href="entrada.html" class="home-btn">
+                <div class="home-btn-background">
+                    <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
+                    <img src="/Img/home.png" alt="Inicio" class="home-img">
+                </div>
+            </a>
+        </div>
+    </nav>
 
     <!-- Títulos - Esto se ocultará en modo OBS gracias al CSS y JS -->
     <h1 style="margin-top: 20px;">Demostración de Marcador con Temporizador (Local)</h1>
