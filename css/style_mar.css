@@ -83,7 +83,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-left: 10px;
-    padding-left: 10px 15px; /* Aumentar el padding para un botón más grande */
+    padding-left: 10px; /* Aumentar el padding para un botón más grande */
 }
 
 .logo-container {
