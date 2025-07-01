@@ -14,24 +14,24 @@ const PORT = process.env.PORT || 3000;
 // --- Configuración para servir archivos estáticos ---
 // Sirve los archivos HTML desde la carpeta 'html'
 app.use(express.static(path.join(__dirname, 'html')));
-// Sirve los archivos CSS desde la carpeta 'CSS'
+// Sirve los archivos CSS desde la carpeta 'css' (¡Asegúrate de que tu carpeta local sea 'css' en minúsculas!)
 app.use('/css', express.static(path.join(__dirname, 'css')));
-// Sirve los archivos JS desde la carpeta 'js'
+// Sirve los archivos JS desde la carpeta 'js' (¡Asegúrate de que tu carpeta local sea 'js' en minúsculas!)
 app.use('/js', express.static(path.join(__dirname, 'js')));
-// Sirve las imágenes desde la carpeta 'Img'
+// Sirve las imágenes desde la carpeta 'Img' (¡Asegúrate de que tu carpeta local sea 'Img' en mayúsculas!)
 app.use('/Img', express.static(path.join(__dirname, 'Img')));
 
+
 // --- Variables de estado de los marcadores (para Socket.IO) ---
-// Este objeto guardará el estado actual de cada marcador en el servidor.
-// Cada clave es un ID de marcador único.
+// Estos son tus marcadores predefinidos.
 let scoreboards = {
     'marcador1': {
         team1Name: 'Equipo 1 Local',
         score1: 0,
         team2Name: 'Equipo 1 Visita',
         score2: 0,
-        totalSeconds: 0, // Fuente de verdad para el tiempo del temporizador
-        gameTime: '00:00', // Representación en string del tiempo
+        totalSeconds: 0,
+        gameTime: '00:00',
         gameStatus: 'Primer Tiempo'
     },
     'marcador2': {
@@ -74,17 +74,18 @@ io.on('connection', (socket) => {
             console.log(`Cliente ${socket.id} se unió a la sala: ${scoreboardId}`);
             // Envía el estado actual de ESE marcador al cliente que se unió
             socket.emit('currentScoreboardData', {
-                id: scoreboardId,
+                id: scoreboardId, // Envía el ID de vuelta para que el cliente lo confirme
                 scoreboardData: scoreboards[scoreboardId]
             });
         } else {
             console.warn(`Intento de cliente ${socket.id} de unirse a marcador inexistente: ${scoreboardId}`);
             // Opcional: podrías emitir un evento de error al cliente
+            socket.emit('scoreboardError', 'Marcador no encontrado o ID inválido.');
         }
     });
 
     // 2. Escucha el evento 'updateScoreboard' que viene del cliente (panel de control).
-    // Ahora, este evento debe incluir el 'id' del marcador a actualizar.
+    // Este evento debe incluir el 'id' del marcador a actualizar.
     socket.on('updateScoreboard', (data) => {
         const { id, ...updates } = data; // Extrae el 'id' y el resto son las 'updates'
         console.log(`Datos recibidos para el marcador ${id} del panel de control:`, updates);
@@ -103,7 +104,7 @@ io.on('connection', (socket) => {
                 const minutes = Math.floor(updates.totalSeconds / 60);
                 const remainingSeconds = updates.totalSeconds % 60;
                 scoreboards[id].gameTime = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-            } else if (updates.gameTime) {
+            } else if (updates.gameTime) { // Fallback si el cliente envía gameTime como string
                 const parts = updates.gameTime.split(':');
                 if (parts.length === 2) {
                     const minutes = parseInt(parts[0], 10);
@@ -115,7 +116,7 @@ io.on('connection', (socket) => {
             
             // 3. Emite la actualización a *TODOS* los clientes conectados a la sala de ESE marcador.
             io.to(id).emit('scoreboardUpdated', {
-                id: id,
+                id: id, // Envía el ID de vuelta para que el cliente sepa qué marcador se actualizó
                 scoreboardData: scoreboards[id]
             });
         } else {
@@ -132,43 +133,47 @@ io.on('connection', (socket) => {
 
 // --- Definición de Rutas de Páginas HTML ---
 
-// Ruta principal ('/') que podría llevar a una página de selección de marcadores
+// Ruta principal ('/')
+// Redirige a la página de selección de marcadores (entrada.html)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'seleccion_marcador.html')); // Asume que tienes un HTML llamado seleccion_marcador.html
+    res.sendFile(path.join(__dirname, 'html', 'entrada.html')); 
 });
 
-// Ruta para el manejo de la entrada, posiblemente desde un login de PHP
+// Ruta para la página de selección de deporte (entrada.html)
 app.get('/entrada.html', (req, res) => {
-    const user = req.query.user;
-    console.log("Usuario recibido desde PHP:", user);
     res.sendFile(path.join(__dirname, 'html', 'entrada.html'));
 });
 
-// Ruta dinámica para visualizar los marcadores
-// Por ejemplo, para ver el marcador 1, ir a http://localhost:3000/marcador/marcador1
+// Ruta dinámica para acceder a CUALQUIER marcador predefinido.
+// Ejemplo: http://localhost:3000/marcador/marcador1
+// Servirá el mismo archivo HTML genérico para todos los marcadores.
 app.get('/marcador/:id', (req, res) => {
     const scoreboardId = req.params.id;
     if (scoreboards[scoreboardId]) {
-        // Asumimos que tienes un HTML genérico que se encargará de mostrar cualquier marcador
-        res.sendFile(path.join(__dirname, 'html', 'marcador_generico.html')); 
+        // ¡CAMBIO CLAVE AQUÍ! Sirve el archivo marcador.html desde la raíz de la carpeta 'html'
+        // Esto asume que has consolidado tus marcador.html en uno solo en 'html/marcador.html'
+        res.sendFile(path.join(__dirname, 'html', 'marcador.html')); 
     } else {
         res.status(404).send('Marcador no encontrado. Por favor, verifica el ID.');
     }
 });
 
-// Ruta dinámica para los paneles de control
-// Por ejemplo, para controlar el marcador 1, ir a http://localhost:3000/panel/marcador1
+// Ruta dinámica para los paneles de control (si quieres separarlos de la vista de OBS)
+// Ejemplo: http://localhost:3000/panel/marcador1
 app.get('/panel/:id', (req, res) => {
     const scoreboardId = req.params.id;
     if (scoreboards[scoreboardId]) {
-        // Necesitas un archivo HTML para el panel de control, por ejemplo, panel_control_generico.html
-        res.sendFile(path.join(__dirname, 'html', 'panel_control_generico.html')); 
+        // Sirve un único archivo HTML para el panel de control.
+        // Asegúrate de que este archivo exista en tu carpeta 'html'.
+        // Podría ser el mismo 'marcador.html' o un 'panel_control.html' separado.
+        res.sendFile(path.join(__dirname, 'html', 'marcador.html')); // Usamos marcador.html como panel también
     } else {
         res.status(404).send('Panel de control para este marcador no encontrado.');
     }
 });
 
 
+// Iniciar el servidor
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
