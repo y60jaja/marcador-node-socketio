@@ -135,13 +135,11 @@ function copiarURL(){
     let textoCopiar;
     if (marcadorId && marcadorId.startsWith('marcadores')) {
         // Para URLs tipo /html/marcadores1/marcador.html
-        textoCopiar = `/${marcadorId}/marcador.html?obs=true`;
+        textoCopiar = `${baseUrl}/${marcadorId}/marcador.html?obs=true`;
     } else if (marcadorId && marcadorId !== 'default') {
         // Para URLs tipo /bskt.html si están directamente en la raíz de 'html'
-        textoCopiar = `/${marcadorId}.html?obs=true`;
-    }else if(marcadorId === 'marcadores1'){ 
-        textoCopiar = `/${marcadorId}/marcador.html?obs=true`;
-    }else {
+        textoCopiar = `${baseUrl}/${marcadorId}.html?obs=true`;
+    } else {
         // Caso por defecto o si no se pudo determinar un ID específico
         textoCopiar = `${baseUrl}/marcador.html?obs=true`;
     }
