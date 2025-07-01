@@ -397,9 +397,9 @@ body > p {
 }
 
 
-.team-display.left { order: 2; }
+.team-display.left { order: 0; }
 .middle-info-display { order: 1; }
-.team-display.right { order: 0; }
+.team-display.right { order: 2; }
 
 /* === Control Panel === */
 #control-panel {

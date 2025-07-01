@@ -4,128 +4,108 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Ruta absoluta para el CSS, usando /CSS/ que es mapeado por server.js -->
-    <link rel="stylesheet" href="../css/style_mar.css">
+        <link rel="stylesheet" href="../css/style_mar.css">
     <title>Formulario Marcador</title>
 </head>
 <body>
 
-    <!-- NAV-BAR - Esto se ocultará en modo OBS gracias al CSS y JS -->
-    <nav class="navbar">
-        <!-- Logo a la izquierda -->
-        <div class="logo-container">
-            <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
-            <img src="/Img/logo.png" alt="Logo" class="logo-img">
+        <nav class="navbar">
+                <div class="logo-container">
+                        <img src="/Img/logo.png" alt="Logo" class="logo-img">
         </div>
-        
-        <!-- Texto en el centro -->
-        <div class="texto-centro">
+
+                <div class="texto-centro">
             <h1>ScoreXtreme</h1>
             <p>⚽️ 🏀 Tu marcador deportivo 🏐 🏈</p>
         </div>
         <div class="boton-cerrar">
             <a href="https://cflq.cl/patricio-ramirez/Integrativa/Integrativa_web/html/"><button class="btn-cerrar">Cerrar Sesión</button></a>
         </div>
-        <!-- Botón home a la derecha CON FONDO BLANCO -->
-        <div class="home-btn-container">
+                <div class="home-btn-container">
             <a href="../entrada.html" class="home-btn">
                 <div class="home-btn-background">
-                    <!-- ¡IMPORTANTE! Asegúrate que '/Img/' tenga la misma capitalización que tu carpeta en GitHub -->
-                    <img src="/Img/home.png" alt="Inicio" class="home-img">
+                                        <img src="/Img/home.png" alt="Inicio" class="home-img">
                 </div>
             </a>
         </div>
     </nav>
 
-    <!-- Títulos - Esto se ocultará en modo OBS gracias al CSS y JS -->
-    <h1 style="margin-top: 20px;">Marcador Deportivo</h1>
-    <p>Controla el marcador y el temporizador. Los cambios se reflejan al instante en la vista previa.</p>
+        <div id="main-container">
 
-    <!-- Contenedor principal de la aplicación (abarca tanto el marcador como el panel de control) -->
-    <div id="main-container">
+            <div id="preview-wrapper">
+                <h1>Vista Previa del Marcador</h1>
+                <div id="overlay-container">
+                    <button onclick="copiarURL()"><img src="../../Img/link.png" alt="OBS" class="obs-img"></button>
 
-        <!-- Contenedor del Marcador Visible (la parte que se verá en OBS) -->
-        <div id="overlay-container">
-            <button onclick="copiarURL()"><img src="../../Img/link.png" alt="OBS" class="obs-img"></button>
-            <h2>Vista Previa del Marcador</h2>
-            <div id="scoreboard-display">
-                <!-- Equipo 1: Por convención, el equipo "Local" o de la izquierda.
-                     Corresponde a control-team1Name y control-score1 -->
-                <div class="team-display left">
-                    <span id="display-team1Name" class="team-name-display">ITALIA</span>
-                    <span id="display-score1" class="score-display">0</span>
+                    <div id="scoreboard-display">
+                                            <div class="team-display left">
+                                <span id="display-team1Name" class="team-name-display">ITALIA</span>
+                                <span id="display-score1" class="score-display">0</span>
+                            </div>
+                                            <div class="middle-info-display">
+                                <span id="display-gameTime" class="time-display">00:00</span>
+                                <span id="display-gameStatus" class="status-display">INICIO</span>
+                            </div>
+                                            <div class="team-display right">
+                                <span id="display-team2Name" class="team-name-display">FRANCIA</span>
+                                <span id="display-score2" class="score-display">0</span>
+                            </div>
+                    </div>
                 </div>
-                <!-- Información Central: Temporizador y Estado del Juego -->
-                <div class="middle-info-display">
-                    <span id="display-gameTime" class="time-display">00:00</span>
-                    <span id="display-gameStatus" class="status-display">INICIO</span>
-                </div>
-                <!-- Equipo 2: Por convención, el equipo "Visitante" o de la derecha.
-                     Corresponde a control-team2Name y control-score2 -->
-                <div class="team-display right">
-                    <span id="display-team2Name" class="team-name-display">FRANCIA</span>
-                    <span id="display-score2" class="score-display">0</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Panel de Control (la parte para interactuar, se ocultará en OBS) -->
-        <div id="control-panel">
+            </div> <div id="control-panel">
             <h2>Panel de Control del Marcador</h2>
             <div id="control-sections-wrapper">
 
-                <!-- Sección de Control para el Equipo 1 (Local/Izquierda) -->
-                <div class="control-section control-section1">
-                    <h2>Equipo Local</h2>
-                    <input type="text" id="control-team1Name" value="ITALIA">
-                    <div class="goles">
-                        <button onclick="updateScore('control-score1', 1)">+1</button>
-                        <input type="number" id="control-score1" value="0">
-                        <button onclick="updateScore('control-score1', -1)">-1</button>
-                    </div>
-                    <!-- El botón "Actualizar Todo" se quita porque sendUpdates() ya se llama automáticamente -->
-                </div>
+                                <div class="control-section control-section1">
+                                <h2>Equipo Local</h2>
+                                <input type="text" id="control-team1Name" value="ITALIA">
+                                <div class="goles">
+                                    <button onclick="updateScore('control-score1', 1)">+1</button>
+                                    <input type="number" id="control-score1" value="0">
+                                    <button onclick="updateScore('control-score1', -1)">-1</button>
+                                </div>
+                                        </div>
 
-                <!-- Sección de Control para el Temporizador y Estado del Juego -->
-                <div class="control-section control-section3">
-                    <h2>Temporizador y Estado</h2>
-                    <!-- Los inputs de minutos/segundos iniciales se quitan porque el temporizador es ascendente -->
-                    <!-- <input type="number" id="control-initialMinutes" value="40" placeholder="Minutos iniciales"> -->
-                    <!-- <input type="number" id="control-initialSeconds" value="0" placeholder="Segundos iniciales"> -->
-                    <div class="timer-controls">
-                        <button onclick="startTimer()">INICIAR</button>
-                        <button onclick="pauseTimer()">PAUSAR</button>
-                        <button onclick="resetTimer()">REINICIAR</button>
-                    </div>
-                    <select id="control-gameStatus">
-                        <option value="Primer Tiempo">PRIMER TIEMPO</option>
-                        <option value="Segundo Tiempo">SEGUNDO TIEMPO</option>
-                        <option value="Descanso">ENTRE TIEMPO</option>
-                        <option value="Tiempo Extra">TIEMPO EXTRA</option>
-                        <option value="Finalizado">FINALIZADO</option>
-                    </select>
-                    <!-- El botón "Actualizar Estado Manual" se quita porque sendUpdates() ya se llama en el 'change' del select -->
-                </div>
+                                <div class="control-section control-section3">
+                                <h2>Temporizador y Estado</h2>
 
-                <!-- Sección de Control para el Equipo 2 (Visitante/Derecha) -->
-                <div class="control-section control-section2">
-                    <h2>Equipo Visitante</h2>
-                    <input type="text" id="control-team2Name" value="FRANCIA">
-                    <div class="goles">
-                        <button onclick="updateScore('control-score2', 1)">+1</button>
-                        <input type="number" id="control-score2" value="0">
-                        <button onclick="updateScore('control-score2', -1)">-1</button>
-                    </div>
-                    <!-- El botón "Actualizar Todo" se quita -->
-                </div>
+                                        <div class="time-manual-input">
+                                    <label for="initialMinutes">Minutos:</label>
+                                    <input type="number" id="initialMinutes" value="0" min="0" max="99">
+                                    <label for="initialSeconds">Segundos:</label>
+                                    <input type="number" id="initialSeconds" value="0" min="0" max="59">
+                                    <button onclick="setManualTime()">Ajustar</button>
+                                </div>
+
+                                <div class="timer-controls">
+                                    <button onclick="startTimer()">INICIAR</button>
+                                    <button onclick="pauseTimer()">PAUSAR</button>
+                                    <button onclick="resetTimer()">REINICIAR</button>
+                                </div>
+                                <select id="control-gameStatus">
+                                    <option value="Primer Tiempo">PRIMER TIEMPO</option>
+                                    <option value="Segundo Tiempo">SEGUNDO TIEMPO</option>
+                                    <option value="Descanso">DESCANSO</option>
+                                    <option value="Tiempo Extra">PRIMER TIEMPO EXTRA</option>
+                                    <option value="Tiempo Extra">SEGUNDO TIEMPO EXTRA</option>
+                                    <option value="Finalizado">EVENTO FINALIZADO</option>
+                                </select>
+                                        </div>
+
+                                <div class="control-section control-section2">
+                                <h2>Equipo Visitante</h2>
+                                <input type="text" id="control-team2Name" value="FRANCIA">
+                                <div class="goles">
+                                    <button onclick="updateScore('control-score2', 1)">+1</button>
+                                    <input type="number" id="control-score2" value="0">
+                                    <button onclick="updateScore('control-score2', -1)">-1</button>
+                                </div>
+                                        </div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts JavaScript al final del body para un mejor rendimiento -->
-    <!-- Script de Socket.IO, lo sirve Node.js automáticamente desde /socket.io/socket.io.js -->
-    <script src="/socket.io/socket.io.js"></script>
-    <!-- Tu script principal de JavaScript para la lógica del marcador -->
-    <script src="js/script_mar.js"></script> 
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/script_mar.js"></script>
 </body>
 </html>
