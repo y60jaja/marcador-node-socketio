@@ -173,6 +173,22 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Primero, asegúrate de que el color base de tu botón rojo sea el que quieres */
+.boton-cerrar .btn-cerrar {
+    /* ... tus estilos actuales para el botón (ahora es blanco en el CSS que pasaste) */
+    background-color: #f44336; /* Si quieres que el botón sea rojo en estado normal */
+    color: white; /* Color del ícono/texto si es rojo */
+    /* ... */
+}
+
+/* Efecto hover */
+.boton-cerrar .btn-cerrar:hover {
+    background-color: #d32f2f; /* Un rojo más oscuro al pasar el ratón */
+    transform: scale(1.05); /* Ligeramente más grande */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
+    cursor: pointer; /* Asegura que el cursor cambie */
+}
+
 
 
 @media (max-width: 768px) {
