@@ -42,14 +42,13 @@ body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcad
     box-shadow: none;              /* Sin sombra */
 }
 
-body.obs-mode button {
-    display: none !important; /* Oculta todos los botones en modo OBS */
-}
-
-/* Excepción: Asegúrate de que el botón de copiar URL para OBS no se oculte en modo OBS si es lo que deseas.
-   Si quieres que este botón también se oculte en OBS, puedes eliminar esta regla o mantenerlo. */
+/* IMPORTANTE: Oculta el botón de copiar URL en modo OBS. Si quieres que se vea, puedes quitar esta regla. */
 body.obs-mode #overlay-container button[onclick="copiarURL()"] {
-    display: none !important; /* Si quieres que el botón de copiar URL también se oculte en OBS */
+    display: none !important;
+}
+/* Si el botón de copiar URL está ahora dentro de #preview-wrapper, ajusta la regla así: */
+body.obs-mode #preview-wrapper button[onclick="copiarURL()"] {
+    display: none !important;
 }
 
 
@@ -265,6 +264,7 @@ h2 {
 }
 
 
+
 body > p {
     text-align: center;
     margin-bottom: 20px;
@@ -285,6 +285,26 @@ body > p {
     padding-bottom: 20px;
 }
 
+/* NUEVO: Contenedor para la vista previa y su título */
+#preview-wrapper {
+    position: relative; /* Muy importante para posicionar el botón de OBS */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espacio entre el h2 y el overlay-container */
+    width: 75%; /* O el mismo ancho que overlay-container */
+    min-width: 350px;
+    box-sizing: border-box; /* Para incluir padding y border en el ancho/alto */
+    margin-bottom: 20px; /* Espacio debajo de la vista previa */
+}
+
+#preview-wrapper h2 {
+    margin-bottom: 0; /* Quita el margen inferior predeterminado del h2 */
+    /* Puedes añadir un z-index si el botón se solapa con él de forma no deseada */
+    z-index: 5;
+    position: relative; /* Para asegurar que el z-index funcione si es necesario */
+}
+
 /* === Overlay Container (Scoreboard) === */
 #overlay-container {
     background-color: rgba(0, 0, 0, 0.7);
@@ -292,20 +312,21 @@ body > p {
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     padding: 25px;
-    width: 75%;
-    min-width: 350px;
+    width: 100%; /* Ajustado a 100% para ocupar el ancho de #preview-wrapper */
+    /* min-width: 350px; Eliminar, ya lo controla preview-wrapper */
     box-sizing: border-box;
     text-align: center;
-    order: 1;
+    order: 1; /* Esto ya no es necesario aquí, lo controla main-container */
     backdrop-filter: blur(3px);
-    position: relative; /* ¡IMPORTANTE para posicionar el botón dentro! */
+    /* position: relative; Ya no es necesario aquí, el botón se posiciona respecto a #preview-wrapper */
 }
 
 /* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' --- */
-#overlay-container button[onclick="copiarURL()"] {
-    position: absolute; /* Posicionamiento absoluto dentro de #overlay-container */
-    top: 10px;          /* 10px desde el borde superior del #overlay-container */
-    right: 10px;        /* 10px desde el borde derecho del #overlay-container */
+#preview-wrapper button[onclick="copiarURL()"] { /* ¡Cambiado a #preview-wrapper! */
+    position: absolute; /* Posicionamiento absoluto dentro de #preview-wrapper */
+    top: 0px; /* Cerca de la parte superior del preview-wrapper. Ajusta según sea necesario */
+    left: 50%;
+    transform: translateX(-50%); /* Centra horizontalmente el botón */
     background-color: rgba(47, 62, 78, 0.7); /* Fondo similar al navbar, semitransparente */
     border: 1px solid #555555; /* Borde sutil */
     border-radius: 5px; /* Bordes ligeramente redondeados */
@@ -320,12 +341,12 @@ body > p {
     z-index: 10;        /* Asegura que esté por encima de otros elementos si se solapan */
 }
 
-#overlay-container button[onclick="copiarURL()"]:hover {
+#preview-wrapper button[onclick="copiarURL()"]:hover {
     background-color: rgba(47, 62, 78, 0.9); /* Un poco más opaco al pasar el ratón */
-    transform: scale(1.05); /* Ligeramente más grande al pasar el ratón */
+    transform: translateX(-50%) scale(1.05); /* Mantiene el centrado al hacer hover */
 }
 
-#overlay-container button[onclick="copiarURL()"] img.obs-img {
+#preview-wrapper button[onclick="copiarURL()"] img.obs-img {
     width: 24px;    /* Tamaño de la imagen del icono */
     height: 24px;   /* Altura de la imagen del icono */
     display: block; /* Asegura que la imagen sea un bloque */

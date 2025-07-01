@@ -1,115 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/style_mar.css">
-    <title>Formulario Marcador</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/style_mar.css">
+    <title>Formulario Marcador</title>
 </head>
 <body>
 
-        <nav class="navbar">
-                <div class="logo-container">
-                        <img src="/Img/logo.png" alt="Logo" class="logo-img">
-        </div>
-        
-                <div class="texto-centro">
-            <h1>ScoreXtreme</h1>
-            <p>⚽️ 🏀 Tu marcador deportivo 🏐 🏈</p>
-        </div>
-        <div class="boton-cerrar">
-            <a href="https://cflq.cl/patricio-ramirez/Integrativa/Integrativa_web/html/"><button class="btn-cerrar">Cerrar Sesión</button></a>
-        </div>
-                <div class="home-btn-container">
-            <a href="../entrada.html" class="home-btn">
-                <div class="home-btn-background">
-                                        <img src="/Img/home.png" alt="Inicio" class="home-img">
-                </div>
-            </a>
-        </div>
-    </nav>
+        <nav class="navbar">
+                <div class="logo-container">
+                        <img src="/Img/logo.png" alt="Logo" class="logo-img">
+        </div>
 
-        <h1 style="margin-top: 20px;">Marcador Deportivo</h1>
-    <p>Controla el marcador y el temporizador. Los cambios se reflejan al instante en la vista previa.</p>
+                <div class="texto-centro">
+            <h1>ScoreXtreme</h1>
+            <p>⚽️ 🏀 Tu marcador deportivo 🏐 🏈</p>
+        </div>
+        <div class="boton-cerrar">
+            <a href="https://cflq.cl/patricio-ramirez/Integrativa/Integrativa_web/html/"><button class="btn-cerrar">Cerrar Sesión</button></a>
+        </div>
+                <div class="home-btn-container">
+            <a href="../entrada.html" class="home-btn">
+                <div class="home-btn-background">
+                                        <img src="/Img/home.png" alt="Inicio" class="home-img">
+                </div>
+            </a>
+        </div>
+    </nav>
 
-        <div id="main-container">
+        <h1 style="margin-top: 20px;">Marcador Deportivo</h1>
+    <p>Controla el marcador y el temporizador. Los cambios se reflejan al instante en la vista previa.</p>
 
-                <h2>Vista Previa del Marcador</h2>
-        <div id="overlay-container">
-            <button onclick="copiarURL()"><img src="../../Img/link.png" alt="OBS" class="obs-img"></button>
-            
-            <div id="scoreboard-display">
-                                <div class="team-display left">
-                    <span id="display-team1Name" class="team-name-display">ITALIA</span>
-                    <span id="display-score1" class="score-display">0</span>
-                </div>
-                                <div class="middle-info-display">
-                    <span id="display-gameTime" class="time-display">00:00</span>
-                    <span id="display-gameStatus" class="status-display">INICIO</span>
-                </div>
-                                <div class="team-display right">
-                    <span id="display-team2Name" class="team-name-display">FRANCIA</span>
-                    <span id="display-score2" class="score-display">0</span>
-                </div>
-            </div>
-        </div>
+        <div id="main-container">
 
-                <div id="control-panel">
-            <h2>Panel de Control del Marcador</h2>
-            <div id="control-sections-wrapper">
+            <div id="preview-wrapper">
+                <h2>Vista Previa del Marcador</h2>
+                <div id="overlay-container">
+                    <button onclick="copiarURL()"><img src="../../Img/link.png" alt="OBS" class="obs-img"></button>
 
-                                <div class="control-section control-section1">
-                    <h2>Equipo Local</h2>
-                    <input type="text" id="control-team1Name" value="ITALIA">
-                    <div class="goles">
-                        <button onclick="updateScore('control-score1', 1)">+1</button>
-                        <input type="number" id="control-score1" value="0">
-                        <button onclick="updateScore('control-score1', -1)">-1</button>
-                    </div>
-                                    </div>
+                    <div id="scoreboard-display">
+                                            <div class="team-display left">
+                                <span id="display-team1Name" class="team-name-display">ITALIA</span>
+                                <span id="display-score1" class="score-display">0</span>
+                            </div>
+                                            <div class="middle-info-display">
+                                <span id="display-gameTime" class="time-display">00:00</span>
+                                <span id="display-gameStatus" class="status-display">INICIO</span>
+                            </div>
+                                            <div class="team-display right">
+                                <span id="display-team2Name" class="team-name-display">FRANCIA</span>
+                                <span id="display-score2" class="score-display">0</span>
+                            </div>
+                    </div>
+                </div>
+            </div> <div id="control-panel">
+            <h2>Panel de Control del Marcador</h2>
+            <div id="control-sections-wrapper">
 
-                                <div class="control-section control-section3">
-                    <h2>Temporizador y Estado</h2>
-                    
-                                        <div class="time-manual-input">
-                        <label for="initialMinutes">Minutos:</label>
-                        <input type="number" id="initialMinutes" value="0" min="0" max="99">
-                        <label for="initialSeconds">Segundos:</label>
-                        <input type="number" id="initialSeconds" value="0" min="0" max="59">
-                        <button onclick="setManualTime()">Establecer Tiempo</button>
-                    </div>
-                    
-                    <div class="timer-controls">
-                        <button onclick="startTimer()">INICIAR</button>
-                        <button onclick="pauseTimer()">PAUSAR</button>
-                        <button onclick="resetTimer()">REINICIAR</button>
-                    </div>
-                    <span id="control-gameTime" class="time-display">00:00</span>
-                                        <select id="control-gameStatus">
-                        <option value="Primer Tiempo">PRIMER TIEMPO</option>
-                        <option value="Segundo Tiempo">SEGUNDO TIEMPO</option>
-                        <option value="Descanso">DESCANSO</option>
-                        <option value="Tiempo Extra">PRIMER TIEMPO EXTRA</option>
-                        <option value="Tiempo Extra">SEGUNDO TIEMPO EXTRA</option>
-                        <option value="Finalizado">EVENTO FINALIZADO</option>
-                    </select>
-                                    </div>
+                                <div class="control-section control-section1">
+                                <h2>Equipo Local</h2>
+                                <input type="text" id="control-team1Name" value="ITALIA">
+                                <div class="goles">
+                                    <button onclick="updateScore('control-score1', 1)">+1</button>
+                                    <input type="number" id="control-score1" value="0">
+                                    <button onclick="updateScore('control-score1', -1)">-1</button>
+                                </div>
+                                        </div>
 
-                                <div class="control-section control-section2">
-                    <h2>Equipo Visitante</h2>
-                    <input type="text" id="control-team2Name" value="FRANCIA">
-                    <div class="goles">
-                        <button onclick="updateScore('control-score2', 1)">+1</button>
-                        <input type="number" id="control-score2" value="0">
-                        <button onclick="updateScore('control-score2', -1)">-1</button>
-                    </div>
-                                    </div>
-            </div>
-        </div>
-    </div>
+                                <div class="control-section control-section3">
+                                <h2>Temporizador y Estado</h2>
 
-            <script src="/socket.io/socket.io.js"></script>
-        <script src="js/script_mar.js"></script> 
+                                        <div class="time-manual-input">
+                                    <label for="initialMinutes">Minutos:</label>
+                                    <input type="number" id="initialMinutes" value="0" min="0" max="99">
+                                    <label for="initialSeconds">Segundos:</label>
+                                    <input type="number" id="initialSeconds" value="0" min="0" max="59">
+                                    <button onclick="setManualTime()">Establecer Tiempo</button>
+                                </div>
+
+                                <div class="timer-controls">
+                                    <button onclick="startTimer()">INICIAR</button>
+                                    <button onclick="pauseTimer()">PAUSAR</button>
+                                    <button onclick="resetTimer()">REINICIAR</button>
+                                </div>
+                                <span id="control-gameTime" class="time-display">00:00</span>
+                                            <select id="control-gameStatus">
+                                    <option value="Primer Tiempo">PRIMER TIEMPO</option>
+                                    <option value="Segundo Tiempo">SEGUNDO TIEMPO</option>
+                                    <option value="Descanso">DESCANSO</option>
+                                    <option value="Tiempo Extra">PRIMER TIEMPO EXTRA</option>
+                                    <option value="Tiempo Extra">SEGUNDO TIEMPO EXTRA</option>
+                                    <option value="Finalizado">EVENTO FINALIZADO</option>
+                                </select>
+                                        </div>
+
+                                <div class="control-section control-section2">
+                                <h2>Equipo Visitante</h2>
+                                <input type="text" id="control-team2Name" value="FRANCIA">
+                                <div class="goles">
+                                    <button onclick="updateScore('control-score2', 1)">+1</button>
+                                    <input type="number" id="control-score2" value="0">
+                                    <button onclick="updateScore('control-score2', -1)">-1</button>
+                                </div>
+                                        </div>
+            </div>
+        </div>
+    </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/script_mar.js"></script>
 </body>
 </html>
