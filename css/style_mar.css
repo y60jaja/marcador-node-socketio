@@ -38,8 +38,8 @@ body.obs-mode #main-container { /* Asume que el ID de tu contenedor principal es
     pero PERMITE que #scoreboard-display mantenga su color de fondo */
 body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcador */
     background-color: transparent; /* Fondo transparente */
-    border: none;                 /* Sin borde */
-    box-shadow: none;             /* Sin sombra */
+    border: none;              /* Sin borde */
+    box-shadow: none;          /* Sin sombra */
 }
 
 /* IMPORTANTE: Oculta el botón de copiar URL en modo OBS. Si quieres que se vea, puedes quitar esta regla. */
@@ -53,7 +53,7 @@ body.obs-mode #preview-wrapper button[onclick="copiarURL()"] {
 
 /* === General Styles === */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Open Sans', sans-serif; /* CAMBIADO: Fuente más moderna */
     margin: 0;
     background-image: url("../Img/fondo.png"); /* Esta es la imagen de fondo para el panel de control */
     background-size: cover;
@@ -72,13 +72,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 1rem 2rem; /* AJUSTADO: Padding vertical para look compacto */
     background-color: #2F3E4E;
     color: white;
     position: relative;
     width: 100%;
     box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* AÑADIDO: Sombra para profundidad */
 }
+/* El botón de la navbar se mantiene, asumo que es para el modo OBS o similar */
 .navbar button {
     background-color: #333333;
     color: #e0e0e0;
@@ -96,9 +98,9 @@ body {
 }
 
 .logo-img {
-    height: 100px;
+    height: 60px; /* AJUSTADO: Tamaño del logo para aspecto minimalista */
     width: auto;
-    max-width: 150px;
+    max-width: 120px; /* AJUSTADO: Ancho máximo del logo */
     object-fit: contain;
 }
 
@@ -106,20 +108,30 @@ body {
     flex: 1;
     text-align: center;
     padding: 0 20px;
+    display: flex; /* CAMBIADO: Usar flexbox para centrar verticalmente los textos */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* CAMBIADO: Asegura que ambos textos estén centrados entre sí */
 }
 
 .texto-centro h1 {
-    font-size: 1.5rem;
-    margin-bottom: 0.2rem;
-    white-space: nowrap;
+    font-family: 'Montserrat', sans-serif; /* CAMBIADO: Fuente recomendada para el título principal */
+    font-size: 1.7rem; /* AJUSTADO: Tamaño para mejor impacto */
+    font-weight: 600; /* AJUSTADO: Mayor grosor para resaltar */
+    margin-bottom: 0.1rem; /* AJUSTADO: Espacio reducido entre título y subtítulo */
+    color: #FFFFFF; /* CAMBIADO: Blanco puro para el título principal */
+    white-space: nowrap; /* AJUSTADO: Evita que el texto se rompa */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* AÑADIDO: Sombra para legibilidad */
 }
 
 .texto-centro p {
-    font-size: 0.9rem;
-    color: #ccc;
+    font-family: 'Open Sans', sans-serif; /* CAMBIADO: Fuente recomendada para el subtítulo */
+    font-size: 0.85rem; /* AJUSTADO: Tamaño para el subtítulo */
+    color: #d0d0d0; /* CAMBIADO: Gris muy claro para apariencia más suave */
+    white-space: nowrap; /* AJUSTADO: Evita que el texto se rompa */
 }
 
-
+/* --- Botones y sus contenedores (Mantenidos intactos según tu CSS original) --- */
 .home-btn-container {
     flex: 0 1 auto;
     display: flex;
@@ -148,7 +160,36 @@ body {
     transform: scale(1.1);
     opacity: 0.9;
 }
-/* Diseño responsive - Manteniendo la misma disposición */
+
+/* Estilos para el contenedor del botón de "Cerrar Sesión" (Mantenidos intactos) */
+.boton-cerrar {
+    display: flex;
+    align-items: center;
+    margin-right: 15px; /* Mantiene el espacio del borde derecho de la navbar */
+    margin-left: 10px;
+}
+
+/* Estilos para el botón de "Cerrar Sesión" en sí (Mantenidos intactos) */
+.boton-cerrar .btn-cerrar {
+    background-color: white;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover (Mantenido intacto) */
+.boton-cerrar .btn-cerrar:hover {
+    background-color: #d32f2f; /* Un rojo más oscuro al pasar el ratón */
+    transform: scale(1.05); /* Ligeramente más grande */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
+    cursor: pointer; /* Asegura que el cursor cambie */
+}
+
+/* --- Diseño responsive (Ajustes en la navbar y texto, manteniendo los de botones) --- */
 @media (max-width: 992px) {
     .navbar {
         padding: 0.8rem 1.5rem;
@@ -184,6 +225,14 @@ body {
     .home-btn-background {
         padding: 6px;
     }
+
+    .boton-cerrar {
+        margin-right: 8px;
+    }
+    .boton-cerrar .btn-cerrar {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -212,47 +261,6 @@ body {
         border-radius: 4px;
     }
 }
-/* Estilos para el contenedor del botón de "Cerrar Sesión" */
-.boton-cerrar {
-    display: flex;
-    align-items: center;
-    margin-right: 15px; /* Mantiene el espacio del borde derecho de la navbar */
-    margin-left: 10px;
-}
-
-/* Estilos para el botón de "Cerrar Sesión" en sí */
-.boton-cerrar .btn-cerrar {
-    background-color: white;
-    padding: 8px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-
-/* Efecto hover */
-.boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f; /* Un rojo más oscuro al pasar el ratón */
-    transform: scale(1.05); /* Ligeramente más grande */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
-    cursor: pointer; /* Asegura que el cursor cambie */
-}
-
-
-
-
-@media (max-width: 768px) {
-    .boton-cerrar {
-        margin-right: 8px;
-    }
-    .boton-cerrar .btn-cerrar {
-        padding: 6px 12px;
-        font-size: 14px;
-    }
-}
 
 
 /* === Headings and Paragraph === */
@@ -267,8 +275,6 @@ h2 {
     text-align: center;
     font-weight: bold;
 }
-
-
 
 body > p {
     text-align: center;
@@ -305,9 +311,8 @@ body > p {
 
 #preview-wrapper h2 {
     margin-bottom: 0; /* Quita el margen inferior predeterminado del h2 */
-    /* Puedes añadir un z-index si el botón se solapa con él de forma no deseada */
     z-index: 5;
-    position: relative; /* Para asegurar que el z-index funcione si es necesario */
+    position: relative;
 }
 
 /* === Overlay Container (Scoreboard) === */
@@ -318,23 +323,19 @@ body > p {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     padding: 25px;
     width: 100%; /* Ajustado a 100% para ocupar el ancho de #preview-wrapper */
-    /* min-width: 350px; Eliminado, ya lo controla preview-wrapper */
     box-sizing: border-box;
     text-align: center;
-    order: 1; /* Esto ya no es necesario aquí, lo controla main-container */
+    order: 1;
     backdrop-filter: blur(3px);
-    position: relative; /* Se mantiene para otros posibles usos o por si es necesario */
+    position: relative;
 }
 
 /* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' --- */
 #preview-wrapper button[onclick="copiarURL()"] {
-    position: absolute; /* Posicionamiento absoluto dentro de #preview-wrapper */
-    top: 0px; /* Ajusta este valor para moverlo más arriba o más abajo */
-    right: 0px; /* Distancia desde el borde derecho del #preview-wrapper */
+    position: absolute;
+    top: 0px;
+    right: 0px;
     
-    /* left: 50%; */ /* Eliminado */
-    /* transform: translateX(-50%); */ /* Eliminado */
-
     background-color: rgba(47, 62, 78, 0.7);
     border: 1px solid #555555;
     border-radius: 5px;
@@ -351,7 +352,7 @@ body > p {
 
 #preview-wrapper button[onclick="copiarURL()"]:hover {
     background-color: rgba(47, 62, 78, 0.9);
-    transform: scale(1.05); /* Solo escala */
+    transform: scale(1.05);
 }
 
 #preview-wrapper button[onclick="copiarURL()"] img.obs-img {
@@ -360,18 +361,17 @@ body > p {
     display: block;
 }
 
-
 #scoreboard-display {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    background-color: rgba(26, 26, 26, 0.8); /* Este es el fondo que quieres visible */
+    background-color: rgba(26, 26, 26, 0.8);
     border: 2px solid #555555;
     border-radius: 12px;
     padding: 15px 25px;
     color: #e0e0e0;
-    margin-top: 10px; /* Ajuste para que el botón no se solape con el título/display */
+    margin-top: 10px;
 }
 
 .team-name-display {
@@ -397,13 +397,11 @@ body > p {
     margin: 20px;
 }
 
-
 .status-display {
     font-size: 1.2em;
     color: #e0e0e0;
     margin-top: 5px;
 }
-
 
 .team-display.left { order: 0; }
 .middle-info-display { order: 1; }
@@ -450,22 +448,22 @@ body > p {
     border-radius: 6px;
     box-sizing: border-box;
     flex: 1;
-    min-width: 350px; /* Aumentado para dar más espacio al temporizador */
-    max-width: 450px; /* Si quieres que crezca más, puedes aumentarlo */
+    min-width: 350px;
+    max-width: 450px;
     background-color: rgba(51, 51, 51, 0.9);
     color: #e0e0e0;
 }
 
 /* Colores específicos para tus secciones */
-.control-section1 { /* Equipo 1 - Rojo */
+.control-section1 {
     background-color: rgba(26, 26, 26, 0.8);
     border-color: #e53935;
 }
-.control-section2 { /* Equipo 2 - Azul */
+.control-section2 {
     background-color: rgba(26, 26, 26, 0.8);
     border-color: #2962ff;
 }
-.control-section3 { /* Temporizador - Blanco */
+.control-section3 {
     background-color: rgba(26, 26, 26, 0.8);
     border-color: #ffffff;
 }
@@ -474,28 +472,28 @@ body > p {
 .time-manual-input {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centrar los elementos dentro del div */
-    gap: 5px; /* Espacio entre elementos */
+    justify-content: center;
+    gap: 5px;
     margin-bottom: 10px;
     padding: 5px;
-    border: 1px solid #4CAF50; /* Un borde para diferenciarlo y darle color */
+    border: 1px solid #4CAF50;
     border-radius: 5px;
-    background-color: rgba(60, 60, 60, 0.7); /* Un fondo ligeramente diferente */
-    width: 90%; /* Ajustar ancho */
+    background-color: rgba(60, 60, 60, 0.7);
+    width: 90%;
 }
 
 .time-manual-input label {
     font-size: 0.9em;
     color: #bdbdbd;
-    white-space: nowrap; /* Evitar que el texto "Minutos:" se rompa */
+    white-space: nowrap;
 }
 
 .time-manual-input input[type="number"] {
-    width: 50px; /* Ajusta el ancho de los inputs */
+    width: 50px;
     text-align: center;
     background-color: #1a1a1a;
-    color: #00e676; /* Color de texto para el tiempo */
-    border: 1px solid #00e676; /* Borde del color del tiempo */
+    color: #00e676;
+    border: 1px solid #00e676;
     border-radius: 4px;
     padding: 5px;
     font-size: 1em;
@@ -503,26 +501,25 @@ body > p {
 
 .time-manual-input button {
     padding: 5px 12px;
-    background-color: #00e676; /* Color verde para el botón */
+    background-color: #00e676;
     color: #1a1a1a;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 0.9em;
-    white-space: nowrap; /* Evitar que el texto del botón se rompa */
-    min-width: unset; /* Sobrescribir min-width general de botones */
-    flex-shrink: 0; /* Evita que el botón se encoja */
+    white-space: nowrap;
+    min-width: unset;
+    flex-shrink: 0;
 }
 
 .time-manual-input button:hover {
-    background-color: #00c265; /* Un verde más oscuro al pasar el ratón */
+    background-color: #00c265;
 }
-
 
 .control-section1 input,
 .control-section2 input,
-.control-section3 input:not(#initialMinutes):not(#initialSeconds) { /* Excluir los nuevos inputs de tiempo */
+.control-section3 input:not(#initialMinutes):not(#initialSeconds) {
     text-align: center;
     background-color: #1a1a1a;
     color: #e0e0e0;
@@ -533,17 +530,15 @@ body > p {
 .control-section > *,
 .control-section1 > *,
 .control-section2 > *,
-.control-section3 > *:not(.time-manual-input) { /* Excluir el nuevo div para aplicar margin individualmente */
+.control-section3 > *:not(.time-manual-input) {
     margin: 8px 0;
     width: 100%;
 }
 
-/* Ajuste específico para el contenedor del tiempo manual */
 .control-section3 .time-manual-input {
-    margin: 10px auto; /* Centrarlo y añadir margen */
-    width: calc(100% - 20px); /* Ajustar ancho para padding interno si es necesario */
+    margin: 10px auto;
+    width: calc(100% - 20px);
 }
-
 
 /* === Inputs and Buttons === */
 .control-section input,
@@ -555,9 +550,9 @@ body > p {
 .control-section2 input,
 .control-section2 select,
 .control-section2 button,
-.control-section3 input:not(#initialMinutes):not(#initialSeconds), /* Excluir los inputs de tiempo manual */
+.control-section3 input:not(#initialMinutes):not(#initialSeconds),
 .control-section3 select,
-.control-section3 button:not(.time-manual-input button) { /* Excluir el botón de tiempo manual */
+.control-section3 button:not(.time-manual-input button) {
     padding: 8px;
     font-size: 16px;
     box-sizing: border-box;
@@ -571,7 +566,7 @@ body > p {
 .control-section button:hover,
 .control-section1 button:hover,
 .control-section2 button:hover,
-.control-section3 button:hover:not(.time-manual-input button) { /* Excluir el botón de tiempo manual */
+.control-section3 button:hover:not(.time-manual-input button) {
     background-color: #00e676;
     color: #1a1a1a;
     border-color: #00e676;
@@ -584,7 +579,6 @@ body > p {
     background-position: right 8px center;
     padding-right: 30px;
 }
-
 
 /* === Score Controls === */
 .goles {
@@ -651,7 +645,7 @@ body > p {
     }
 
     .time-manual-input {
-        flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+        flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
     }
@@ -659,10 +653,10 @@ body > p {
     .time-manual-input label,
     .time-manual-input input[type="number"],
     .time-manual-input button {
-        flex-basis: auto; /* Permite que el tamaño se ajuste automáticamente */
+        flex-basis: auto;
     }
 
     .time-manual-input input[type="number"] {
-        width: 45px; /* Ajuste para pantallas pequeñas */
+        width: 45px;
     }
 }
