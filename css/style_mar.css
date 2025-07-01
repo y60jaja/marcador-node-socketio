@@ -15,11 +15,11 @@ body.obs-mode #control-panel { /* Asegúrate que el ID de tu panel de control se
 }
 
 /* 3. Oculta otros elementos que no quieres ver en OBS (ajusta IDs/clases según tu HTML) */
-body.obs-mode #navbar { /* Si tienes un navbar global */
+body.obs-mode .navbar { /* Cambiado de #navbar a .navbar */
     display: none !important;
 }
 body.obs-mode h1, /* Si tienes títulos grandes que no son parte del marcador */
-body.obs-mode body > p { /* Si tienes párrafos introductorios */
+body.obs-mode p { /* Si tienes párrafos introductorios */
     display: none !important;
 }
 
@@ -42,8 +42,14 @@ body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcad
     box-shadow: none;              /* Sin sombra */
 }
 
-body.obs-mode button{
+body.obs-mode button {
     display: none !important; /* Oculta todos los botones en modo OBS */
+}
+
+/* Excepción: Asegúrate de que el botón de copiar URL para OBS no se oculte en modo OBS si es lo que deseas.
+   Si quieres que este botón también se oculte en OBS, puedes eliminar esta regla o mantenerlo. */
+body.obs-mode #overlay-container button[onclick="copiarURL()"] {
+    display: none !important; /* Si quieres que el botón de copiar URL también se oculte en OBS */
 }
 
 
@@ -85,13 +91,6 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-body.obs-mode .navbar { /* Cambiado de #navbar a .navbar */
-    display: none !important; /* El !important asegura que estas reglas prevalezcan */
-}
-body.obs-mode P { /* Cambiado de #navbar a .navbar */
-    display: none !important; /* El !important asegura que estas reglas prevalezcan */
 }
 
 .logo-container {
@@ -327,8 +326,8 @@ body > p {
 }
 
 #overlay-container button[onclick="copiarURL()"] img.obs-img {
-    width: 24px;   /* Tamaño de la imagen del icono */
-    height: 24px;  /* Altura de la imagen del icono */
+    width: 24px;    /* Tamaño de la imagen del icono */
+    height: 24px;   /* Altura de la imagen del icono */
     display: block; /* Asegura que la imagen sea un bloque */
 }
 
@@ -437,15 +436,64 @@ body > p {
     background-color: rgba(26, 26, 26, 0.8);
     border-color: #2962ff;
 }
-.control-section3 { /* Temporizador - Verde */  
+.control-section3 { /* Temporizador - Blanco */
     background-color: rgba(26, 26, 26, 0.8);
     border-color: #ffffff;
+}
+
+/* Estilos para los nuevos inputs de tiempo manual */
+.time-manual-input {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar los elementos dentro del div */
+    gap: 5px; /* Espacio entre elementos */
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #4CAF50; /* Un borde para diferenciarlo y darle color */
+    border-radius: 5px;
+    background-color: rgba(60, 60, 60, 0.7); /* Un fondo ligeramente diferente */
+    width: 90%; /* Ajustar ancho */
+}
+
+.time-manual-input label {
+    font-size: 0.9em;
+    color: #bdbdbd;
+    white-space: nowrap; /* Evitar que el texto "Minutos:" se rompa */
+}
+
+.time-manual-input input[type="number"] {
+    width: 50px; /* Ajusta el ancho de los inputs */
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #00e676; /* Color de texto para el tiempo */
+    border: 1px solid #00e676; /* Borde del color del tiempo */
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.time-manual-input button {
+    padding: 5px 12px;
+    background-color: #00e676; /* Color verde para el botón */
+    color: #1a1a1a;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    white-space: nowrap; /* Evitar que el texto del botón se rompa */
+    min-width: unset; /* Sobrescribir min-width general de botones */
+    flex-shrink: 0; /* Evita que el botón se encoja */
+}
+
+.time-manual-input button:hover {
+    background-color: #00c265; /* Un verde más oscuro al pasar el ratón */
 }
 
 
 .control-section1 input,
 .control-section2 input,
-.control-section3 input {
+.control-section3 input:not(#initialMinutes):not(#initialSeconds) { /* Excluir los nuevos inputs de tiempo */
     text-align: center;
     background-color: #1a1a1a;
     color: #e0e0e0;
@@ -456,10 +504,17 @@ body > p {
 .control-section > *,
 .control-section1 > *,
 .control-section2 > *,
-.control-section3 > * {
+.control-section3 > *:not(.time-manual-input) { /* Excluir el nuevo div para aplicar margin individualmente */
     margin: 8px 0;
     width: 100%;
 }
+
+/* Ajuste específico para el contenedor del tiempo manual */
+.control-section3 .time-manual-input {
+    margin: 10px auto; /* Centrarlo y añadir margen */
+    width: calc(100% - 20px); /* Ajustar ancho para padding interno si es necesario */
+}
+
 
 /* === Inputs and Buttons === */
 .control-section input,
@@ -471,9 +526,9 @@ body > p {
 .control-section2 input,
 .control-section2 select,
 .control-section2 button,
-.control-section3 input,
+.control-section3 input:not(#initialMinutes):not(#initialSeconds), /* Excluir los inputs de tiempo manual */
 .control-section3 select,
-.control-section3 button {
+.control-section3 button:not(.time-manual-input button) { /* Excluir el botón de tiempo manual */
     padding: 8px;
     font-size: 16px;
     box-sizing: border-box;
@@ -487,7 +542,7 @@ body > p {
 .control-section button:hover,
 .control-section1 button:hover,
 .control-section2 button:hover,
-.control-section3 button:hover {
+.control-section3 button:hover:not(.time-manual-input button) { /* Excluir el botón de tiempo manual */
     background-color: #00e676;
     color: #1a1a1a;
     border-color: #00e676;
@@ -564,5 +619,21 @@ body > p {
     .control-section3 {
         width: 100%;
         max-width: unset;
+    }
+
+    .time-manual-input {
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .time-manual-input label,
+    .time-manual-input input[type="number"],
+    .time-manual-input button {
+        flex-basis: auto; /* Permite que el tamaño se ajuste automáticamente */
+    }
+
+    .time-manual-input input[type="number"] {
+        width: 45px; /* Ajuste para pantallas pequeñas */
     }
 }
