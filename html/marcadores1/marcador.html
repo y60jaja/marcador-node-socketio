@@ -37,7 +37,7 @@
     </nav>
 
     <!-- Títulos - Esto se ocultará en modo OBS gracias al CSS y JS -->
-    <h1 style="margin-top: 20px;">Demostración de Marcador con Temporizador (Local)</h1>
+    <h1 style="margin-top: 20px;">Marcador Deportivo</h1>
     <p>Controla el marcador y el temporizador. Los cambios se reflejan al instante en la vista previa.</p>
 
     <!-- Contenedor principal de la aplicación (abarca tanto el marcador como el panel de control) -->
@@ -45,9 +45,8 @@
 
         <!-- Contenedor del Marcador Visible (la parte que se verá en OBS) -->
         <div id="overlay-container">
-            <h2>Vista Previa del Marcador</h2>
             <button onclick="copiarURL()"><img src="../../Img/link.png" alt="OBS" class="obs-img"></button>
-            <img src="../../Img/link.png" alt="OBS" class="obs-img">
+            <h2>Vista Previa del Marcador</h2>
             <div id="scoreboard-display">
                 <!-- Equipo 1: Por convención, el equipo "Local" o de la izquierda.
                      Corresponde a control-team1Name y control-score1 -->

@@ -4,7 +4,7 @@
 /* Estas reglas solo se aplican cuando el body tiene la clase 'obs-mode' */
 body.obs-mode {
     background-color: transparent !important; /* ¡Muy importante para OBS! */
-    background-image: none !important;      /* Asegura que no haya imagen de fondo en OBS */
+    background-image: none !important;        /* Asegura que no haya imagen de fondo en OBS */
     margin: 0;
     overflow: hidden;
 }
@@ -35,7 +35,7 @@ body.obs-mode #main-container { /* Asume que el ID de tu contenedor principal es
 }
 
 /* 5. Haz transparentes los fondos del contenedor general del marcador si no quieres que tengan fondo extra,
-   pero PERMITE que #scoreboard-display mantenga su color de fondo */
+    pero PERMITE que #scoreboard-display mantenga su color de fondo */
 body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcador */
     background-color: transparent; /* Fondo transparente */
     border: none;                  /* Sin borde */
@@ -66,11 +66,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2rem; 
+    padding: 1.5rem 2rem;
     background-color: #2F3E4E;
     color: white;
     position: relative;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
 }
 .navbar button {
@@ -153,11 +153,11 @@ body.obs-mode P { /* Cambiado de #navbar a .navbar */
     .navbar {
         padding: 0.8rem 1.5rem;
     }
-    
+
     .texto-centro h1 {
         font-size: 1.3rem;
     }
-    
+
     .texto-centro p {
         font-size: 0.8rem;
     }
@@ -167,20 +167,20 @@ body.obs-mode P { /* Cambiado de #navbar a .navbar */
     .navbar {
         padding: 0.6rem 1rem;
     }
-    
+
     .logo-img {
         height: 40px;
     }
-    
+
     .texto-centro h1 {
         font-size: 1.1rem;
         white-space: normal;
     }
-    
+
     .home-img {
         height: 20px;
     }
-    
+
     .home-btn-background {
         padding: 6px;
     }
@@ -190,23 +190,23 @@ body.obs-mode P { /* Cambiado de #navbar a .navbar */
     .navbar {
         padding: 0.5rem;
     }
-    
+
     .logo-img {
         height: 35px;
     }
-    
+
     .texto-centro h1 {
         font-size: 1rem;
     }
-    
+
     .texto-centro p {
         display: none;
     }
-    
+
     .home-img {
         height: 18px;
     }
-    
+
     .home-btn-background {
         padding: 5px;
         border-radius: 4px;
@@ -214,14 +214,14 @@ body.obs-mode P { /* Cambiado de #navbar a .navbar */
 }
 /* Estilos para el contenedor del botón de "Cerrar Sesión" */
 .boton-cerrar {
-    display: flex; 
+    display: flex;
     align-items: center;
     margin-right: 15px;
 }
 
 /* Estilos para el botón de "Cerrar Sesión" en sí */
 .boton-cerrar .btn-cerrar {
-    background-color: #f44336; 
+    background-color: #f44336;
     color: white;
     border: none;
     padding: 8px 15px;
@@ -233,20 +233,19 @@ body.obs-mode P { /* Cambiado de #navbar a .navbar */
 }
 
 .boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f; 
+    background-color: #d32f2f;
 }
 
 
 @media (max-width: 768px) {
     .boton-cerrar {
-        margin-right: 8px; 
+        margin-right: 8px;
     }
     .boton-cerrar .btn-cerrar {
-        padding: 6px 12px; 
+        padding: 6px 12px;
         font-size: 14px;
     }
 }
-
 
 
 /* === Headings and Paragraph === */
@@ -296,7 +295,39 @@ body > p {
     text-align: center;
     order: 1;
     backdrop-filter: blur(3px);
+    position: relative; /* ¡IMPORTANTE para posicionar el botón dentro! */
 }
+
+/* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' --- */
+#overlay-container button[onclick="copiarURL()"] {
+    position: absolute; /* Posicionamiento absoluto dentro de #overlay-container */
+    top: 10px;          /* 10px desde el borde superior del #overlay-container */
+    right: 10px;        /* 10px desde el borde derecho del #overlay-container */
+    background-color: rgba(47, 62, 78, 0.7); /* Fondo similar al navbar, semitransparente */
+    border: 1px solid #555555; /* Borde sutil */
+    border-radius: 5px; /* Bordes ligeramente redondeados */
+    padding: 5px;       /* Relleno para que la imagen no esté pegada al borde */
+    cursor: pointer;
+    display: flex;      /* Para centrar la imagen dentro del botón */
+    align-items: center;
+    justify-content: center;
+    width: 40px;        /* Ancho fijo para el botón */
+    height: 40px;       /* Alto fijo para el botón */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones para hover */
+    z-index: 10;        /* Asegura que esté por encima de otros elementos si se solapan */
+}
+
+#overlay-container button[onclick="copiarURL()"]:hover {
+    background-color: rgba(47, 62, 78, 0.9); /* Un poco más opaco al pasar el ratón */
+    transform: scale(1.05); /* Ligeramente más grande al pasar el ratón */
+}
+
+#overlay-container button[onclick="copiarURL()"] img.obs-img {
+    width: 24px;   /* Tamaño de la imagen del icono */
+    height: 24px;  /* Altura de la imagen del icono */
+    display: block; /* Asegura que la imagen sea un bloque */
+}
+
 
 #scoreboard-display {
     display: flex;
@@ -308,6 +339,7 @@ body > p {
     border-radius: 12px;
     padding: 15px 25px;
     color: #e0e0e0;
+    margin-top: 10px; /* Ajuste para que el botón no se solape con el título/display */
 }
 
 .team-name-display {
