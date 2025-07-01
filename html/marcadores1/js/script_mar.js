@@ -139,7 +139,9 @@ function copiarURL(){
     } else if (marcadorId && marcadorId !== 'default') {
         // Para URLs tipo /bskt.html si están directamente en la raíz de 'html'
         textoCopiar = `/${marcadorId}.html?obs=true`;
-    } else {
+    }else if(marcadorId === 'marcadores1'){ 
+        textoCopiar = `/${marcadorId}/marcador.html?obs=true`;
+    }else {
         // Caso por defecto o si no se pudo determinar un ID específico
         textoCopiar = `${baseUrl}/marcador.html?obs=true`;
     }
