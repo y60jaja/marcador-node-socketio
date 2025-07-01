@@ -74,6 +74,16 @@ body {
     width: 100%; /* Asegurarse de que ocupe el 100% del ancho */
     box-sizing: border-box; /* Para que el padding no añada ancho extra */
 }
+.navbar button {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
 
 .logo-container {
     flex: 0 1 auto;
