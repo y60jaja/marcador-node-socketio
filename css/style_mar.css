@@ -1,4 +1,4 @@
-/* --- Estilos para el MODO OBS --- */
+/* --- Estilos para el MODO OBS (SIN CAMBIOS) --- */
 
 /* 1. Fondo de la página transparente (esencial para OBS como overlay) */
 /* Estas reglas solo se aplican cuando el body tiene la clase 'obs-mode' */
@@ -53,13 +53,13 @@ body.obs-mode #preview-wrapper button[onclick="copiarURL()"] {
 
 /* === General Styles === */
 body {
-    font-family: 'Open Sans', sans-serif; /* CAMBIADO: Fuente más moderna */
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
     background-image: url("../Img/fondo.png"); /* Esta es la imagen de fondo para el panel de control */
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Esto asegura que el fondo no se mueva con el scroll */
-    color: #e0e0e0; /* Color para el texto general */
+    background-attachment: fixed;
+    color: #e0e0e0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -67,19 +67,27 @@ body {
     box-sizing: border-box;
 }
 
-/* === Navbar === */
+/* === Navbar: NUEVO ESTILO === */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem; /* AJUSTADO: Padding vertical para look compacto */
-    background-color: #2F3E4E;
+    padding: 0.8rem 2rem; /* Ajustado para un look más compacto y moderno */
+    background-color: rgba(30, 30, 30, 0.75); /* Oscuro semi-transparente */
+    backdrop-filter: blur(8px); /* Efecto cristal esmerilado */
+    -webkit-backdrop-filter: blur(8px); /* Para compatibilidad con Safari */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde inferior sutil */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
     color: white;
-    position: relative;
+    position: sticky; /* Sticky para que se quede arriba al hacer scroll */
+    top: 0;
     width: 100%;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
     box-sizing: border-box;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* AÑADIDO: Sombra para profundidad */
+    /* Ajustes para un look más "glassmorphism" o "neofuturista" */
+    border-radius: 0 0 15px 15px; /* Bordes redondeados solo en la parte inferior */
 }
+
 /* El botón de la navbar se mantiene, asumo que es para el modo OBS o similar */
 .navbar button {
     background-color: #333333;
@@ -98,40 +106,45 @@ body {
 }
 
 .logo-img {
-    height: 60px; /* AJUSTADO: Tamaño del logo para aspecto minimalista */
+    height: 55px; /* Ligeramente más pequeño para un estilo más elegante */
     width: auto;
-    max-width: 120px; /* AJUSTADO: Ancho máximo del logo */
+    max-width: 110px;
     object-fit: contain;
+    filter: drop-shadow(0 0 3px rgba(0,255,0,0.3)); /* Sombra de color para el logo */
 }
 
 .texto-centro {
     flex: 1;
     text-align: center;
     padding: 0 20px;
-    display: flex; /* CAMBIADO: Usar flexbox para centrar verticalmente los textos */
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* CAMBIADO: Asegura que ambos textos estén centrados entre sí */
+    align-items: center;
+    /* Efectos de texto para que resalten */
+    user-select: none; /* Evitar selección de texto */
 }
 
 .texto-centro h1 {
-    font-family: 'Montserrat', sans-serif; /* CAMBIADO: Fuente recomendada para el título principal */
-    font-size: 1.7rem; /* AJUSTADO: Tamaño para mejor impacto */
-    font-weight: 600; /* AJUSTADO: Mayor grosor para resaltar */
-    margin-bottom: 0.1rem; /* AJUSTADO: Espacio reducido entre título y subtítulo */
-    color: #FFFFFF; /* CAMBIADO: Blanco puro para el título principal */
-    white-space: nowrap; /* AJUSTADO: Evita que el texto se rompa */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* AÑADIDO: Sombra para legibilidad */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem; /* Ligeramente más grande para impacto */
+    font-weight: 700; /* Más audaz */
+    margin-bottom: 0.1rem;
+    color: #00E676; /* Color vibrante para el título (verde neón) */
+    text-shadow: 0 0 8px rgba(0,230,118,0.6), 0 0 15px rgba(0,230,118,0.3); /* Efecto neón */
+    white-space: nowrap;
+    letter-spacing: 0.05em; /* Espaciado entre letras */
 }
 
 .texto-centro p {
-    font-family: 'Open Sans', sans-serif; /* CAMBIADO: Fuente recomendada para el subtítulo */
-    font-size: 0.85rem; /* AJUSTADO: Tamaño para el subtítulo */
-    color: #d0d0d0; /* CAMBIADO: Gris muy claro para apariencia más suave */
-    white-space: nowrap; /* AJUSTADO: Evita que el texto se rompa */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem; /* Ligeramente más grande */
+    color: #888888; /* Un gris más oscuro para el subtítulo */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra para legibilidad */
+    white-space: nowrap;
 }
 
-/* --- Botones y sus contenedores (Mantenidos intactos según tu CSS original) --- */
+/* --- Botones y sus contenedores (Mantenidos intactos en su estructura, pero ajustados estéticamente) --- */
 .home-btn-container {
     flex: 0 1 auto;
     display: flex;
@@ -139,74 +152,127 @@ body {
 }
 
 .home-btn-background {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo blanco semi-transparente */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
     padding: 8px;
-    border-radius: 6px;
+    border-radius: 8px; /* Bordes un poco más redondeados */
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4); /* Sombra más fuerte */
     transition: all 0.3s ease;
-    padding-bottom: 10px;
+    padding-bottom: 10px; /* Mantener tu padding-bottom original */
 }
 
 .home-img {
     height: 30px;
     width: auto;
     object-fit: contain;
+    filter: invert(100%) brightness(150%); /* Hace que el ícono sea blanco y más brillante */
 }
 
 .home-btn:hover .home-btn-background {
-    transform: scale(1.1);
-    opacity: 0.9;
+    background-color: rgba(0, 230, 118, 0.7); /* Verde neón semi-transparente en hover */
+    border-color: #00E676; /* Borde del color de acento */
+    transform: scale(1.08); /* Escala ligeramente */
+    box-shadow: 0 4px 12px rgba(0, 230, 118, 0.6); /* Sombra de neón al hacer hover */
+}
+.home-btn:hover .home-img {
+    filter: invert(0%) brightness(100%); /* Revierte el color del icono a su original si es negro, o similar */
 }
 
-/* Estilos para el contenedor del botón de "Cerrar Sesión" (Mantenidos intactos) */
+/* Estilos para el contenedor del botón de "Cerrar Sesión" */
 .boton-cerrar {
     display: flex;
     align-items: center;
-    margin-right: 15px; /* Mantiene el espacio del borde derecho de la navbar */
+    margin-right: 15px;
     margin-left: 10px;
 }
 
-/* Estilos para el botón de "Cerrar Sesión" en sí (Mantenidos intactos) */
+/* Estilos para el botón de "Cerrar Sesión" en sí */
 .boton-cerrar .btn-cerrar {
-    background-color: white;
+    background-color: rgba(229, 57, 53, 0.6); /* Rojo semi-transparente */
+    border: 1px solid rgba(229, 57, 53, 0.8); /* Borde rojo */
     padding: 8px;
-    border-radius: 6px;
+    border-radius: 8px; /* Bordes más redondeados */
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
 }
 
-/* Efecto hover (Mantenido intacto) */
+/* Efecto hover */
 .boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f; /* Un rojo más oscuro al pasar el ratón */
-    transform: scale(1.05); /* Ligeramente más grande */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte */
-    cursor: pointer; /* Asegura que el cursor cambie */
+    background-color: #d32f2f; /* Rojo más oscuro sólido */
+    border-color: #d32f2f;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
-/* --- Diseño responsive (Ajustes en la navbar y texto, manteniendo los de botones) --- */
+
+/* --- Diseño responsive (Ajustes de la navbar y texto, adaptados al nuevo estilo) --- */
 @media (max-width: 992px) {
     .navbar {
-        padding: 0.8rem 1.5rem;
+        padding: 0.6rem 1.5rem;
     }
 
     .texto-centro h1 {
-        font-size: 1.3rem;
+        font-size: 1.5rem; /* Ajuste para pantallas medianas */
     }
 
     .texto-centro p {
         font-size: 0.8rem;
     }
+
+    .logo-img {
+        height: 50px;
+    }
 }
 
 @media (max-width: 768px) {
     .navbar {
-        padding: 0.6rem 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 10px 10px; /* Bordes más pequeños */
+    }
+
+    .logo-img {
+        height: 45px;
+    }
+
+    .texto-centro h1 {
+        font-size: 1.2rem;
+        white-space: normal; /* Permite que el texto se rompa en varias líneas */
+    }
+
+    .texto-centro p {
+        font-size: 0.75rem;
+        white-space: normal; /* Permite que el texto se rompa */
+    }
+
+    .home-img {
+        height: 25px;
+    }
+
+    .home-btn-background {
+        padding: 7px;
+        border-radius: 6px;
+    }
+
+    .boton-cerrar {
+        margin-right: 10px;
+    }
+    .boton-cerrar .btn-cerrar {
+        padding: 7px 14px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.4rem;
+        border-radius: 0 0 8px 8px;
     }
 
     .logo-img {
@@ -214,8 +280,12 @@ body {
     }
 
     .texto-centro h1 {
-        font-size: 1.1rem;
-        white-space: normal;
+        font-size: 1rem;
+        letter-spacing: 0.02em; /* Reducir espaciado */
+    }
+
+    .texto-centro p {
+        display: none; /* Ocultar el subtítulo en pantallas muy pequeñas */
     }
 
     .home-img {
@@ -224,46 +294,12 @@ body {
 
     .home-btn-background {
         padding: 6px;
-    }
-
-    .boton-cerrar {
-        margin-right: 8px;
-    }
-    .boton-cerrar .btn-cerrar {
-        padding: 6px 12px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 0.5rem;
-    }
-
-    .logo-img {
-        height: 35px;
-    }
-
-    .texto-centro h1 {
-        font-size: 1rem;
-    }
-
-    .texto-centro p {
-        display: none;
-    }
-
-    .home-img {
-        height: 18px;
-    }
-
-    .home-btn-background {
-        padding: 5px;
-        border-radius: 4px;
+        border-radius: 5px;
     }
 }
 
 
-/* === Headings and Paragraph === */
+/* === Headings and Paragraph (Mantenidos intactos) === */
 h1 {
     color: #e0e0e0;
     text-align: center;
@@ -283,7 +319,7 @@ body > p {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
-/* === Main Container === */
+/* === Main Container (Mantenido intacto) === */
 #main-container {
     display: flex;
     flex-wrap: wrap;
@@ -296,33 +332,33 @@ body > p {
     padding-bottom: 20px;
 }
 
-/* NUEVO: Contenedor para la vista previa y su título */
+/* NUEVO: Contenedor para la vista previa y su título (Mantenido intacto) */
 #preview-wrapper {
-    position: relative; /* Muy importante para posicionar el botón de OBS */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Espacio entre el h2 y el overlay-container */
-    width: 75%; /* O el mismo ancho que overlay-container */
+    gap: 10px;
+    width: 75%;
     min-width: 350px;
-    box-sizing: border-box; /* Para incluir padding y border en el ancho/alto */
-    margin-bottom: 20px; /* Espacio debajo de la vista previa */
+    box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 #preview-wrapper h2 {
-    margin-bottom: 0; /* Quita el margen inferior predeterminado del h2 */
+    margin-bottom: 0;
     z-index: 5;
     position: relative;
 }
 
-/* === Overlay Container (Scoreboard) === */
+/* === Overlay Container (Scoreboard) (Mantenido intacto) === */
 #overlay-container {
     background-color: rgba(0, 0, 0, 0.7);
     border: 1px solid #333333;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     padding: 25px;
-    width: 100%; /* Ajustado a 100% para ocupar el ancho de #preview-wrapper */
+    width: 100%;
     box-sizing: border-box;
     text-align: center;
     order: 1;
@@ -330,7 +366,7 @@ body > p {
     position: relative;
 }
 
-/* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' --- */
+/* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' (Mantenido intacto) --- */
 #preview-wrapper button[onclick="copiarURL()"] {
     position: absolute;
     top: 0px;
@@ -407,7 +443,7 @@ body > p {
 .middle-info-display { order: 1; }
 .team-display.right { order: 2; }
 
-/* === Control Panel === */
+/* === Control Panel (Mantenido intacto) === */
 #control-panel {
     background-color: rgba(26, 26, 26, 0.8);
     border: 1px solid #333333;
@@ -434,7 +470,7 @@ body > p {
     width: 100%;
 }
 
-/* === Individual Control Sections === */
+/* === Individual Control Sections (Mantenido intacto) === */
 .control-section,
 .control-section1,
 .control-section2,
@@ -454,7 +490,7 @@ body > p {
     color: #e0e0e0;
 }
 
-/* Colores específicos para tus secciones */
+/* Colores específicos para tus secciones (Mantenidos intactos) */
 .control-section1 {
     background-color: rgba(26, 26, 26, 0.8);
     border-color: #e53935;
@@ -468,7 +504,7 @@ body > p {
     border-color: #ffffff;
 }
 
-/* Estilos para los nuevos inputs de tiempo manual */
+/* Estilos para los nuevos inputs de tiempo manual (Mantenidos intactos) */
 .time-manual-input {
     display: flex;
     align-items: center;
@@ -540,7 +576,7 @@ body > p {
     width: calc(100% - 20px);
 }
 
-/* === Inputs and Buttons === */
+/* === Inputs and Buttons (Mantenido intacto) === */
 .control-section input,
 .control-section select,
 .control-section button,
@@ -580,7 +616,7 @@ body > p {
     padding-right: 30px;
 }
 
-/* === Score Controls === */
+/* === Score Controls (Mantenido intacto) === */
 .goles {
     display: flex;
     justify-content: center;
@@ -606,7 +642,7 @@ body > p {
     border-radius: 4px;
 }
 
-/* === Timer Controls === */
+/* === Timer Controls (Mantenido intacto) === */
 .timer-controls {
     display: flex;
     justify-content: center;
@@ -619,7 +655,7 @@ body > p {
 }
 
 
-/* === Responsive === */
+/* === Responsive (Mantenido intacto) === */
 @media (max-width: 768px) {
     #control-panel,
     #overlay-container {
