@@ -109,6 +109,11 @@ function resetTimer() {
     sendUpdates();    // Envía el tiempo reseteado al servidor
 }
 
+function copiarURL(){
+    var textoCopiar = "https://marcador-server.onrender.com/marcador.html?obs=true";
+    navigator.clipboard.writeText(textoCopiar);
+}
+
 // --- Event Listeners para los inputs del panel de control ---
 // Cuando el usuario cambia el valor de un input de texto o select, se envía la actualización.
 document.getElementById('control-team1Name').addEventListener('change', sendUpdates);
