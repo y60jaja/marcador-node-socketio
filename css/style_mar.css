@@ -78,12 +78,11 @@ body {
     background-color: #333333;
     color: #e0e0e0;
     border: 1px solid #555;
-    padding: 8px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-left: 10px;
-    padding-left: 10px; /* Aumentar el padding para un botón más grande */
 }
 
 .logo-container {
