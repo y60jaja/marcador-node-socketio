@@ -1,4 +1,11 @@
-
+/*
+* {
+* margin: 0;
+* padding: 0;
+* box-sizing: border-box;
+*}
+*/
+/* Se mantiene el reinicio básico para evitar conflictos */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +14,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* Puede ser ignorado si hay background-image */
     background-image: url('../Img/fondo.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -16,17 +23,79 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    display: flex; /* Añadido para controlar el layout principal del body */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en el tamaño */
 }
 
-/* Estilos navbar */
+/* --- Estilos para el MODO OBS --- */
+
+/* 1. Fondo de la página transparente (esencial para OBS como overlay) */
+body.obs-mode {
+    background-color: transparent !important;
+    background-image: none !important;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* 2. Oculta el panel de control cuando el body tiene la clase 'obs-mode' */
+body.obs-mode #control-panel {
+    display: none !important;
+}
+
+/* 3. Oculta otros elementos que no quieres ver en OBS */
+body.obs-mode .navbar,
+body.obs-mode h1,
+body.obs-mode p {
+    display: none !important;
+}
+
+/* 4. Centra y ajusta el tamaño del contenedor principal del marcador en modo OBS */
+body.obs-mode #main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+/* 5. Haz transparentes los fondos del contenedor general del marcador */
+body.obs-mode #overlay-container {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* IMPORTANTE: Oculta el botón de copiar URL en modo OBS */
+body.obs-mode #preview-wrapper button[onclick="copiarURL()"] {
+    display: none !important;
+}
+
+
+/* === Navbar === */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem;
     background-color: #2F3E4E;
     color: white;
     position: relative;
+    width: 100%; /* Asegura que la navbar ocupe todo el ancho */
+    box-sizing: border-box; /* Incluye padding y border en el ancho */
+}
+
+.navbar button {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .logo-container {
@@ -59,7 +128,6 @@ body {
     color: #ccc;
 }
 
-
 .home-btn-container {
     flex: 0 1 auto;
     display: flex;
@@ -88,16 +156,14 @@ body {
     opacity: 0.9;
 }
 
-/* Diseño responsive - Manteniendo la misma disposición */
+/* Diseño responsive - Navbar */
 @media (max-width: 992px) {
     .navbar {
         padding: 0.8rem 1.5rem;
     }
-    
     .texto-centro h1 {
         font-size: 1.3rem;
     }
-    
     .texto-centro p {
         font-size: 0.8rem;
     }
@@ -107,20 +173,16 @@ body {
     .navbar {
         padding: 0.6rem 1rem;
     }
-    
     .logo-img {
         height: 40px;
     }
-    
     .texto-centro h1 {
         font-size: 1.1rem;
         white-space: normal;
     }
-    
     .home-img {
         height: 20px;
     }
-    
     .home-btn-background {
         padding: 6px;
     }
@@ -130,59 +192,58 @@ body {
     .navbar {
         padding: 0.5rem;
     }
-    
     .logo-img {
         height: 35px;
     }
-    
     .texto-centro h1 {
         font-size: 1rem;
     }
-    
     .texto-centro p {
         display: none;
     }
-    
     .home-img {
         height: 18px;
     }
-    
     .home-btn-background {
         padding: 5px;
         border-radius: 4px;
     }
 }
+
 /* Estilos para el contenedor del botón de "Cerrar Sesión" */
 .boton-cerrar {
-    display: flex; 
+    display: flex;
     align-items: center;
     margin-right: 15px;
 }
 
-/* Estilos para el botón de "Cerrar Sesión" en sí */
+/* Estilos para el botón de "Cerrar Sesión" en sí (ajustado para parecerse al botón de Home) */
 .boton-cerrar .btn-cerrar {
-    background-color: #f44336; 
+    background-color: #f44336; /* Color rojo original */
     color: white;
     border: none;
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     font-size: 16px;
     white-space: nowrap;
+    transition: all 0.3s ease; /* Animación suave para todos los cambios */
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2); /* Sombra sutil */
 }
 
 .boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f; 
+    background-color: #d32f2f; /* Un rojo un poco más oscuro al pasar el ratón */
+    transform: scale(1.05); /* Escala ligeramente */
+    opacity: 0.9; /* Reduce la opacidad */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Sombra más pronunciada */
 }
-
 
 @media (max-width: 768px) {
     .boton-cerrar {
-        margin-right: 8px; 
+        margin-right: 8px;
     }
     .boton-cerrar .btn-cerrar {
-        padding: 6px 12px; 
+        padding: 6px 12px;
         font-size: 14px;
     }
 }
@@ -190,9 +251,9 @@ body {
 
 /* PALETA DE COLORES */
 :root {
-  --color-primario: #2F3E4E;
-  --color-secundario: #3A6EA5;
-  --color-borde: #E1E8ED;
+    --color-primario: #2F3E4E;
+    --color-secundario: #3A6EA5;
+    --color-borde: #E1E8ED;
 }
 
 /* ESTRUCTURA PRINCIPAL*/
@@ -201,7 +262,7 @@ body {
     background-color: white;
     padding: 0.5rem 0.5rem;
     border: 2px solid #2F3E4E;
-    border-radius: 10px 30px 60px 120px; 
+    border-radius: 10px 30px 60px 120px;
     margin: 0 auto 1.5rem auto;
     text-align: center;
     max-width: 55%;
@@ -225,52 +286,65 @@ body {
 .tarjeta-deporte {
     background: white;
     border-radius: 12px;
-    padding: 2rem 1.8rem; 
+    padding: 2rem 1.8rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     display: flex;
     align-items: center;
     position: relative;
     transition: all 0.3s ease;
-    min-height: 120px; 
+    min-height: 120px;
     border-radius: 10px 60px 30px;
     border: 1px solid var(--color-borde);
+    /* Se mantienen las propiedades para el efecto hover, aunque algunas pueden ser redundantes */
+    overflow: hidden; /* Necesario para el pseudoelemento ::before */
+    z-index: 1; /* Necesario para el pseudoelemento ::before */
 }
 
 /* ELEMENTOS INTERNOSS */
 .icono-deporte {
     width: 70px;
     height: 70px;
-    margin-right: 1.5rem; 
+    margin-right: 1.5rem;
     object-fit: contain;
+    transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s,
+                transform 0.4s ease-out;
+    will-change: filter, transform;
 }
 
 .info-deporte h3 {
-    font-size: 1.3rem; 
+    font-size: 1.3rem;
     color: var(--color-primario);
     margin-bottom: 0.5rem;
+    transition: color 0.6s 0.2s ease-out;
 }
 
 .info-deporte p {
-    font-size: 1rem; 
+    font-size: 1rem;
     color: #666;
+    transition: color 0.6s 0.2s ease-out;
 }
 
-/* BOTÓN IR  */
+/* BOTÓN IR */
 .boton-ir {
     position: absolute;
     bottom: 1.5rem;
     right: 1.5rem;
     background: var(--color-secundario);
     color: white;
-    padding: 0.6rem 1.2rem; 
+    padding: 0.6rem 1.2rem;
     border-radius: 8px;
-    font-size: 1rem; 
-    transition: all 0.2s;
+    font-size: 1rem;
+    transition: background 0.5s ease-in-out 0.1s,
+                color 0.4s ease-out 0.1s,
+                border-color 0.4s ease-out,
+                box-shadow 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.1),
+                transform 0.3s ease-out;
+    will-change: transform, background;
 }
 
 
 .titulo-seleccion {
-    font-size: 2rem; 
+    font-size: 2rem;
     color: var(--color-primario);
     text-align: center;
     margin-bottom: 0.8rem;
@@ -283,13 +357,12 @@ body {
     margin-bottom: 2.5rem;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE DEPORTES */
 @media (max-width: 900px) {
     .contenedor-deportes {
         grid-template-columns: 1fr;
         gap: 1.8rem;
     }
-    
     .contenido-principal {
         padding: 2rem 1.5rem;
     }
@@ -300,30 +373,19 @@ body {
         padding: 1.8rem 1.5rem;
         min-height: 110px;
     }
-    
     .icono-deporte {
         width: 60px;
         height: 60px;
     }
-    
     .boton-ir {
         padding: 0.5rem 1rem;
     }
-    
     .titulo-seleccion {
         font-size: 1.8rem;
     }
 }
 
-.tarjeta-deporte {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1;
-    background: white;
-    border: 1px solid #e2e8f0;
-}
-
+/* Efectos Hover de tarjeta-deporte */
 .tarjeta-deporte::before {
     content: '';
     position: absolute;
@@ -332,170 +394,486 @@ body {
     width: 100%;
     height: 100%;
     background: #2F3E4E;
-    transform: scaleX(0);
-    transform-origin: right;
+    transform: scaleX(0); /* Inicia oculto */
+    transform-origin: right; /* Crece desde la derecha */
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: -1;
-}
-
-
-.tarjeta-deporte {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 1;
-    background: white; 
-}
-
-
-.tarjeta-deporte::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #2F3E4E; 
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.5s ease;
-    z-index: -1;
-}
-
-
-.tarjeta-deporte {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.7s cubic-bezier(0.28, 0.84, 0.42, 1); 
-    z-index: 1;
-    background: white;
-    border: 1px solid rgba(47, 62, 78, 0.1);
-}
-
-
-.tarjeta-deporte::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #2F3E4E;
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: 
-        transform 0.9s cubic-bezier(0.28, 0.84, 0.42, 1),
-        opacity 0.4s ease;
-    z-index: -1;
-    opacity: 0.8;
+    opacity: 0.8; /* Ajustado para el hover */
 }
 
 .tarjeta-deporte:hover::before {
-    transform: scaleY(1);
-    opacity: 1; 
-}
-
-
-.tarjeta-deporte .info-deporte h3,
-.tarjeta-deporte .info-deporte p {
-    transition: color 0.6s 0.2s ease-out; 
-}
-
-.tarjeta-deporte .icono-deporte {
-    transition: filter 0.5s 0.15s ease-out;
-}
-
-.tarjeta-deporte .boton-ir {
-    transition: 
-        background 0.5s 0.15s ease-out,
-        color 0.5s 0.15s ease-out,
-        border 0.5s 0.15s ease-out;
-}
-
-
-.tarjeta-deporte {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1;
-    background: white;
-    border: 1px solid #e2e8f0; 
-}
-
-
-.tarjeta-deporte::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #2F3E4E;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
-}
-
-.tarjeta-deporte:hover::before {
-    transform: scaleX(1);
-    transform-origin: left;
+    transform: scaleX(1); /* Se expande */
+    transform-origin: left; /* Crece desde la izquierda */
+    opacity: 1; /* Totalmente opaco */
 }
 
 .tarjeta-deporte:hover .info-deporte h3,
 .tarjeta-deporte:hover .info-deporte p {
-    color: white !important;
-    transition: color 0.3s 0.2s; 
-}
-
-
-.tarjeta-deporte .icono-deporte {
-    transition: 
-        filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s,
-        transform 0.4s ease-out;
-    will-change: filter, transform; 
+    color: white !important; /* Cambia el color del texto a blanco al pasar el ratón */
+    transition: color 0.3s 0.2s; /* Animación para el cambio de color */
 }
 
 .tarjeta-deporte:hover .icono-deporte {
-    filter: 
-        invert(99%) 
-        sepia(1%) 
-        saturate(50%) 
-        brightness(125%); 
-    transform: 
-        scale(1.08) 
-        rotate(2deg); 
+    filter: invert(99%) sepia(1%) saturate(50%) brightness(125%); /* Cambia el color del icono */
+    transform: scale(1.08) rotate(2deg); /* Escala y rota ligeramente */
 }
 
-/* BOTÓN */
-.tarjeta-deporte .boton-ir {
-    transition: 
-        background 0.5s ease-in-out 0.1s,
-        color 0.4s ease-out 0.1s,
-        border-color 0.4s ease-out,
-        box-shadow 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.1),
-        transform 0.3s ease-out;
-    will-change: transform, background;
-}
-
+/* BOTÓN de la tarjeta-deporte en hover */
 .tarjeta-deporte:hover .boton-ir {
     background: white !important;
     color: #2F3E4E !important;
     border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 
-        0 3px 12px rgba(255, 255, 255, 0.4),
-        0 2px 0 rgba(47, 62, 78, 0.1) inset; 
-    transform: 
-        translateY(-3px) 
-        scale(1.02); 
-}
-
-
-.tarjeta-deporte {
-    border: 1px solid rgba(47, 62, 78, 0.15); 
-    transition: border-color 0.6s ease-in-out;
+    box-shadow: 0 3px 12px rgba(255, 255, 255, 0.4),
+                0 2px 0 rgba(47, 62, 78, 0.1) inset;
+    transform: translateY(-3px) scale(1.02);
 }
 
 .tarjeta-deporte:hover {
-    border-color: rgba(255, 255, 255, 0.3); 
+    border-color: rgba(255, 255, 255, 0.3); /* Cambia el color del borde al pasar el ratón */
+}
+
+/* === Headings and Paragraph === */
+h1 {
+    color: #e0e0e0;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+h2 {
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+body > p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #bdbdbd;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* === Main Container === */
+#main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+    flex-grow: 1;
+    align-items: flex-start;
+    padding-bottom: 20px;
+}
+
+/* NUEVO: Contenedor para la vista previa y su título */
+#preview-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 75%;
+    min-width: 350px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+#preview-wrapper h2 {
+    margin-bottom: 0;
+    z-index: 5;
+    position: relative;
+}
+
+/* === Overlay Container (Scoreboard) === */
+#overlay-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid #333333;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    backdrop-filter: blur(3px);
+    position: relative;
+}
+
+/* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' --- */
+#preview-wrapper button[onclick="copiarURL()"] {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: rgba(47, 62, 78, 0.7);
+    border: 1px solid #555555;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+#preview-wrapper button[onclick="copiarURL()"]:hover {
+    background-color: rgba(47, 62, 78, 0.9);
+    transform: scale(1.05);
+}
+
+#preview-wrapper button[onclick="copiarURL()"] img.obs-img {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+
+/* === Scoreboard Display === */
+#scoreboard-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 2px solid #555555;
+    border-radius: 12px;
+    padding: 15px 25px;
+    color: #e0e0e0;
+    margin-top: 10px;
+}
+
+.team-name-display {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #e0e0e0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    white-space: nowrap; /* Evita que el nombre del equipo se rompa */
+}
+
+.score-display {
+    font-size: 3em;
+    font-weight: bold;
+    color: #00e676;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    padding: 20px; /* Considera ajustar si el espacio no es el deseado */
+}
+
+.time-display {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    margin-bottom: 5px; /* Espacio debajo del contador */
+}
+
+.status-display {
+    font-size: 1.2em;
+    color: #e0e0e0;
+    margin-top: 5px; /* Espacio encima del estado */
+}
+
+/* ========================================================================= */
+/* --- MODIFICACIONES ESPECÍFICAS PARA TU DISEÑO (consolidado) --- */
+/* ========================================================================= */
+
+/* Contenedor del equipo A (izquierda) */
+.team-display.left {
+    display: flex;
+    flex-direction: row; /* Nombre y score en fila */
+    align-items: center;
+    order: 0; /* Asegura que Equipo A sea el primero visualmente (izquierda) */
+}
+
+.team-display.left .score-display {
+    padding-left: 10px; /* Espacio entre el nombre y la puntuación para el equipo A */
+    padding-right: 0; /* Asegura que no haya padding excesivo a la derecha */
+}
+
+/* Modificación para .middle-info-display (Temporizador y Estado) */
+.middle-info-display {
+    display: flex;
+    flex-direction: column; /* Apila el tiempo y el estado verticalmente */
+    align-items: center;   /* Centra horizontalmente el tiempo y el estado */
+    justify-content: center;
+    order: 1; /* Mantiene este contenedor en el medio visualmente */
+}
+
+/* Modificación para .team-display.right (Equipo B) */
+.team-display.right {
+    display: flex; /* Convierte el contenedor del Equipo B en un flex container */
+    flex-direction: row; /* Asegura que los elementos dentro estén en fila */
+    align-items: center; /* Alinea verticalmente los items */
+    order: 2; /* Asegura que Equipo B sea el último visualmente (derecha) */
+}
+
+/* Ajustes específicos para el score del equipo B a la izquierda del nombre */
+.team-display.right .score-display {
+    order: 0; /* Coloca la puntuación primero visualmente dentro del team-display.right */
+    padding-right: 10px; /* Espacio entre la puntuación y el nombre */
+    padding-left: 0; /* Asegura que no haya padding excesivo a la izquierda */
+}
+
+.team-display.right .team-name-display {
+    order: 1; /* Coloca el nombre segundo visualmente dentro del team-display.right */
+}
+/* ========================================================================= */
+/* --- FIN DE MODIFICACIONES ESPECÍFICAS PARA TU DISEÑO --- */
+/* ========================================================================= */
+
+
+/* === Control Panel === */
+#control-panel {
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 1px solid #333333;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    width: 75%;
+    box-sizing: border-box;
+    flex-basis: 75%;
+    order: 2; /* Define el orden en el layout flex de #main-container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    backdrop-filter: blur(3px);
+}
+
+#control-sections-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* === Individual Control Sections === */
+.control-section,
+.control-section1,
+.control-section2,
+.control-section3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    border: 1px dashed #555555;
+    border-radius: 6px;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 350px;
+    max-width: 450px;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: #e0e0e0;
+}
+
+/* Colores específicos para tus secciones */
+.control-section1 { /* Equipo 1 - Rojo */
+    background-color: rgba(26, 26, 26, 0.8);
+    border-color: #e53935;
+}
+.control-section2 { /* Equipo 2 - Azul */
+    background-color: rgba(26, 26, 26, 0.8);
+    border-color: #2962ff;
+}
+.control-section3 { /* Temporizador - Blanco */
+    background-color: rgba(26, 26, 26, 0.8);
+    border-color: #ffffff;
+}
+
+/* Estilos para los nuevos inputs de tiempo manual */
+.time-manual-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    background-color: rgba(60, 60, 60, 0.7);
+    width: 90%;
+}
+
+.time-manual-input label {
+    font-size: 0.9em;
+    color: #bdbdbd;
+    white-space: nowrap;
+}
+
+.time-manual-input input[type="number"] {
+    width: 50px;
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #00e676;
+    border: 1px solid #00e676;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.time-manual-input button {
+    padding: 5px 12px;
+    background-color: #00e676;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    white-space: nowrap;
+    min-width: unset;
+    flex-shrink: 0;
+}
+
+.time-manual-input button:hover {
+    background-color: #00c265;
+}
+
+.control-section1 input,
+.control-section2 input,
+.control-section3 input:not(#initialMinutes):not(#initialSeconds) {
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    border-radius: 4px;
+}
+
+.control-section > *,
+.control-section1 > *,
+.control-section2 > *,
+.control-section3 > *:not(.time-manual-input) {
+    margin: 8px 0;
+    width: 100%;
+}
+
+/* Ajuste específico para el contenedor del tiempo manual */
+.control-section3 .time-manual-input {
+    margin: 10px auto;
+    width: calc(100% - 20px);
+}
+
+/* === Inputs and Buttons (Generales) === */
+.control-section input,
+.control-section select,
+.control-section button,
+.control-section1 input,
+.control-section1 select,
+.control-section1 button,
+.control-section2 input,
+.control-section2 select,
+.control-section2 button,
+.control-section3 input:not(#initialMinutes):not(#initialSeconds),
+.control-section3 select,
+.control-section3 button:not(.time-manual-input button) {
+    padding: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.control-section button:hover,
+.control-section1 button:hover,
+.control-section2 button:hover,
+.control-section3 button:hover:not(.time-manual-input button) {
+    background-color: #00e676;
+    color: #1a1a1a;
+    border-color: #00e676;
+}
+
+.control-section select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 30px;
+}
+
+/* === Score Controls === */
+.goles {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    width: auto;
+}
+
+.goles button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.goles input {
+    width: 60px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #1a1a1a;
+    color: #00e676;
+    border: 1px solid #00e676;
+    border-radius: 4px;
+}
+
+/* === Timer Controls === */
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+.timer-controls button {
+    flex: 1;
+    min-width: 80px;
+}
+
+/* === Responsive (General) === */
+@media (max-width: 768px) {
+    #control-panel,
+    #overlay-container {
+        width: 100%;
+        min-width: unset;
+    }
+
+    #main-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    #control-sections-wrapper {
+        flex-direction: column;
+    }
+
+    .control-section,
+    .control-section1,
+    .control-section2,
+    .control-section3 {
+        width: 100%;
+        max-width: unset;
+    }
+
+    .time-manual-input {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .time-manual-input label,
+    .time-manual-input input[type="number"],
+    .time-manual-input button {
+        flex-basis: auto;
+    }
+
+    .time-manual-input input[type="number"] {
+        width: 45px;
+    }
 }

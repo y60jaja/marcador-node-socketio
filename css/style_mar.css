@@ -218,21 +218,27 @@ body {
     margin-right: 15px;
 }
 
-/* Estilos para el botón de "Cerrar Sesión" en sí */
+/* Estilos para el botón de "Cerrar Sesión" en sí (AHORA COMO EL BOTÓN DE HOME) */
 .boton-cerrar .btn-cerrar {
-    background-color: #f44336;
+    background-color: #f44336; /* Color rojo original */
     color: white;
-    border: none;
+    border: none; /* Quitamos el borde para un look más "botón" */
     padding: 8px 15px;
-    border-radius: 5px;
+    border-radius: 6px; /* Ajustado para que sea igual que home-btn-background */
     cursor: pointer;
-    transition: background-color 0.3s ease;
     font-size: 16px;
     white-space: nowrap;
+
+    /* Propiedades para el efecto visual similar al de Home */
+    transition: all 0.3s ease; /* Transición suave para todas las propiedades */
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2); /* Sombra sutil similar a home-btn-background */
 }
 
 .boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f;
+    background-color: #d32f2f; /* Un rojo un poco más oscuro al pasar el ratón */
+    transform: scale(1.1); /* Escala ligeramente, igual que el de Home */
+    opacity: 0.9; /* Reduce la opacidad, igual que el de Home */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Sombra más pronunciada al pasar el ratón */
 }
 
 
