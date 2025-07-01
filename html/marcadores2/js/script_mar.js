@@ -135,7 +135,7 @@ function copiarURL(){
     let textoCopiar;
     if (marcadorId && marcadorId.startsWith('marcadores')) {
         // Para URLs tipo /html/marcadores1/marcador.html
-        textoCopiar = `${baseUrl}/html/${marcadorId}/marcador.html?obs=true`;
+        textoCopiar = `${baseUrl}/${marcadorId}/marcador.html?obs=true`;
     } else if (marcadorId && marcadorId !== 'default') {
         // Para URLs tipo /bskt.html si están directamente en la raíz de 'html'
         textoCopiar = `${baseUrl}/${marcadorId}.html?obs=true`;
