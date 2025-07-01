@@ -1,23 +1,23 @@
 // script_mar.js
 
-// Obtiene la ruta actual de la URL
+// 1. Detección de marcadorId (¡Esto debe ser lo primero y fuera de DOMContentLoaded!)
 const path = window.location.pathname;
-// Extrae el nombre del directorio padre (ej. 'marcadores1', 'marcadores2')
-// Se asume que la URL será algo como /html/marcadores1/marcador.html
-const pathParts = path.split('/');
-// Busca el segmento que precede a 'marcador.html' o 'js'
+// Ejemplo de path: "/html/marcadores1/marcador.html"
+// Queremos extraer "marcadores1" o "bskt" si es "/bskt.html"
+const pathSegments = path.split('/').filter(segment => segment !== ''); // Divide y filtra segmentos vacíos
+
 let marcadorId = 'default'; // Un ID por defecto si no se encuentra
-for (let i = pathParts.length - 1; i >= 0; i--) {
-    if (pathParts[i] === 'marcador.html' || pathParts[i] === 'js') {
-        if (i > 0) {
-            marcadorId = pathParts[i - 1]; // Toma el nombre de la carpeta (e.g., 'marcadores1')
-            break;
-        }
-    }
+if (pathSegments.length >= 2 && pathSegments[pathSegments.length - 2].startsWith('marcadores')) {
+    // Si la URL es como /html/marcadores1/marcador.html
+    marcadorId = pathSegments[pathSegments.length - 2];
+} else if (pathSegments.length >= 1 && pathSegments[pathSegments.length - 1].endsWith('.html')) {
+    // Si la URL es directa a un HTML como /bskt.html
+    marcadorId = pathSegments[pathSegments.length - 1].replace('.html', '');
 }
 console.log('ID de marcador detectado:', marcadorId);
 
-// Establece la conexión con el servidor Socket.IO.
+
+// 2. Conexión con el servidor Socket.IO (¡Después de tener el marcadorId!)
 const socket = io();
 
 // --- Variables para la gestión del temporizador ---
@@ -50,15 +50,21 @@ function updateDisplay(data) {
 
     if (typeof data.totalSeconds !== 'undefined') {
         const newTotalSeconds = data.totalSeconds;
+        // Solo actualiza totalSeconds si no está corriendo el temporizador del cliente
+        // O si hay una diferencia significativa (para sincronización al pausar/reiniciar desde otro lado)
         if (newTotalSeconds !== totalSeconds && !isTimerRunning) {
-            totalSeconds = newTotalSeconds;
-            document.getElementById('display-gameTime').textContent = formatTime(totalSeconds);
+             totalSeconds = newTotalSeconds;
+             document.getElementById('display-gameTime').textContent = formatTime(totalSeconds);
+        } else if (isTimerRunning && Math.abs(newTotalSeconds - totalSeconds) > 2) { // Permitir una pequeña desincronización
+             // Si el temporizador está corriendo y hay una desincronización grande, forzar la sincronización
+             totalSeconds = newTotalSeconds;
         }
     }
 }
 
 // --- Escuchar eventos del servidor Socket.IO ---
-// El servidor ahora enviará 'currentScoreboardData' y 'scoreboardUpdated' con un ID
+// Cuando el servidor envía el estado inicial O una actualización, se llama a updateDisplay.
+// La función updateDisplay se encarga de filtrar por ID.
 socket.on('currentScoreboardData', (data) => {
     console.log('Datos iniciales recibidos del servidor:', data);
     updateDisplay(data);
@@ -79,29 +85,90 @@ function sendUpdates() {
         score2: parseInt(document.getElementById('control-score2').value, 10),
         gameStatus: document.getElementById('control-gameStatus').value,
         totalSeconds: totalSeconds,
-        gameTime: formatTime(totalSeconds)
+        gameTime: formatTime(totalSeconds) // Mantiene gameTime para consistencia si el servidor lo usa
     };
-    socket.emit('updateScoreboard', dataToSend);
+    socket.emit('updateScoreboard', dataToSend); // Emite el evento al servidor
 }
 
-// ... (el resto del código de script_mar.js es el mismo) ...
+// --- Funciones de control de goles ---
+function updateScore(scoreId, change) {
+    const scoreInput = document.getElementById(scoreId);
+    let currentScore = parseInt(scoreInput.value, 10);
+    currentScore += change;
+    if (currentScore < 0) currentScore = 0; // Evita puntuaciones negativas
+    scoreInput.value = currentScore;
+    sendUpdates(); // Envía la actualización al servidor inmediatamente
+}
+
+// --- Funciones del temporizador (contando hacia arriba) ---
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+}
+
+function startTimer() {
+    if (!isTimerRunning) {
+        isTimerRunning = true;
+        timerInterval = setInterval(() => {
+            totalSeconds++; // ¡Ahora cuenta hacia arriba!
+            sendUpdates();  // Envía el tiempo actualizado al servidor cada segundo
+        }, 1000); // Se ejecuta cada 1 segundo
+    }
+}
+
+function pauseTimer() {
+    clearInterval(timerInterval); // Detiene el intervalo del temporizador
+    isTimerRunning = false;
+    sendUpdates(); // Envía el estado actual del tiempo al servidor
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+    totalSeconds = 0; // Reinicia el contador a 0
+    sendUpdates();     // Envía el tiempo reseteado al servidor
+}
 
 function copiarURL(){
-    // La URL debe ser específica para cada marcador.
-    // Esto es solo un ejemplo, necesitarás la base de tu dominio.
-    const baseUrl = "https://marcador-server.onrender.com"; // O tu dominio local
-    var textoCopiar = `${baseUrl}/html/${marcadorId}/marcador.html?obs=true`;
+    const baseUrl = window.location.origin; // Obtiene la base de la URL actual (ej. http://localhost:3000)
+    let textoCopiar;
+    if (marcadorId && marcadorId.startsWith('marcadores')) {
+        // Para URLs tipo /html/marcadores1/marcador.html
+        textoCopiar = `${baseUrl}/html/${marcadorId}/marcador.html?obs=true`;
+    } else if (marcadorId && marcadorId !== 'default') {
+        // Para URLs tipo /bskt.html si están directamente en la raíz de 'html'
+        textoCopiar = `${baseUrl}/${marcadorId}.html?obs=true`;
+    } else {
+        // Caso por defecto o si no se pudo determinar un ID específico
+        textoCopiar = `${baseUrl}/marcador.html?obs=true`;
+    }
     navigator.clipboard.writeText(textoCopiar);
     alert("URL copiada al portapapeles: " + textoCopiar);
 }
 
 // --- Event Listeners para los inputs del panel de control ---
-document.getElementById('control-team1Name').addEventListener('change', sendUpdates);
-document.getElementById('control-team2Name').addEventListener('change', sendUpdates);
-document.getElementById('control-gameStatus').addEventListener('change', sendUpdates);
-
-// Lógica para el Modo OBS (ocultar panel de control)
+// Estos deben ejecutarse después de que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
+    // Primero, solicitar los datos iniciales para ESTE marcador
+    console.log('DOM Cargado. Solicitando datos iniciales para el marcador:', marcadorId);
+    socket.emit('requestInitialScoreboardData', marcadorId);
+
+    // Adjuntar Event Listeners para los inputs de control
+    const controlTeam1Name = document.getElementById('control-team1Name');
+    const controlScore1 = document.getElementById('control-score1');
+    const controlTeam2Name = document.getElementById('control-team2Name');
+    const controlScore2 = document.getElementById('control-score2');
+    const controlGameStatus = document.getElementById('control-gameStatus');
+
+    // Se añaden los event listeners de 'change' para los inputs de puntaje
+    if (controlTeam1Name) controlTeam1Name.addEventListener('change', sendUpdates);
+    if (controlScore1) controlScore1.addEventListener('change', sendUpdates);
+    if (controlTeam2Name) controlTeam2Name.addEventListener('change', sendUpdates);
+    if (controlScore2) controlScore2.addEventListener('change', sendUpdates);
+    if (controlGameStatus) controlGameStatus.addEventListener('change', sendUpdates);
+
+    // Lógica para el Modo OBS (ocultar panel de control)
     const urlParams = new URLSearchParams(window.location.search);
     const isOBS = urlParams.get('obs');
 
