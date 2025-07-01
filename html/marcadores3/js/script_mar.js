@@ -1,7 +1,6 @@
-// script_mar.js
+// script_mar.js (MODIFICADO para múltiples marcadores)
 
 // Establece la conexión con el servidor Socket.IO.
-// 'io()' es una función global proporcionada por el script /socket.io/socket.io.js
 const socket = io();
 
 // --- Variables para la gestión del temporizador ---
@@ -9,46 +8,74 @@ let timerInterval;
 let isTimerRunning = false;
 let totalSeconds = 0; // Ahora siempre empieza en 0 para contar hacia arriba
 
+// --- Variable para almacenar el ID del marcador actual ---
+let currentScoreboardId = null; // Variable global para almacenar el ID del marcador
+
+
+// --- Función para obtener el ID del marcador de la URL ---
+function getScoreboardIdFromUrl() {
+    const pathParts = window.location.pathname.split('/');
+    // Busca el último segmento que no esté vacío.
+    // Si la URL es /marcador/marcador1, obtendrá 'marcador1'.
+    // Si la URL es /panel/marcador1, obtendrá 'marcador1'.
+    let id = pathParts[pathParts.length - 1];
+    if (id === '' && pathParts.length > 1) { // Caso de URL terminada en / (ej. /marcador/marcador1/)
+        id = pathParts[pathParts.length - 2];
+    }
+    return id;
+}
+
+
 // --- Función para actualizar la interfaz del marcador y los campos de control ---
 function updateDisplay(data) {
+    // Asegurarse de que los datos recibidos corresponden al marcador que estamos gestionando
+    if (data.id && data.id !== currentScoreboardId) {
+        console.warn(`Recibida actualización para marcador ${data.id}, pero este cliente es ${currentScoreboardId}. Ignorando.`);
+        return; // Ignorar si no es nuestro marcador
+    }
+
+    const scoreboardData = data.scoreboardData; // Los datos del marcador real están anidados
+
     // Actualiza los elementos HTML que muestran el marcador (la parte visible para OBS)
-    document.getElementById('display-team2Name').textContent = data.team1Name;
-    document.getElementById('display-score2').textContent = data.score1;
-    document.getElementById('display-team1Name').textContent = data.team2Name;
-    document.getElementById('display-score1').textContent = data.score2;
-    // Siempre actualiza el tiempo con el dato formateado que viene del servidor (data.gameTime)
-    document.getElementById('display-gameTime').textContent = data.gameTime;
-    document.getElementById('display-gameStatus').textContent = data.gameStatus;
+    // *** Revísalo si tus display names están invertidos intencionalmente ***
+    document.getElementById('display-team1Name').textContent = scoreboardData.team1Name; // Corregido según nombres estándar
+    document.getElementById('display-score1').textContent = scoreboardData.score1; // Corregido
+    document.getElementById('display-team2Name').textContent = scoreboardData.team2Name; // Corregido
+    document.getElementById('display-score2').textContent = scoreboardData.score2; // Corregido
+    
+    document.getElementById('display-gameTime').textContent = scoreboardData.gameTime;
+    document.getElementById('display-gameStatus').textContent = scoreboardData.gameStatus;
 
     // Actualiza los campos de entrada en tu panel de control para que estén sincronizados
-    document.getElementById('control-team1Name').value = data.team1Name;
-    document.getElementById('control-score1').value = data.score1;
-    document.getElementById('control-team2Name').value = data.team2Name;
-    document.getElementById('control-score2').value = data.score2;
-    document.getElementById('control-gameStatus').value = data.gameStatus;
+    document.getElementById('control-team1Name').value = scoreboardData.team1Name;
+    document.getElementById('control-score1').value = scoreboardData.score1;
+    document.getElementById('control-team2Name').value = scoreboardData.team2Name;
+    document.getElementById('control-score2').value = scoreboardData.score2;
+    document.getElementById('control-gameStatus').value = scoreboardData.gameStatus;
 
     // Sincroniza la variable interna 'totalSeconds' del cliente con la del servidor.
-    // Esto es crucial para que el temporizador del cliente se mantenga sincronizado.
-    // Solo actualiza si el temporizador del cliente no está corriendo, para evitar saltos.
-    if (typeof data.totalSeconds !== 'undefined') {
-        const newTotalSeconds = data.totalSeconds;
-        if (newTotalSeconds !== totalSeconds && !isTimerRunning) {
+    if (typeof scoreboardData.totalSeconds !== 'undefined') {
+        const newTotalSeconds = scoreboardData.totalSeconds;
+        // Solo actualiza totalSeconds del cliente si el temporizador del cliente no está corriendo
+        // O si hay una diferencia significativa (para resincronizar en caso de desajuste)
+        if (!isTimerRunning || Math.abs(newTotalSeconds - totalSeconds) > 1) {
             totalSeconds = newTotalSeconds;
-            // Opcional: Si el temporizador no está corriendo, actualiza la visualización de inmediato.
-            // Si está corriendo, setInterval ya se encargará de actualizarlo cada segundo.
-            document.getElementById('display-gameTime').textContent = formatTime(totalSeconds);
+            // Si el temporizador no está corriendo, actualiza la visualización de inmediato.
+            if (!isTimerRunning) {
+                document.getElementById('display-gameTime').textContent = formatTime(totalSeconds);
+            }
         }
     }
 }
 
 // --- Escuchar eventos del servidor Socket.IO ---
-// Cuando el cliente se conecta, el servidor le envía el estado inicial del marcador.
+// Cuando el cliente recibe los datos iniciales o una actualización.
+// Ambos eventos ahora esperan un objeto { id, scoreboardData }
 socket.on('currentScoreboardData', (data) => {
     console.log('Datos iniciales recibidos del servidor:', data);
     updateDisplay(data);
 });
 
-// Cuando el servidor envía una actualización (porque otro cliente cambió algo), actualiza la vista.
 socket.on('scoreboardUpdated', (data) => {
     console.log('Actualización recibida del servidor:', data);
     updateDisplay(data);
@@ -56,13 +83,19 @@ socket.on('scoreboardUpdated', (data) => {
 
 // --- Funciones para enviar datos al servidor (desde los controles de tu panel) ---
 function sendUpdates() {
+    if (!currentScoreboardId) {
+        console.error('No se ha podido determinar el ID del marcador. No se enviará la actualización.');
+        return;
+    }
+
     const dataToSend = {
+        id: currentScoreboardId, // ¡AHORA INCLUYE EL ID DEL MARCADOR!
         team1Name: document.getElementById('control-team1Name').value,
         score1: parseInt(document.getElementById('control-score1').value, 10),
         team2Name: document.getElementById('control-team2Name').value,
         score2: parseInt(document.getElementById('control-score2').value, 10),
         gameStatus: document.getElementById('control-gameStatus').value,
-        totalSeconds: totalSeconds, // ¡AHORA ENVÍA totalSeconds como número!
+        totalSeconds: totalSeconds, // Envía totalSeconds como número
         gameTime: formatTime(totalSeconds) // Mantiene gameTime para consistencia si el servidor lo usa
     };
     socket.emit('updateScoreboard', dataToSend); // Emite el evento al servidor
@@ -82,7 +115,6 @@ function updateScore(scoreId, change) {
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    // Esta es la línea que formatea el tiempo a MM:SS.
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 }
 
@@ -90,7 +122,7 @@ function startTimer() {
     if (!isTimerRunning) {
         isTimerRunning = true;
         timerInterval = setInterval(() => {
-            totalSeconds++; // ¡Ahora cuenta hacia arriba!
+            totalSeconds++; // Cuenta hacia arriba
             sendUpdates();  // Envía el tiempo actualizado al servidor cada segundo
         }, 1000); // Se ejecuta cada 1 segundo
     }
@@ -109,34 +141,46 @@ function resetTimer() {
     sendUpdates();    // Envía el tiempo reseteado al servidor
 }
 
-function copiarURL(){
-    var textoCopiar = "https://marcador-server.onrender.com/marcador.html?obs=true";
-    navigator.clipboard.writeText(textoCopiar);
-    alert("URL copiada al portapapeles");
+function copiarURL() {
+    if (!currentScoreboardId) {
+        alert("Primero carga un marcador para copiar su URL específica.");
+        return;
+    }
+    // La URL ahora es dinámica y usa el ID del marcador actual
+    var textoCopiar = `${window.location.origin}/marcador/${currentScoreboardId}?obs=true`;
+    navigator.clipboard.writeText(textoCopiar)
+        .then(() => alert("URL copiada al portapapeles: " + textoCopiar))
+        .catch(err => console.error('Error al copiar la URL: ', err));
 }
 
+
 // --- Event Listeners para los inputs del panel de control ---
-// Cuando el usuario cambia el valor de un input de texto o select, se envía la actualización.
 document.getElementById('control-team1Name').addEventListener('change', sendUpdates);
 document.getElementById('control-team2Name').addEventListener('change', sendUpdates);
 document.getElementById('control-gameStatus').addEventListener('change', sendUpdates);
 
-// Asegúrate de que los botones en tu HTML (para goles, iniciar/pausar/resetear tiempo)
-// llamen a estas funciones usando 'onclick'. Ejemplo:
-// <button onclick="updateScore('control-score1', 1)">+1</button>
-// <button onclick="startTimer()">INICIAR</button>
 
-// --- Lógica para el Modo OBS (ocultar panel de control) ---
+// --- Lógica de Inicialización al cargar la página ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtiene los parámetros de la URL (ej. ?obs=true)
-    const urlParams = new URLSearchParams(window.location.search);
-    const isOBS = urlParams.get('obs'); // Obtiene el valor del parámetro 'obs'
+    currentScoreboardId = getScoreboardIdFromUrl();
 
-    // Si el parámetro 'obs' existe y su valor es 'true'
+    if (currentScoreboardId) {
+        console.log(`Cliente cargado para el marcador: ${currentScoreboardId}`);
+        // Notifica al servidor a qué marcador nos queremos unir
+        socket.emit('joinScoreboard', currentScoreboardId);
+    } else {
+        console.error('Error: No se pudo obtener el ID del marcador de la URL. Asegúrate de acceder vía /marcador/:id o /panel/:id');
+        // Aquí podrías redirigir al usuario a una página de selección de marcador
+        alert('URL inválida. Por favor, accede a través de una URL con un ID de marcador (ej. /marcador/marcador1).');
+        return; // Detiene la ejecución si no hay ID válido
+    }
+
+    // Lógica para el Modo OBS (ocultar panel de control)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isOBS = urlParams.get('obs');
+
     if (isOBS === 'true') {
-        // Añade una clase 'obs-mode' al body del documento
         document.body.classList.add('obs-mode');
-        // Opcional: Puedes quitar estos console.log en producción
         console.log('Modo OBS activado: Clase obs-mode añadida al body.');
     } else {
         console.log('Modo OBS NO activado.');
