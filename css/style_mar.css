@@ -426,14 +426,14 @@ body > p {
 
 /* Colores específicos para tus secciones */
 .control-section1 { /* Equipo 1 - Rojo */
-    background-color: rgba(229, 57, 53, 0.8);
+    background-color: rgba(26, 26, 26, 0.8);
     border-color: #e53935;
 }
 .control-section2 { /* Equipo 2 - Azul */
-    background-color: rgba(41, 98, 255, 0.8);
+    background-color: rgba(26, 26, 26, 0.8);
     border-color: #2962ff;
 }
-.control-section3 { /* Temporizador - Verde */
+.control-section3 { /* Temporizador - Verde */  
     background-color: rgba(67, 160, 71, 0.8);
     border-color: #43a047;
 }
