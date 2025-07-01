@@ -130,8 +130,8 @@ body {
     font-size: 1.8rem; /* Ligeramente más grande para impacto */
     font-weight: 700; /* Más audaz */
     margin-bottom: 0.1rem;
-    color: #00E676; /* Color vibrante para el título (verde neón) */
-    text-shadow: 0 0 8px rgba(0,230,118,0.6), 0 0 15px rgba(0,230,118,0.3); /* Efecto neón */
+    color: #e60303e7; /* Color vibrante para el título (verde neón) */
+    text-shadow: 0 0 8px rgba(230, 0, 0, 0.6), 0 0 15px rgba(230, 0, 0, 0.3); /* Efecto neón */
     white-space: nowrap;
     letter-spacing: 0.05em; /* Espaciado entre letras */
 }
