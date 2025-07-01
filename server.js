@@ -12,168 +12,161 @@ const io = socketIo(server);
 const PORT = process.env.PORT || 3000;
 
 // --- Configuración para servir archivos estáticos ---
-// Sirve los archivos HTML desde la carpeta 'html'
+// Sirve la carpeta 'html' y sus subcarpetas
 app.use(express.static(path.join(__dirname, 'html')));
-// Sirve los archivos CSS desde la carpeta 'css' (¡Asegúrate de que tu carpeta local sea 'css' en minúsculas!)
 app.use('/css', express.static(path.join(__dirname, 'css')));
-// Sirve los archivos JS desde la carpeta 'js' (¡Asegúrate de que tu carpeta local sea 'js' en minúsculas!)
 app.use('/js', express.static(path.join(__dirname, 'js')));
-// Sirve las imágenes desde la carpeta 'Img' (¡Asegúrate de que tu carpeta local sea 'Img' en mayúsculas!)
 app.use('/Img', express.static(path.join(__dirname, 'Img')));
 
 
-// --- Variables de estado de los marcadores (para Socket.IO) ---
-// Estos son tus marcadores predefinidos.
-let scoreboards = {
-    'marcador1': {
-        team1Name: 'Equipo 1 Local',
-        score1: 0,
-        team2Name: 'Equipo 1 Visita',
-        score2: 0,
-        totalSeconds: 0,
-        gameTime: '00:00',
-        gameStatus: 'Primer Tiempo'
-    },
-    'marcador2': {
-        team1Name: 'Equipo 2 Casa',
-        score1: 0,
-        team2Name: 'Equipo 2 Fuera',
-        score2: 0,
-        totalSeconds: 0,
-        gameTime: '00:00',
-        gameStatus: 'Segundo Tiempo'
-    },
-    'marcador3': {
-        team1Name: 'Los Rojos',
-        score1: 0,
-        team2Name: 'Los Azules',
-        score2: 0,
-        totalSeconds: 0,
-        gameTime: '00:00',
-        gameStatus: 'Tiempo Extra'
-    },
-    'marcador4': {
-        team1Name: 'Equipo Alpha',
-        score1: 0,
-        team2Name: 'Equipo Beta',
-        score2: 0,
-        totalSeconds: 0,
-        gameTime: '00:00',
-        gameStatus: 'Finalizado'
+// --- Variables de estado del marcador (para Socket.IO) ---
+// Objeto para almacenar el estado de CADA marcador, usando su ID como clave.
+// Ejemplo: { 'marcadores1': { ...datos... }, 'marcadores2': { ...datos... } }
+const allScoreboardsData = {};
+
+// Función para inicializar los datos de un nuevo marcador si no existen
+function initializeScoreboard(marcadorId) {
+    if (!allScoreboardsData[marcadorId]) {
+        console.log(`Inicializando datos para el marcador: ${marcadorId}`);
+        allScoreboardsData[marcadorId] = {
+            id: marcadorId, // Añade el ID al objeto de datos
+            team1Name: 'Equipo A', // Valores por defecto
+            score1: 0,
+            team2Name: 'Equipo B',
+            score2: 0,
+            totalSeconds: 0,
+            gameTime: '00:00',
+            gameStatus: 'Iniciando Juego'
+        };
     }
-};
+    return allScoreboardsData[marcadorId];
+}
 
 // --- Manejo de Conexiones y Eventos de Socket.IO ---
 io.on('connection', (socket) => {
     console.log('Cliente conectado:', socket.id);
 
-    // 1. Escucha el evento 'joinScoreboard' para que el cliente especifique qué marcador le interesa.
-    socket.on('joinScoreboard', (scoreboardId) => {
-        if (scoreboards[scoreboardId]) {
-            socket.join(scoreboardId); // Une el socket a una "sala" específica de Socket.IO
-            console.log(`Cliente ${socket.id} se unió a la sala: ${scoreboardId}`);
-            // Envía el estado actual de ESE marcador al cliente que se unió
-            socket.emit('currentScoreboardData', {
-                id: scoreboardId, // Envía el ID de vuelta para que el cliente lo confirme
-                scoreboardData: scoreboards[scoreboardId]
-            });
-        } else {
-            console.warn(`Intento de cliente ${socket.id} de unirse a marcador inexistente: ${scoreboardId}`);
-            // Opcional: podrías emitir un evento de error al cliente
-            socket.emit('scoreboardError', 'Marcador no encontrado o ID inválido.');
-        }
-    });
+    // Cuando un cliente se conecta, podemos asumir que aún no sabemos a qué marcador pertenece.
+    // Esperaremos a que el cliente nos envíe su ID de marcador con la primera actualización.
+    // Sin embargo, para dar un estado inicial, podríamos necesitar una ruta específica
+    // o que el cliente emita un evento 'requestScoreboardData' con su ID al conectar.
+
+    // Por ahora, el cliente simplemente recibirá el estado por defecto o el último conocido
+    // para el ID que pida. El `updateDisplay` del cliente se encargará de ignorar
+    // los datos si el ID no coincide.
 
     // 2. Escucha el evento 'updateScoreboard' que viene del cliente (panel de control).
-    // Este evento debe incluir el 'id' del marcador a actualizar.
+    // Ahora, `data` contendrá `id`, `team1Name`, `score1`, etc.
     socket.on('updateScoreboard', (data) => {
-        const { id, ...updates } = data; // Extrae el 'id' y el resto son las 'updates'
-        console.log(`Datos recibidos para el marcador ${id} del panel de control:`, updates);
+        const marcadorId = data.id; // ¡Obtenemos el ID del marcador de los datos!
 
-        if (id && scoreboards[id]) {
-            // Actualiza el estado del marcador específico en el servidor con los datos recibidos.
-            if (updates.team1Name !== undefined) scoreboards[id].team1Name = updates.team1Name;
-            if (updates.score1 !== undefined) scoreboards[id].score1 = updates.score1;
-            if (updates.team2Name !== undefined) scoreboards[id].team2Name = updates.team2Name;
-            if (updates.score2 !== undefined) scoreboards[id].score2 = updates.score2;
-            if (updates.gameStatus !== undefined) scoreboards[id].gameStatus = updates.gameStatus;
-
-            // Lógica para el temporizador: la fuente de verdad es 'totalSeconds'.
-            if (typeof updates.totalSeconds !== 'undefined') {
-                scoreboards[id].totalSeconds = updates.totalSeconds;
-                const minutes = Math.floor(updates.totalSeconds / 60);
-                const remainingSeconds = updates.totalSeconds % 60;
-                scoreboards[id].gameTime = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-            } else if (updates.gameTime) { // Fallback si el cliente envía gameTime como string
-                const parts = updates.gameTime.split(':');
-                if (parts.length === 2) {
-                    const minutes = parseInt(parts[0], 10);
-                    const seconds = parseInt(parts[1], 10);
-                    scoreboards[id].totalSeconds = (minutes * 60) + seconds;
-                    scoreboards[id].gameTime = updates.gameTime;
-                }
-            }
-            
-            // 3. Emite la actualización a *TODOS* los clientes conectados a la sala de ESE marcador.
-            io.to(id).emit('scoreboardUpdated', {
-                id: id, // Envía el ID de vuelta para que el cliente sepa qué marcador se actualizó
-                scoreboardData: scoreboards[id]
-            });
-        } else {
-            console.warn(`Actualización recibida para un marcador no válido o sin ID: ${id}`);
+        if (!marcadorId) {
+            console.warn('Actualización recibida sin ID de marcador. Ignorando.');
+            return;
         }
+
+        // Asegurarse de que el marcador existe, inicializándolo si es necesario
+        initializeScoreboard(marcadorId);
+
+        console.log(`Datos recibidos para el marcador ${marcadorId}:`, data);
+
+        // Actualiza el estado del marcador ESPECÍFICO en el servidor.
+        const currentScoreboard = allScoreboardsData[marcadorId];
+
+        if (data.team1Name !== undefined) currentScoreboard.team1Name = data.team1Name;
+        if (data.score1 !== undefined) currentScoreboard.score1 = data.score1;
+        if (data.team2Name !== undefined) currentScoreboard.team2Name = data.team2Name;
+        if (data.score2 !== undefined) currentScoreboard.score2 = data.score2;
+        if (data.gameStatus !== undefined) currentScoreboard.gameStatus = data.gameStatus;
+
+        if (typeof data.totalSeconds !== 'undefined') {
+            currentScoreboard.totalSeconds = data.totalSeconds;
+            const minutes = Math.floor(data.totalSeconds / 60);
+            const remainingSeconds = data.totalSeconds % 60;
+            currentScoreboard.gameTime = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        } else if (data.gameTime) {
+            const parts = data.gameTime.split(':');
+            if (parts.length === 2) {
+                const minutes = parseInt(parts[0], 10);
+                const seconds = parseInt(parts[1], 10);
+                currentScoreboard.totalSeconds = (minutes * 60) + seconds;
+                currentScoreboard.gameTime = data.gameTime;
+            }
+        }
+        
+        // Emite la actualización a *TODOS* los clientes conectados.
+        // CADA CLIENTE filtrará los datos si su ID no coincide.
+        io.emit('scoreboardUpdated', currentScoreboard); // Envía el estado actualizado del marcador ESPECÍFICO
     });
 
-    // 4. Maneja la desconexión de clientes.
     socket.on('disconnect', () => {
         console.log('Cliente desconectado:', socket.id);
+    });
+
+    // *** Nuevo: Manejar la solicitud de datos iniciales por ID ***
+    // Cuando un cliente se conecta, no sabe su ID hasta que el JS se ejecuta.
+    // Una vez que el `script_mar.js` obtiene su `marcadorId`, puede solicitar los datos iniciales.
+    socket.on('requestInitialScoreboardData', (marcadorId) => {
+        console.log(`Cliente ${socket.id} solicita datos para el marcador: ${marcadorId}`);
+        // Asegúrate de que el marcador exista y esté inicializado
+        const initialData = initializeScoreboard(marcadorId);
+        // Envía los datos iniciales SÓLO a este socket que los solicitó.
+        socket.emit('currentScoreboardData', initialData);
     });
 });
 
 
 // --- Definición de Rutas de Páginas HTML ---
 
-// Ruta principal ('/')
-// Redirige a la página de selección de marcadores (entrada.html)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'entrada.html')); 
+// Sirve las páginas HTML dinámicamente desde sus subcarpetas
+// Esto asegura que /html/marcadores1/marcador.html funcione y obtenga 'marcadores1' como ID
+app.get('/html/:marcadorFolder/:htmlFile', (req, res) => {
+    const marcadorFolder = req.params.marcadorFolder;
+    const htmlFile = req.params.htmlFile;
+    // Asegurarse de que el htmlFile es el esperado (e.g., marcador.html)
+    if (htmlFile === 'marcador.html') {
+        res.sendFile(path.join(__dirname, 'html', marcadorFolder, htmlFile));
+    } else {
+        res.status(404).send('Archivo no encontrado.');
+    }
 });
 
-// Ruta para la página de selección de deporte (entrada.html)
+// Ruta principal, puedes redirigir a una página de selección si quieres
+app.get('/', (req, res) => {
+    // Puedes enviar un index.html con links a cada marcador o redirigir
+    // Por ahora, redirigimos a marcador1 como ejemplo
+    res.redirect('/html/marcadores1/marcador.html');
+});
+
+
+// Rutas para otros tipos de marcadores si tienes HTMLs específicos en la carpeta 'html'
+// NOTA: Con la nueva ruta '/html/:marcadorFolder/:htmlFile', si tus 'marcadoresX'
+// son los únicos que usan 'marcador.html', estas rutas podrían ser redundantes.
+// Si tienes otros HTMLs (bskt.html, tenis.html) directamente en la carpeta 'html'
+// Y no dentro de subcarpetas como 'marcadores1', entonces estas rutas son necesarias.
 app.get('/entrada.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'entrada.html'));
 });
-
-// Ruta dinámica para acceder a CUALQUIER marcador predefinido.
-// Ejemplo: http://localhost:3000/marcador/marcador1
-// Servirá el mismo archivo HTML genérico para todos los marcadores.
-app.get('/marcador/:id', (req, res) => {
-    const scoreboardId = req.params.id;
-    if (scoreboards[scoreboardId]) {
-        // ¡CAMBIO CLAVE AQUÍ! Sirve el archivo marcador.html desde la raíz de la carpeta 'html'
-        // Esto asume que has consolidado tus marcador.html en uno solo en 'html/marcador.html'
-        res.sendFile(path.join(__dirname, 'html', 'marcador.html')); 
-    } else {
-        res.status(404).send('Marcador no encontrado. Por favor, verifica el ID.');
-    }
+app.get('/index.html', (req, res) => { // Asegúrate de que index.html es accesible
+    res.sendFile(path.join(__dirname, 'html', 'index.html'));
 });
 
-// Ruta dinámica para los paneles de control (si quieres separarlos de la vista de OBS)
-// Ejemplo: http://localhost:3000/panel/marcador1
-app.get('/panel/:id', (req, res) => {
-    const scoreboardId = req.params.id;
-    if (scoreboards[scoreboardId]) {
-        // Sirve un único archivo HTML para el panel de control.
-        // Asegúrate de que este archivo exista en tu carpeta 'html'.
-        // Podría ser el mismo 'marcador.html' o un 'panel_control.html' separado.
-        res.sendFile(path.join(__dirname, 'html', 'marcador.html')); // Usamos marcador.html como panel también
+// Si 'bskt.html', 'tenis.html', etc., están en la raíz de 'html'
+app.get('/:htmlFile', (req, res) => {
+    const htmlFile = req.params.htmlFile;
+    if (htmlFile.endsWith('.html')) { // Solo permitir archivos .html
+        res.sendFile(path.join(__dirname, 'html', htmlFile));
     } else {
-        res.status(404).send('Panel de control para este marcador no encontrado.');
+        res.status(404).send('Archivo no encontrado.');
     }
 });
 
 
-// Iniciar el servidor
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    console.log('Accede a los marcadores únicos, por ejemplo:');
+    console.log(` - http://localhost:${PORT}/html/marcadores1/marcador.html`);
+    console.log(` - http://localhost:${PORT}/html/marcadores2/marcador.html`);
+    console.log(` - http://localhost:${PORT}/html/marcadores3/marcador.html`);
+    console.log(` - http://localhost:${PORT}/html/marcadores4/marcador.html`);
 });
