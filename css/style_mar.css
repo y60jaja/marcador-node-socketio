@@ -222,23 +222,24 @@ body {
 .boton-cerrar .btn-cerrar {
     background-color: #f44336; /* Color rojo original */
     color: white;
-    border: none; /* Quitamos el borde para un look más "botón" */
-    padding: 8px 15px;
-    border-radius: 6px; /* Ajustado para que sea igual que home-btn-background */
+    border: none; /* Quitamos el borde */
+    padding: 8px 15px; /* Reducimos un poco el padding vertical para que sea menos alto visualmente */
+    border-radius: 6px; /* Mantenemos el radio de borde */
     cursor: pointer;
     font-size: 16px;
     white-space: nowrap;
-
-    /* Propiedades para el efecto visual similar al de Home */
-    transition: all 0.3s ease; /* Transición suave para todas las propiedades */
-    box-shadow: 0 2px 3px rgba(0,0,0,0.2); /* Sombra sutil similar a home-btn-background */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1); /* Añadimos una sombra sutil como el botón de Home */
+    display: flex; /* Para alinear el texto si fuera necesario en el futuro */
+    align-items: center;
+    justify-content: center;
+    height: auto; /* Dejamos que la altura se ajuste al contenido con el padding */
 }
-
 .boton-cerrar .btn-cerrar:hover {
-    background-color: #d32f2f; /* Un rojo un poco más oscuro al pasar el ratón */
-    transform: scale(1.1); /* Escala ligeramente, igual que el de Home */
-    opacity: 0.9; /* Reduce la opacidad, igual que el de Home */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Sombra más pronunciada al pasar el ratón */
+    background-color: #d32f2f;
+    transform: scale(1.1);
+    opacity: 0.9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 
