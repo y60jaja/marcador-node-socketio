@@ -42,6 +42,10 @@ body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcad
     box-shadow: none;              /* Sin sombra */
 }
 
+body.obs-mode button{
+    display: none !important; /* Oculta todos los botones en modo OBS */
+}
+
 
 /* --- Aquí comienza el resto de tus estilos CSS generales para el marcador y el panel --- */
 
