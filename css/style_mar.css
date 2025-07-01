@@ -38,8 +38,8 @@ body.obs-mode #main-container { /* Asume que el ID de tu contenedor principal es
     pero PERMITE que #scoreboard-display mantenga su color de fondo */
 body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcador */
     background-color: transparent; /* Fondo transparente */
-    border: none;                  /* Sin borde */
-    box-shadow: none;              /* Sin sombra */
+    border: none;                 /* Sin borde */
+    box-shadow: none;             /* Sin sombra */
 }
 
 /* IMPORTANTE: Oculta el botón de copiar URL en modo OBS. Si quieres que se vea, puedes quitar esta regla. */
@@ -218,28 +218,21 @@ body {
     margin-right: 15px;
 }
 
-/* Estilos para el botón de "Cerrar Sesión" en sí (AHORA COMO EL BOTÓN DE HOME) */
+/* Estilos para el botón de "Cerrar Sesión" en sí */
 .boton-cerrar .btn-cerrar {
-    background-color: #f44336; /* Color rojo original */
+    background-color: #f44336;
     color: white;
-    border: none; /* Quitamos el borde */
-    padding: 8px 15px; /* Reducimos un poco el padding vertical para que sea menos alto visualmente */
-    border-radius: 6px; /* Mantenemos el radio de borde */
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
     font-size: 16px;
     white-space: nowrap;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.1); /* Añadimos una sombra sutil como el botón de Home */
-    display: flex; /* Para alinear el texto si fuera necesario en el futuro */
-    align-items: center;
-    justify-content: center;
-    height: auto; /* Dejamos que la altura se ajuste al contenido con el padding */
 }
+
 .boton-cerrar .btn-cerrar:hover {
     background-color: #d32f2f;
-    transform: scale(1.1);
-    opacity: 0.9;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 
@@ -378,7 +371,6 @@ body > p {
     font-weight: bold;
     color: #e0e0e0;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    white-space: nowrap; /* Añadido: Evita que el nombre del equipo se rompa */
 }
 
 .score-display {
@@ -386,7 +378,7 @@ body > p {
     font-weight: bold;
     color: #00e676;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    padding: 20px; /* Considera ajustar esto si el espacio no es el deseado */
+    padding: 20px;
 }
 
 .time-display {
@@ -394,68 +386,20 @@ body > p {
     font-weight: bold;
     color: #ffffff;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-    /* margin: 20px; <--- Eliminar o ajustar esto. Se manejará con margin-bottom */
-    margin-bottom: 5px; /* Añadido: Espacio debajo del contador */
+    margin: 20px;
 }
 
 
 .status-display {
     font-size: 1.2em;
     color: #e0e0e0;
-    margin-top: 5px; /* Añadido: Espacio encima del estado */
-}
-
-/* ========================================================================= */
-/* --- INICIO DE MODIFICACIONES ESPECÍFICAS PARA TU DISEÑO --- */
-/* ========================================================================= */
-
-/* Modificación para .middle-info-display (Temporizador y Estado) */
-/* Haz que los elementos dentro de middle-info-display se apilen verticalmente */
-.middle-info-display {
-    display: flex;
-    flex-direction: column; /* ¡Esto apila el tiempo y el estado verticalmente! */
-    align-items: center;   /* Centra horizontalmente el tiempo y el estado */
-    justify-content: center;
-    order: 1; /* Mantiene este contenedor en el medio visualmente */
+    margin-top: 5px;
 }
 
 
-/* Modificación para .team-display.right (Equipo B) */
-/* Reorganiza los elementos dentro del contenedor del Equipo B */
-.team-display.right {
-    display: flex; /* Convierte el contenedor del Equipo B en un flex container */
-    flex-direction: row; /* Asegura que los elementos dentro estén en fila */
-    align-items: center; /* Alinea verticalmente los items */
-    order: 2; /* Asegura que Equipo B sea el último visualmente (derecha) */
-}
-
-/* Ajustes específicos para el score del equipo B a la izquierda del nombre */
-.team-display.right .score-display {
-    order: 0; /* Coloca la puntuación primero visualmente dentro del team-display.right */
-    padding-right: 10px; /* Espacio entre la puntuación y el nombre */
-    padding-left: 0; /* Asegura que no haya padding excesivo a la izquierda */
-}
-
-.team-display.right .team-name-display {
-    order: 1; /* Coloca el nombre segundo visualmente dentro del team-display.right */
-}
-
-/* Ajustes para el equipo A, si no se han establecido ya */
-.team-display.left {
-    order: 0; /* Asegura que Equipo A sea el primero visualmente (izquierda) */
-    display: flex; /* Añade flex para controlar el orden si fuera necesario en el futuro */
-    flex-direction: row;
-    align-items: center;
-}
-
-.team-display.left .score-display {
-    padding-left: 10px; /* Espacio entre el nombre y la puntuación para el equipo A */
-    padding-right: 0; /* Asegura que no haya padding excesivo a la derecha */
-}
-/* ========================================================================= */
-/* --- FIN DE MODIFICACIONES ESPECÍFICAS PARA TU DISEÑO --- */
-/* ========================================================================= */
-
+.team-display.left { order: 0; }
+.middle-info-display { order: 1; }
+.team-display.right { order: 2; }
 
 /* === Control Panel === */
 #control-panel {
