@@ -220,15 +220,14 @@ body {
 
 /* Estilos para el botón de "Cerrar Sesión" en sí */
 .boton-cerrar .btn-cerrar {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 16px;
-    white-space: nowrap;
+    background-color: white;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .boton-cerrar .btn-cerrar:hover {
