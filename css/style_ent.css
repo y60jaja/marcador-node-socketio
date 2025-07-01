@@ -49,7 +49,7 @@ body {
     width: auto;
     max-width: 110px;
     object-fit: contain;
-    filter: drop-shadow(0 0 3px rgba(0,255,0,0.3)); /* Sombra de color para el logo */
+    filter: drop-shadow(0 0 3px rgba(255,0,0,0.3)); /* Sombra de color para el logo */
 }
 
 .texto-centro {
@@ -68,8 +68,8 @@ body {
     font-size: 1.8rem; /* Ligeramente más grande para impacto */
     font-weight: 700; /* Más audaz */
     margin-bottom: 0.1rem;
-    color: #00E676; /* Color vibrante para el título (verde neón) */
-    text-shadow: 0 0 8px rgba(0,230,118,0.6), 0 0 15px rgba(0,230,118,0.3); /* Efecto neón */
+    color: #FF1744; /* Color vibrante para el título (rojo neón) */
+    text-shadow: 0 0 8px rgba(255,23,68,0.6), 0 0 15px rgba(255,23,68,0.3); /* Efecto neón */
     white-space: nowrap;
     letter-spacing: 0.05em; /* Espaciado entre letras */
 }
@@ -110,10 +110,10 @@ body {
 }
 
 .home-btn:hover .home-btn-background {
-    background-color: rgba(0, 230, 118, 0.8); /* Verde neón más opaco en hover */
-    border-color: #00E676; /* Borde del color de acento */
+    background-color: rgba(255, 23, 68, 0.8); /* Rojo neón más opaco en hover */
+    border-color: #FF1744; /* Borde del color de acento */
     transform: scale(1.08); /* Escala ligeramente */
-    box-shadow: 0 4px 15px rgba(0, 230, 118, 0.7); /* Sombra de neón más intensa al hacer hover */
+    box-shadow: 0 4px 15px rgba(255, 23, 68, 0.7); /* Sombra de neón más intensa al hacer hover */
 }
 .home-btn:hover .home-img {
     filter: invert(0%) brightness(100%); /* Revierte el color del icono a su original si es negro, o similar */
@@ -245,7 +245,7 @@ body {
 .Titulo {
     background-color: rgba(30, 30, 30, 0.9); /* Fondo oscuro con opacidad */
     padding: 1.2rem 2rem; /* Mayor padding para un look más robusto */
-    border: 2px solid #00E676; /* Borde verde neón */
+    border: 2px solid #FF1744; /* Borde rojo neón */
     border-radius: 12px; /* Bordes más uniformes y sutiles */
     margin: 2rem auto 2.5rem auto; /* Más margen arriba y abajo */
     text-align: center;
@@ -262,7 +262,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(0,230,118,0.1), rgba(0,180,90,0.1)); /* Sutil degradado interno */
+    background: linear-gradient(45deg, rgba(255,23,68,0.1), rgba(200,20,50,0.1)); /* Sutil degradado interno rojo */
     z-index: 0;
     pointer-events: none;
 }
@@ -271,8 +271,8 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.2rem; /* Tamaño de fuente impactante */
     font-weight: 800; /* Extra bold */
-    color: #00E676; /* Verde neón para el título principal */
-    text-shadow: 0 0 10px rgba(0,230,118,0.7), 0 0 20px rgba(0,230,118,0.4); /* Efecto neón más fuerte */
+    color: #FF1744; /* Rojo neón para el título principal */
+    text-shadow: 0 0 10px rgba(255,23,68,0.7), 0 0 20px rgba(255,23,68,0.4); /* Efecto neón más fuerte */
     letter-spacing: 0.1em; /* Mayor espaciado entre letras */
     text-transform: uppercase; /* Todo en mayúsculas */
     margin-bottom: 0.5rem;
@@ -294,13 +294,13 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem; /* Tamaño adecuado para un título de panel */
     font-weight: 700;
-    color: #00E676; /* El mismo verde neón para coherencia */
+    color: #FF1744; /* El mismo rojo neón para coherencia */
     text-align: center;
     margin-bottom: 1.5rem; /* Espacio debajo del título */
-    text-shadow: 0 0 7px rgba(0,230,118,0.5), 0 0 12px rgba(0,230,118,0.2); /* Efecto neón */
+    text-shadow: 0 0 7px rgba(255,23,68,0.5), 0 0 12px rgba(255,23,68,0.2); /* Efecto neón */
     letter-spacing: 0.08em;
     padding-bottom: 0.5rem; /* Pequeño padding inferior para una línea */
-    border-bottom: 2px solid rgba(0, 230, 118, 0.3); /* Línea inferior sutil */
+    border-bottom: 2px solid rgba(255, 23, 68, 0.3); /* Línea inferior sutil */
     display: block; /* Para que border-bottom funcione correctamente */
     width: fit-content; /* Ajusta el ancho de la línea al contenido */
     margin-left: auto; /* Centra el elemento con width:fit-content */
@@ -333,7 +333,7 @@ body {
     transition: all 0.3s ease;
     min-height: 120px; 
     border-radius: 10px 60px 30px;
-    border: 1px solid rgba(0, 230, 118, 0.4); /* Borde verde neón sutil */
+    border: 1px solid rgba(255, 23, 68, 0.4); /* Borde rojo neón sutil */
 }
 
 /* ELEMENTOS INTERNOS (Mantenidos intactos en color, pero con más contraste si es necesario) */
@@ -342,14 +342,14 @@ body {
     height: 70px;
     margin-right: 1.5rem; 
     object-fit: contain;
-    filter: invert(1) brightness(0.8) sepia(1) hue-rotate(90deg) saturate(3); /* Intento de darle un tono verdoso a los iconos si son oscuros, ajustar si es necesario */
+    filter: invert(0) brightness(0.8) sepia(1) hue-rotate(300deg) saturate(3); /* Intento de darle un tono rojizo a los iconos si son oscuros, ajustar si es necesario */
 }
 
 .info-deporte h3 {
     font-size: 1.3rem; 
-    color: #00E676; /* Color verde neón */
+    color: #FF1744; /* Color rojo neón */
     margin-bottom: 0.5rem;
-    text-shadow: 0 0 5px rgba(0,230,118,0.4);
+    text-shadow: 0 0 5px rgba(255,23,68,0.4);
 }
 
 .info-deporte p {
@@ -362,22 +362,23 @@ body {
     position: absolute;
     bottom: 1.5rem;
     right: 1.5rem;
-    background: #00E676; /* Fondo verde neón */
+    background: #FF1744; /* Fondo rojo neón */
     color: #2F3E4E; /* Texto oscuro para contraste */
     padding: 0.6rem 1.2rem; 
     border-radius: 8px;
     font-size: 1rem; 
     transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(0, 230, 118, 0.4);
-    border: 1px solid #00E676;
+    box-shadow: 0 2px 8px rgba(255, 23, 68, 0.4);
+    border: 1px solid #FF1744;
 }
 .boton-ir:hover {
-    background: #00CC66; /* Verde un poco más oscuro en hover */
-    box-shadow: 0 4px 12px rgba(0, 230, 118, 0.6);
+    background: #CC1035; /* Rojo un poco más oscuro en hover */
+    box-shadow: 0 4px 12px rgba(255, 23, 68, 0.6);
 }
 
 
 .titulo-seleccion { /* ESTE ES EL TÍTULO QUE SE DEBE CAMBIAR AL NUEVO ESTILO .panel-title */
+    /* Estas propiedades serán sobrescritas por .panel-title si se aplica esa clase en el HTML */
     font-size: 2rem; 
     color: var(--color-primario);
     text-align: center;
@@ -452,7 +453,7 @@ body {
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
     background: rgba(40, 40, 40, 0.9); 
-    border: 1px solid rgba(0, 230, 118, 0.4); 
+    border: 1px solid rgba(255, 23, 68, 0.4); /* Borde rojo neón sutil */
 }
 
 .tarjeta-deporte::before {
@@ -462,7 +463,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #00E676; /* Verde neón en hover */
+    background: #FF1744; /* Rojo neón en hover */
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -509,10 +510,10 @@ body {
 
 .tarjeta-deporte:hover .boton-ir {
     background: #2F3E4E !important; /* Fondo oscuro en hover */
-    color: #00E676 !important; /* Texto verde neón en hover */
-    border: 1px solid #00E676;
+    color: #FF1744 !important; /* Texto rojo neón en hover */
+    border: 1px solid #FF1744;
     box-shadow: 
-        0 3px 12px rgba(0, 230, 118, 0.6),
+        0 3px 12px rgba(255, 23, 68, 0.6),
         0 2px 0 rgba(47, 62, 78, 0.1) inset; 
     transform: 
         translateY(-3px) 
@@ -520,10 +521,10 @@ body {
 }
 
 .tarjeta-deporte {
-    border: 1px solid rgba(0, 230, 118, 0.4); /* Borde inicial sutilmente neón */
+    border: 1px solid rgba(255, 23, 68, 0.4); /* Borde inicial sutilmente neón */
     transition: border-color 0.6s ease-in-out;
 }
 
 .tarjeta-deporte:hover {
-    border-color: #00E676; /* Borde más intenso en hover */
+    border-color: #FF1744; /* Borde más intenso en hover */
 }
