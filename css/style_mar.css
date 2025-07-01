@@ -131,6 +131,71 @@ body {
     transform: scale(1.1);
     opacity: 0.9;
 }
+/* Diseño responsive - Manteniendo la misma disposición */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .texto-centro h1 {
+        font-size: 1.3rem;
+    }
+    
+    .texto-centro p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.6rem 1rem;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    .texto-centro h1 {
+        font-size: 1.1rem;
+        white-space: normal;
+    }
+    
+    .home-img {
+        height: 20px;
+    }
+    
+    .home-btn-background {
+        padding: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+    
+    .logo-img {
+        height: 35px;
+    }
+    
+    .texto-centro h1 {
+        font-size: 1rem;
+    }
+    
+    .texto-centro p {
+        display: none;
+    }
+    
+    .home-img {
+        height: 18px;
+    }
+    
+    .home-btn-background {
+        padding: 5px;
+        border-radius: 4px;
+    }
+}
+
 
 
 /* === Headings and Paragraph === */
