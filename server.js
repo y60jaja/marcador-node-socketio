@@ -9,6 +9,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // Inicializa Socket.IO con el servidor HTTP
 
+
 const PORT = process.env.PORT || 3000; // Define el puerto, usa 3000 por defecto
 
 // --- Configuración para servir archivos estáticos ---
@@ -90,9 +91,9 @@ io.on('connection', (socket) => {
 // Ruta principal ('/')
 // Al acceder a http://localhost:3000, carga el 'marcador.html' por defecto para el desarrollo.
 // Si quieres que el usuario vaya primero al login de PHP, puedes cambiar esto a un res.redirect.
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'marcador.html')); 
-});
+});*/
 
 app.get('/entrada.html', (req, res) => {
     const user = req.query.user;
@@ -101,28 +102,17 @@ app.get('/entrada.html', (req, res) => {
 });
 
 // Rutas para cada tipo de marcador (asegúrate de que estos archivos existan en /html)
-app.get('/marcador.html', (req, res) => {
+app.get('/marcadores1/marcador.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'marcador.html'));
 });
-
-app.get('/bskt.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'bskt.html'));
+app.get('/marcadores2/marcador.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'marcador.html'));
 });
-
-app.get('/tenis.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'tenis.html'));
+app.get('/marcadores3/marcador.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'marcador.html'));
 });
-
-app.get('/voleibol.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'voleibol.html'));
-});
-
-app.get('/hockey.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'hockey.html'));
-});
-
-app.get('/rugby.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'rugby.html'));
+app.get('/marcadores4/marcador.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html', 'marcador.html'));
 });
 
 server.listen(PORT, () => {

@@ -112,6 +112,7 @@ function resetTimer() {
 function copiarURL(){
     var textoCopiar = "https://marcador-server.onrender.com/marcador.html?obs=true";
     navigator.clipboard.writeText(textoCopiar);
+    alert("URL copiada al portapapeles");
 }
 
 // --- Event Listeners para los inputs del panel de control ---
