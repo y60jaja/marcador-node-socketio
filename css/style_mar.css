@@ -29,7 +29,7 @@ body.obs-mode #main-container { /* Asume que el ID de tu contenedor principal es
     align-items: center;    /* Centra verticalmente el contenido */
     justify-content: center; /* Centra horizontalmente el contenido */
     height: 100vh;          /* Ocupa el 100% de la altura de la ventana del navegador */
-    width: 100vw;           /* Ocupa el 100% del ancho de la ventana del navegador */
+    width: 100vw;           /* Ocupa el 100% del ancho del navegador */
     margin: 0;
     padding: 0;
 }
@@ -38,15 +38,12 @@ body.obs-mode #main-container { /* Asume que el ID de tu contenedor principal es
     pero PERMITE que #scoreboard-display mantenga su color de fondo */
 body.obs-mode #overlay-container { /* O el ID de tu contenedor visual del marcador */
     background-color: transparent; /* Fondo transparente */
-    border: none;                  /* Sin borde */
-    box-shadow: none;              /* Sin sombra */
+    border: none;                 /* Sin borde */
+    box-shadow: none;             /* Sin sombra */
 }
 
 /* IMPORTANTE: Oculta el botón de copiar URL en modo OBS. Si quieres que se vea, puedes quitar esta regla. */
-body.obs-mode #overlay-container button[onclick="copiarURL()"] {
-    display: none !important;
-}
-/* Si el botón de copiar URL está ahora dentro de #preview-wrapper, ajusta la regla así: */
+/* Se mantiene el selector de #preview-wrapper ya que es el elemento padre con position: relative */
 body.obs-mode #preview-wrapper button[onclick="copiarURL()"] {
     display: none !important;
 }
@@ -313,43 +310,46 @@ body > p {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     padding: 25px;
     width: 100%; /* Ajustado a 100% para ocupar el ancho de #preview-wrapper */
-    /* min-width: 350px; Eliminar, ya lo controla preview-wrapper */
+    /* min-width: 350px; Eliminado, ya lo controla preview-wrapper */
     box-sizing: border-box;
     text-align: center;
     order: 1; /* Esto ya no es necesario aquí, lo controla main-container */
     backdrop-filter: blur(3px);
-    /* position: relative; Ya no es necesario aquí, el botón se posiciona respecto a #preview-wrapper */
+    position: relative; /* Se mantiene para otros posibles usos o por si es necesario */
 }
 
 /* --- ESTILOS PARA EL BOTÓN 'COPIAR LINK OBS' --- */
-#preview-wrapper button[onclick="copiarURL()"] { /* ¡Cambiado a #preview-wrapper! */
+#preview-wrapper button[onclick="copiarURL()"] {
     position: absolute; /* Posicionamiento absoluto dentro de #preview-wrapper */
-    top: 0px; /* Cerca de la parte superior del preview-wrapper. Ajusta según sea necesario */
-    left: 50%;
-    transform: translateX(-50%); /* Centra horizontalmente el botón */
-    background-color: rgba(47, 62, 78, 0.7); /* Fondo similar al navbar, semitransparente */
-    border: 1px solid #555555; /* Borde sutil */
-    border-radius: 5px; /* Bordes ligeramente redondeados */
-    padding: 5px;       /* Relleno para que la imagen no esté pegada al borde */
+    top: 0px; /* Ajusta este valor para moverlo más arriba o más abajo */
+    right: 0px; /* Distancia desde el borde derecho del #preview-wrapper */
+    
+    /* left: 50%; */ /* Eliminado */
+    /* transform: translateX(-50%); */ /* Eliminado */
+
+    background-color: rgba(47, 62, 78, 0.7);
+    border: 1px solid #555555;
+    border-radius: 5px;
+    padding: 5px;
     cursor: pointer;
-    display: flex;      /* Para centrar la imagen dentro del botón */
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;        /* Ancho fijo para el botón */
-    height: 40px;       /* Alto fijo para el botón */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones para hover */
-    z-index: 10;        /* Asegura que esté por encima de otros elementos si se solapan */
+    width: 40px;
+    height: 40px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 10;
 }
 
 #preview-wrapper button[onclick="copiarURL()"]:hover {
-    background-color: rgba(47, 62, 78, 0.9); /* Un poco más opaco al pasar el ratón */
-    transform: translateX(-50%) scale(1.05); /* Mantiene el centrado al hacer hover */
+    background-color: rgba(47, 62, 78, 0.9);
+    transform: scale(1.05); /* Solo escala */
 }
 
 #preview-wrapper button[onclick="copiarURL()"] img.obs-img {
-    width: 24px;    /* Tamaño de la imagen del icono */
-    height: 24px;   /* Altura de la imagen del icono */
-    display: block; /* Asegura que la imagen sea un bloque */
+    width: 24px;
+    height: 24px;
+    display: block;
 }
 
 
@@ -442,8 +442,8 @@ body > p {
     border-radius: 6px;
     box-sizing: border-box;
     flex: 1;
-    min-width: 280px;
-    max-width: 350px;
+    min-width: 350px; /* Aumentado para dar más espacio al temporizador */
+    max-width: 450px; /* Si quieres que crezca más, puedes aumentarlo */
     background-color: rgba(51, 51, 51, 0.9);
     color: #e0e0e0;
 }
@@ -621,7 +621,7 @@ body > p {
 @media (max-width: 768px) {
     #control-panel,
     #overlay-container {
-        width: 95%;
+        width: 100%;
         min-width: unset;
     }
 
