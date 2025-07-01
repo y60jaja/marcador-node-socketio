@@ -86,6 +86,9 @@ body {
 body.obs-mode .navbar { /* Cambiado de #navbar a .navbar */
     display: none !important; /* El !important asegura que estas reglas prevalezcan */
 }
+body.obs-mode P { /* Cambiado de #navbar a .navbar */
+    display: none !important; /* El !important asegura que estas reglas prevalezcan */
+}
 
 .logo-container {
     flex: 0 1 auto;
