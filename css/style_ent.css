@@ -24,7 +24,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0.8rem 2rem; /* Ajustado para un look más compacto y moderno */
-    background-color: rgba(30, 30, 30, 0.95); /* Menos transparente: 95% opacidad */
+    background-color: #2F3E4E; /* Menos transparente: 95% opacidad */
     backdrop-filter: blur(5px); /* Efecto cristal esmerilado, un poco menos intenso */
     -webkit-backdrop-filter: blur(5px); /* Para compatibilidad con Safari */
     border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Borde inferior sutil, un poco más visible */
@@ -68,8 +68,8 @@ body {
     font-size: 1.8rem; /* Ligeramente más grande para impacto */
     font-weight: 700; /* Más audaz */
     margin-bottom: 0.1rem;
-    color: #FF1744; /* Color vibrante para el título (rojo neón) */
-    text-shadow: 0 0 8px rgba(255,23,68,0.6), 0 0 15px rgba(255,23,68,0.3); /* Efecto neón */
+    color: #fff; /* Color vibrante para el título (rojo neón) */
+    /* text-shadow: 0 0 8px rgba(255,23,68,0.6), 0 0 15px rgba(255,23,68,0.3); */ /* Efecto neón */
     white-space: nowrap;
     letter-spacing: 0.05em; /* Espaciado entre letras */
 }
@@ -243,9 +243,9 @@ body {
 
 /* ESTRUCTURA PRINCIPAL - Título "Selecciona el deporte" */
 .Titulo {
-    background-color: rgba(30, 30, 30, 0.9); /* Fondo oscuro con opacidad */
+    background-color: rgba(47,62,78,255); /* Fondo oscuro con opacidad */
     padding: 1.2rem 2rem; /* Mayor padding para un look más robusto */
-    border: 2px solid #FF1744; /* Borde rojo neón */
+    border: 2px solid #2f3e4e; /* Borde rojo neón */
     border-radius: 12px; /* Bordes más uniformes y sutiles */
     margin: 2rem auto 2.5rem auto; /* Más margen arriba y abajo */
     text-align: center;
@@ -262,7 +262,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(255,23,68,0.1), rgba(200,20,50,0.1)); /* Sutil degradado interno rojo */
+    /* background: linear-gradient(45deg, rgba(255,23,68,0.1), rgba(200,20,50,0.1)); */ /* Sutil degradado interno rojo */
     z-index: 0;
     pointer-events: none;
 }
@@ -271,8 +271,8 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.2rem; /* Tamaño de fuente impactante */
     font-weight: 800; /* Extra bold */
-    color: #FF1744; /* Rojo neón para el título principal */
-    text-shadow: 0 0 10px rgba(255,23,68,0.7), 0 0 20px rgba(255,23,68,0.4); /* Efecto neón más fuerte */
+    color: #fff; /* Rojo neón para el título principal */
+    /* text-shadow: 0 0 10px rgba(255,23,68,0.7), 0 0 20px rgba(255,23,68,0.4); */ /* Efecto neón más fuerte */
     letter-spacing: 0.1em; /* Mayor espaciado entre letras */
     text-transform: uppercase; /* Todo en mayúsculas */
     margin-bottom: 0.5rem;
@@ -325,13 +325,13 @@ body {
 .tarjeta-deporte {
     background: rgba(40, 40, 40, 0.9); /* Fondo oscuro con opacidad para tarjetas */
     border-radius: 12px;
-    padding: 2rem 1.8rem; 
+    padding: 2rem 1.8rem;
     box-shadow: 0 4px 18px rgba(0,0,0,0.6); /* Sombra más pronunciada */
     display: flex;
     align-items: center;
     position: relative;
     transition: all 0.3s ease;
-    min-height: 120px; 
+    min-height: 120px;
     border-radius: 10px 60px 30px;
     border: 1px solid rgba(255, 23, 68, 0.4); /* Borde rojo neón sutil */
 }
@@ -346,10 +346,10 @@ body {
 }
 
 .info-deporte h3 {
-    font-size: 1.3rem; 
-    color: #FF1744; /* Color rojo neón */
+    font-size: 1.3rem;
+    color: #FFF; /* Color rojo neón */
     margin-bottom: 0.5rem;
-    text-shadow: 0 0 5px rgba(255,23,68,0.4);
+    /* text-shadow: 0 0 5px rgba(255,23,68,0.4); */
 }
 
 .info-deporte p {
@@ -362,14 +362,14 @@ body {
     position: absolute;
     bottom: 1.5rem;
     right: 1.5rem;
-    background: #FF1744; /* Fondo rojo neón */
-    color: #2F3E4E; /* Texto oscuro para contraste */
-    padding: 0.6rem 1.2rem; 
+    background: #2f3e4e; /* Fondo rojo neón */
+    color: #ffff; /* Texto oscuro para contraste */
+    padding: 0.6rem 1.2rem;
     border-radius: 8px;
-    font-size: 1rem; 
+    font-size: 1rem;
     transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(255, 23, 68, 0.4);
-    border: 1px solid #FF1744;
+    /* box-shadow: 0 2px 8px rgba(255, 23, 68, 0.4); */
+    border: 1px solid #FFF;
 }
 .boton-ir:hover {
     background: #CC1035; /* Rojo un poco más oscuro en hover */
@@ -452,7 +452,7 @@ body {
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
-    background: rgba(40, 40, 40, 0.9); 
+    background: rgba(40, 40, 40, 0.9);
     border: 1px solid rgba(255, 23, 68, 0.4); /* Borde rojo neón sutil */
 }
 
@@ -463,7 +463,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #FF1744; /* Rojo neón en hover */
+    background: #fff; /* Rojo neón en hover */
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -477,8 +477,9 @@ body {
 
 .tarjeta-deporte:hover .info-deporte h3,
 .tarjeta-deporte:hover .info-deporte p {
-    color: #2F3E4E !important; /* Texto oscuro en hover */
+    /*color: #2F3E4E !important; /* Texto oscuro en hover */
     transition: color 0.3s 0.2s; 
+    color: #000;
 }
 
 .tarjeta-deporte .icono-deporte {
@@ -510,21 +511,21 @@ body {
 
 .tarjeta-deporte:hover .boton-ir {
     background: #2F3E4E !important; /* Fondo oscuro en hover */
-    color: #FF1744 !important; /* Texto rojo neón en hover */
-    border: 1px solid #FF1744;
+    /*color: #FF1744 !important; /* Texto rojo neón en hover */
+    /*border: 1px solid #FF1744;
     box-shadow: 
         0 3px 12px rgba(255, 23, 68, 0.6),
-        0 2px 0 rgba(47, 62, 78, 0.1) inset; 
+        0 2px 0 rgba(47, 62, 78, 0.1) inset;*/ 
     transform: 
         translateY(-3px) 
         scale(1.02); 
 }
 
 .tarjeta-deporte {
-    border: 1px solid rgba(255, 23, 68, 0.4); /* Borde inicial sutilmente neón */
+    border: 1px solid rgba(47,62,78,255); /* Borde inicial sutilmente neón */
     transition: border-color 0.6s ease-in-out;
 }
 
-.tarjeta-deporte:hover {
+/*.tarjeta-deporte:hover {
     border-color: #FF1744; /* Borde más intenso en hover */
-}
+}*/
